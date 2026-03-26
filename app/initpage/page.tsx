@@ -32,7 +32,7 @@ export default function InitPage() {
 
                     <div className="flex flex-col md:flex-row items-center justify-center gap-4 mt-8">
                         <Link
-                            href="https://pay.mycheckoutt.com/019bc3ae-63ca-7242-97fd-5ca7d86778fd?ref="
+                            href="https://pay.mycheckoutt.com/0198c1be-98b4-7315-a3bc-8c0fa9120e5c?ref="
                             className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold py-4 px-10 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1"
                         >
                             Get Access Now For $37

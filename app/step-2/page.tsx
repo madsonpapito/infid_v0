@@ -186,6 +186,7 @@ function DatingScannerContent() {
   const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false)
   const [isFetchingProfile, setIsFetchingProfile] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [instagramFeed, setInstagramFeed] = useState<any[]>([])
 
   const checkProfile = async (type: 'instagram' | 'whatsapp', value: string) => {
     setErrorMessage(null);
@@ -219,6 +220,23 @@ function DatingScannerContent() {
               setImageUploaded(true);
             } else {
               setErrorMessage("Profile found but private/no photo accessible.");
+            }
+
+            // Fetch feed for Instagram Scanner
+            try {
+              const postsRes = await fetch('/api/instagram/posts', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: cleanValue })
+              });
+              if (postsRes.ok) {
+                const postsData = await postsRes.json();
+                if (postsData.success && postsData.posts) {
+                  setInstagramFeed(postsData.posts);
+                }
+              }
+            } catch (err) {
+              console.error("Feed fetch error", err);
             }
           } else {
             setErrorMessage(data.error || "Profile picture not found.");
@@ -737,16 +755,28 @@ function DatingScannerContent() {
                   className="aspect-square bg-slate-800 rounded overflow-hidden relative"
                   style={{ animationDelay: `${i * 0.15}s` }}
                 >
-                  <div
-                    className="absolute inset-0 bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 animate-pulse"
-                    style={{
-                      animationDelay: `${i * 0.2}s`,
-                      opacity: scanPhase > i * 0.5 ? 0.4 : 1
-                    }}
-                  />
+                  {instagramFeed[i] ? (
+                    <img 
+                      src={instagramFeed[i].imageUrl} 
+                      alt={`Feed ${i}`} 
+                      className="w-full h-full object-cover animate-fade-in"
+                      style={{ 
+                        opacity: scanPhase >= Math.ceil((i + 1) / 3) ? 1 : 0.3,
+                        filter: scanPhase >= Math.ceil((i + 1) / 3) ? 'none' : 'blur(2px)'
+                      }}
+                    />
+                  ) : (
+                    <div
+                      className="absolute inset-0 bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 animate-pulse"
+                      style={{
+                        animationDelay: `${i * 0.2}s`,
+                        opacity: scanPhase > i * 0.5 ? 0.4 : 1
+                      }}
+                    />
+                  )}
                   {scanPhase >= Math.ceil((i + 1) / 3) && (
-                    <div className="absolute inset-0 bg-slate-700/60 flex items-center justify-center">
-                      <div className="w-4 h-4 border border-rose-500/40 rounded-sm" />
+                    <div className="absolute inset-0 bg-slate-700/10 flex items-center justify-center">
+                      {!instagramFeed[i] && <div className="w-4 h-4 border border-rose-500/40 rounded-sm" />}
                     </div>
                   )}
                 </div>
