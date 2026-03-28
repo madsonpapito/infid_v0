@@ -48,6 +48,28 @@ function DatingScannerContent() {
   const [location, setLocation] = useState("Unknown Location")
   const [timeLeft, setTimeLeft] = useState(5 * 60)
   const [selectedMatch, setSelectedMatch] = useState<any | null>(null)
+  const [testimonialIndex, setTestimonialIndex] = useState(0)
+
+  const testimonials = [
+    {
+      name: "Jessica, 31",
+      location: "Orlando, FL",
+      text: "I honestly didn't think it would work, but the report pulled up deleted chats that explained everything. It felt like the missing piece.",
+      video: "https://play.tynk.ai/p/55c0525d-8354-4cd6-a98f-34a31df5b1aa"
+    },
+    {
+      name: "Amanda, 44",
+      location: "Dallas, TX",
+      text: "I was nervous, but within minutes it showed hidden messages and even voice notes. That was the confirmation I needed.",
+      video: "https://play.tynk.ai/p/d04e1286-c92c-4f39-a679-2ce4b742cd59"
+    },
+    {
+      name: "Daniel, 38",
+      location: "Fresno, CA",
+      text: "It's not guesses or random alerts… it's actual proof. I saw the screenshots myself. It's worth it.",
+      video: "https://play.tynk.ai/p/ac310c50-c224-4c0f-bdc0-ebf311ef7afa"
+    }
+  ]
 
   // Dynamic Matches State
   const [randomMatches, setRandomMatches] = useState<any[]>([])
@@ -1027,26 +1049,38 @@ function DatingScannerContent() {
           </div>
 
           <h2 className="text-xl font-black text-white uppercase tracking-wide mb-2">UNLOCK FULL DOSSIER</h2>
-          <p className="text-xs text-slate-400 mb-6 px-4">Get instant access to this full report with all chats, dates history, location, secret account hookups and photos exchanged.</p>
+          <p className="text-xs text-slate-400 mb-6 px-4">Get instant access to this full report with all chats, conversations, audio, videos, location history and photos exchanged.</p>
 
-          <div className="bg-slate-900 border border-slate-800 p-3 rounded-lg flex items-center justify-center gap-3 mb-2 max-w-[250px] mx-auto">
-            <span className="text-[10px] text-slate-500 uppercase font-bold line-through">Reg. Est: $119.99</span>
-            <span className="font-black text-emerald-500 text-xl">Today: $37</span>
+          <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6 mb-6 max-w-[320px] mx-auto relative group">
+            <div className="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
+              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Offer Expires:</span>
+              <span className="text-rose-500 font-mono font-bold text-xl animate-pulse">{formatTime(timeLeft)}</span>
+            </div>
+
+            <div className="flex flex-col gap-1 items-start">
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-slate-500 line-through">Regular: $149.00</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-3xl font-black text-emerald-400">Today: $37</span>
+              </div>
+            </div>
+            
+            <p className="text-[9px] text-slate-500 mt-4 text-left italic">Includes full evidence download & updates</p>
           </div>
-          <p className="text-[9px] text-slate-500 mb-6 uppercase tracking-wider">REFUNDS GUARANTEED IF NOTHING IS FOUND</p>
 
           <a
             href="https://pay.mycheckoutt.com/0198c1be-98b4-7315-a3bc-8c0fa9120e5c?ref="
             target="_blank"
             rel="noopener noreferrer"
-            className="block w-full bg-emerald-500 hover:bg-emerald-400 text-[#0B1120] font-bold py-4 rounded-xl shadow-lg transition-all transform hover:scale-[1.02] uppercase tracking-widest text-sm relative z-10"
+            className="block w-full bg-emerald-500 hover:bg-emerald-400 text-[#0B1120] font-bold py-5 rounded-xl shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all transform hover:scale-[1.02] active:scale-95 uppercase tracking-widest text-sm relative z-10"
           >
             UNLOCK REPORT FOR $37
           </a>
 
-          <div className="flex justify-center items-center gap-4 text-[9px] text-slate-600 mt-4 font-mono">
-            <span className="flex items-center gap-1"><Lock className="w-3 h-3 text-emerald-500/50" /> 256-bit SSL</span>
-            <span className="flex items-center gap-1"><ShieldCheck className="w-3 h-3 text-emerald-500/50" /> 100% Anonymous</span>
+          <div className="flex justify-center items-center gap-6 text-[10px] text-slate-500 mt-6 pt-4 border-t border-slate-900">
+            <span className="flex items-center gap-1.5"><Lock className="w-3.5 h-3.5 text-emerald-500/50" /> 256-bit SSL</span>
+            <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-emerald-500/50" /> 7-Day Guarantee</span>
           </div>
         </div>
 
@@ -1054,55 +1088,90 @@ function DatingScannerContent() {
         <div className="bg-[#0f172a] rounded-2xl border border-slate-700/50 shadow-lg overflow-hidden mt-8 w-full">
           <div className="p-6 text-center border-b border-slate-800">
             <h2 className="text-xl font-bold text-white uppercase tracking-tight mb-2">WHAT THEY DISCOVERED</h2>
-            <p className="text-[10px] text-slate-400">Hear the stories from people who unlocked their report today.</p>
+            <p className="text-[10px] text-slate-400">Real reactions from people who unlocked their reports today.</p>
           </div>
           
-          <div className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar p-6 gap-6 bg-black/20">
-            {/* Video 1 */}
-            <div className="snap-start shrink-0 w-[240px] aspect-[9/16] bg-slate-900 rounded-xl overflow-hidden border border-slate-800 relative shadow-xl">
-              <iframe src="https://play.tynk.ai/p/55c0525d-8354-4cd6-a98f-34a31df5b1aa" width="100%" height="100%" style={{ border: 'none' }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+          <div className="relative p-6 bg-black/20">
+            <div className="flex overflow-hidden relative">
+              <div className="flex w-full transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${testimonialIndex * 100}%)` }}>
+                {testimonials.map((t, i) => (
+                  <div key={i} className="w-full flex-shrink-0 flex flex-col items-center gap-4 px-2">
+                    <div className="w-full max-w-[260px] aspect-[9/16] bg-slate-900 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl relative">
+                      <iframe src={t.video} width="100%" height="100%" style={{ border: 'none' }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                      <div className="absolute bottom-4 left-4 right-4 h-1 bg-slate-800 rounded-full overflow-hidden">
+                        <div className="h-full bg-rose-500 w-1/3"></div>
+                      </div>
+                    </div>
+                    <div className="bg-slate-900/80 border border-slate-800 p-4 rounded-xl w-full max-w-[320px] text-left">
+                      <h4 className="text-white font-bold text-sm tracking-tight mb-1">{t.name} — {t.location}</h4>
+                      <p className="text-xs text-slate-400 italic leading-relaxed">"{t.text}"</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-            {/* Video 2 */}
-            <div className="snap-start shrink-0 w-[240px] aspect-[9/16] bg-slate-900 rounded-xl overflow-hidden border border-slate-800 relative shadow-xl">
-              <iframe src="https://play.tynk.ai/p/d04e1286-c92c-4f39-a679-2ce4b742cd59" width="100%" height="100%" style={{ border: 'none' }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-            </div>
-            {/* Video 3 */}
-            <div className="snap-start shrink-0 w-[240px] aspect-[9/16] bg-slate-900 rounded-xl overflow-hidden border border-slate-800 relative shadow-xl">
-              <iframe src="https://play.tynk.ai/p/ac310c50-c224-4c0f-bdc0-ebf311ef7afa" width="100%" height="100%" style={{ border: 'none' }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+
+            {/* Navigation Arrows */}
+            <button 
+              onClick={() => setTestimonialIndex(prev => (prev > 0 ? prev - 1 : testimonials.length - 1))}
+              className="absolute left-2 top-[40%] -translate-y-1/2 w-8 h-8 rounded-full bg-slate-900/80 border border-slate-700 flex items-center justify-center text-white hover:bg-slate-800 z-10"
+            >
+              <ChevronRight className="w-5 h-5 rotate-180" />
+            </button>
+            <button 
+              onClick={() => setTestimonialIndex(prev => (prev < testimonials.length - 1 ? prev + 1 : 0))}
+              className="absolute right-2 top-[40%] -translate-y-1/2 w-8 h-8 rounded-full bg-slate-900/80 border border-slate-700 flex items-center justify-center text-white hover:bg-slate-800 z-10"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+
+            {/* Pagination Dots */}
+            <div className="flex justify-center gap-2 mt-6">
+              {testimonials.map((_, i) => (
+                <button 
+                  key={i} 
+                  onClick={() => setTestimonialIndex(i)}
+                  className={`w-2 h-2 rounded-full transition-all ${testimonialIndex === i ? 'bg-emerald-500 w-4' : 'bg-slate-700'}`}
+                />
+              ))}
             </div>
           </div>
         </div>
 
-        {/* FAQ */}
-        <div className="mt-8 space-y-4 w-full">
-          <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 justify-center mb-6">
-            <ShieldCheck className="w-4 h-4 text-emerald-500" /> Frequently Asked Questions
+        <div className="mt-8 bg-[#0f172a] border border-slate-700/50 rounded-3xl p-6 md:p-8 space-y-6 w-full shadow-2xl">
+          <h2 className="text-sm font-black text-white uppercase tracking-[0.2em] flex items-center gap-3 justify-center mb-10 pb-4 border-b border-slate-800/50">
+            <span className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/30">
+               <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+            </span>
+            Frequently Asked Questions
           </h2>
           
-          <div className="bg-[#0f172a] border border-slate-700/50 p-4 rounded-xl">
-            <h3 className="text-xs font-bold text-white flex gap-2 items-center mb-2">
-              <Lock className="w-3 h-3 text-cyan-400 text-emerald-400" /> Is this 100% Anonymous?
-            </h3>
-            <p className="text-[10px] text-slate-400 leading-relaxed pl-5">Absolutely. There is no trace that you accessed this data. We don't notify them or need any access to their device.</p>
-          </div>
+          <div className="space-y-4">
+            <div className="bg-slate-900/50 border border-slate-800 hover:border-cyan-500/30 p-5 rounded-2xl transition-all group">
+              <h3 className="text-sm font-bold text-white flex gap-3 items-center mb-3">
+                <Lock className="w-4 h-4 text-emerald-500 group-hover:scale-110 transition-transform" /> Is this 100% Anonymous?
+              </h3>
+              <p className="text-[13px] text-slate-400 leading-relaxed font-medium">Absolutely. There is no trace that you accessed this data. We don't notify them or need any access to their device.</p>
+            </div>
 
-          <div className="bg-[#0f172a] border border-slate-700/50 p-4 rounded-xl">
-            <h3 className="text-xs font-bold text-white flex gap-2 items-center mb-2">
-              <Eye className="w-3 h-3 text-cyan-400 text-emerald-400" /> What exactly is in the report?
-            </h3>
-            <p className="text-[10px] text-slate-400 leading-relaxed pl-5">You will instantly download a dossier containing hidden social media activity, deleted messages logs, GPS history, and hidden gallery items found in our database scan.</p>
-          </div>
+            <div className="bg-slate-900/50 border border-slate-800 hover:border-cyan-500/30 p-5 rounded-2xl transition-all group">
+              <h3 className="text-sm font-bold text-white flex gap-3 items-center mb-3">
+                <Search className="w-4 h-4 text-emerald-500 group-hover:scale-110 transition-transform" /> What exactly is in the report?
+              </h3>
+              <p className="text-[13px] text-slate-400 leading-relaxed font-medium">You will instantly download a dossier containing hidden social media activity, deleted messages logs, GPS history, and hidden gallery items found in our database scan.</p>
+            </div>
 
-          <div className="bg-[#0f172a] border border-slate-700/50 p-4 rounded-xl">
-            <h3 className="text-xs font-bold text-white flex gap-2 items-center mb-2">
-              <Activity className="w-3 h-3 text-cyan-400 text-emerald-400" /> What if I don't find anything?
-            </h3>
-            <p className="text-[10px] text-slate-400 leading-relaxed pl-5">If our scan comes back completely clean, you have the peace of mind you deserve. You are covered by our 7-Day Guarantee.</p>
+            <div className="bg-slate-900/50 border border-slate-800 hover:border-cyan-500/30 p-5 rounded-2xl transition-all group">
+              <h3 className="text-sm font-bold text-white flex gap-3 items-center mb-3">
+                <ShieldCheck className="w-4 h-4 text-emerald-500 group-hover:scale-110 transition-transform" /> What if I don't find anything?
+              </h3>
+              <p className="text-[13px] text-slate-400 leading-relaxed font-medium">If our scan comes back completely clean, you have the peace of mind you deserve. You are covered by our 7-Day Guarantee.</p>
+            </div>
           </div>
           
           <button
             onClick={scrollToCheckout}
-            className="w-full mt-4 bg-slate-800/50 border border-slate-700 text-cyan-400 font-bold py-4 rounded-xl shadow transition-all hover:bg-slate-800 uppercase tracking-widest text-[10px]"
+            className="w-full mt-10 bg-emerald-500 hover:bg-emerald-400 text-[#0B1120] font-black py-5 rounded-2xl shadow-[0_0_40px_rgba(16,185,129,0.3)] transition-all transform hover:scale-[1.02] active:scale-95 uppercase tracking-[0.1em] text-sm"
           >
             GET MY DOSSIER NOW
           </button>
