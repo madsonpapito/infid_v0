@@ -36,8 +36,8 @@ export default function Step1WireframeMatch() {
                 <div className="absolute top-0 right-0 w-[60%] h-full bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.15),transparent_70%)] blur-3xl pointer-events-none"></div>
 
                 <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center relative z-10">
-                    <div className="text-left space-y-6 max-w-xl">
-                        <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-3 py-1 text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">
+                    <div className="text-center space-y-6 max-w-xl mx-auto">
+                        <div className="inline-flex items-center gap-2 bg-rose-500/10 border border-rose-500/20 rounded-full px-3 py-1 text-xs font-bold text-rose-400 uppercase tracking-wider mb-2 mx-auto">
                             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                             Live Database Access
                         </div>
@@ -48,14 +48,14 @@ export default function Step1WireframeMatch() {
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">SOCIAL MEDIA?</span>
                         </h1>
 
-                        <p className="text-slate-400 text-lg leading-relaxed max-w-md">
+                        <p className="text-slate-400 text-lg leading-relaxed max-w-md mx-auto">
                             They think they deleted the conversations. <strong className="text-white">They are wrong.</strong> See who they are really messaging right now in under 2 minutes.
                         </p>
 
-                        <ul className="space-y-2 text-sm text-slate-300">
-                            <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Recover &apos;deleted&apos; messages.</li>
-                            <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Discover hidden photos &amp; folders.</li>
-                            <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Track suspicious likes &amp; interactions.</li>
+                        <ul className="space-y-2 text-sm text-slate-300 max-w-md mx-auto">
+                            <li className="flex items-center gap-2 justify-center"><CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Recover &apos;deleted&apos; messages.</li>
+                            <li className="flex items-center gap-2 justify-center"><CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Discover hidden photos &amp; folders.</li>
+                            <li className="flex items-center gap-2 justify-center"><CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Track suspicious likes &amp; interactions.</li>
                         </ul>
 
                         <div className="flex flex-col sm:flex-row gap-4 pt-4">
