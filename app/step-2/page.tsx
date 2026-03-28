@@ -16,7 +16,20 @@ import { COUNTRIES } from "@/components/Countries"
 // DATA MOCKS
 // ==========================================================
 
-const matchesData = [
+interface Match {
+  name: string;
+  age: number;
+  lastSeen: string;
+  avatar: string;
+  verified: boolean;
+  identity: string;
+  distance: string;
+  bio: string;
+  zodiac: string;
+  interests: string[];
+}
+
+const matchesData: Match[] = [
   { name: "Mila", age: 26, lastSeen: "6h ago", avatar: "/images/male/tinder/5.jpg", verified: true, identity: "Bisexual", distance: "2 km", bio: "Good vibes only.", zodiac: "Virgo", interests: ["Hiking", "Music"] },
   { name: "John", age: 25, lastSeen: "4h ago", avatar: "/images/female/tinder/5.jpg", verified: true, identity: "Bisexual", distance: "2 km", bio: "Adrenaline junkie.", zodiac: "Leo", interests: ["Fitness", "Books"] },
   { name: "Harper", age: 21, lastSeen: "3h ago", avatar: "/images/male/tinder/3.jpg", verified: false, identity: "Woman", distance: "5 km", bio: "Sunsets and wine.", zodiac: "Leo", interests: ["Travel", "Photo"] },
@@ -48,7 +61,7 @@ function DatingScannerContent() {
   const [scanPhase, setScanPhase] = useState(0)
   const [location, setLocation] = useState("Unknown Location")
   const [timeLeft, setTimeLeft] = useState(5 * 60)
-  const [selectedMatch, setSelectedMatch] = useState<any | null>(null)
+  const [selectedMatch, setSelectedMatch] = useState<Match | null>(null)
   const [testimonialIndex, setTestimonialIndex] = useState(0)
 
   const testimonials = [
@@ -73,7 +86,7 @@ function DatingScannerContent() {
   ]
 
   // Dynamic Matches State
-  const [randomMatches, setRandomMatches] = useState<any[]>([])
+  const [randomMatches, setRandomMatches] = useState<Match[]>([])
 
   useEffect(() => {
     // Fetch user location silently
@@ -119,6 +132,17 @@ function DatingScannerContent() {
   }, [step, selectedGender])
 
   const checkoutRef = useRef<HTMLDivElement>(null)
+  const videoScrollRef = useRef<HTMLDivElement>(null)
+
+  const scrollVideos = (direction: 'left' | 'right') => {
+    if (videoScrollRef.current) {
+      const scrollAmount = 300
+      videoScrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      })
+    }
+  }
 
 
   const scrollToCheckout = useCallback(() => {
@@ -128,7 +152,7 @@ function DatingScannerContent() {
 
   useEffect(() => {
     if (step === 3 && timeLeft > 0) {
-      const timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000)
+      const timer = setInterval(() => setTimeLeft((prev: number) => prev - 1), 1000)
       return () => clearInterval(timer)
     }
   }, [step, timeLeft])
@@ -850,349 +874,348 @@ function DatingScannerContent() {
       : ["censored-h-1.jpg", "censored-h-2.jpg", "censored-h-3.jpg", "censored-h-4.jpg"].map(f => `/images/female/tinder/censored/${f}`);
 
     return (
-      <div className="flex flex-col items-center w-full max-w-[440px] mx-auto space-y-5 animate-fade-in pb-32 pt-6 px-4">
+      <div className="space-y-6 animate-fade-in w-full max-w-lg mx-auto pb-20">
 
-        {/* 1. POSITIVE MATCH ALERT - ROSE SOLID */}
-        <div className="w-full bg-[#f43f5e] text-white p-4 rounded-[1.25rem] shadow-lg flex items-center gap-4 border border-rose-400/30">
-          <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0">
-            <AlertTriangle className="w-6 h-6 animate-bounce" />
-          </div>
+        {/* Alert Main */}
+        <div className="bg-rose-500 text-white p-4 rounded-xl shadow-[0_0_30px_rgba(244,63,94,0.4)] flex items-center gap-4 border border-rose-400">
+          <AlertTriangle className="w-8 h-8 shrink-0 animate-bounce" />
           <div>
-            <h1 className="font-black text-sm uppercase tracking-wider leading-none mb-1">POSITIVE MATCH FOUND</h1>
-            <p className="text-[11px] text-rose-100 font-medium">Target is currently <span className="underline font-black">ONLINE</span> in Unknown Location.</p>
+            <h1 className="font-bold text-lg uppercase tracking-tight">Positive Match Found</h1>
+            <p className="text-xs text-rose-100">User is currently <span className="font-bold underline">ONLINE</span> in {location}.</p>
           </div>
         </div>
 
-        {/* 2. DATA LOCKING ALERT - ORANGE DARK */}
-        <div className="w-full bg-[#7c2d12]/20 border border-orange-600/40 p-4 rounded-[1.25rem] flex items-start gap-4 relative overflow-hidden backdrop-blur-sm">
-          <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-600"></div>
-          <Activity className="w-5 h-5 text-orange-500 animate-pulse mt-0.5 shrink-0" />
+        {/* URGENCY BANNER */}
+        <div className="bg-orange-500/10 border border-orange-500/50 p-4 rounded-xl flex items-start gap-3 mt-4">
+          <Activity className="w-5 h-5 text-orange-400 shrink-0 mt-0.5" />
           <div>
-            <h3 className="text-[11px] font-black text-orange-400 uppercase tracking-widest mb-1">DATA LOCKING IMMINENT</h3>
-            <p className="text-[10px] text-orange-200/70 leading-relaxed font-medium">
-              To guarantee their anonymity, these intercepted messages will be <strong>permanently encrypted</strong> in <span className="font-mono text-white font-bold">{formatTime(timeLeft)} min</span>.
+            <h3 className="text-sm font-bold text-orange-400 uppercase tracking-wide">Data Locking Imminent</h3>
+            <p className="text-[11px] text-slate-300 mt-1 leading-relaxed">
+              To guarantee true anonymity and comply with privacy rules, these intercepted messages and hidden galleries will be <strong>permanently encrypted</strong> in {formatTime(timeLeft)}.
             </p>
           </div>
         </div>
 
-        {/* 3. STATS GRID - COMPACT PILLS */}
-        <div className="w-full grid grid-cols-4 gap-2">
+        {/* Stats Grid */}
+        <div className="grid grid-cols-4 gap-2">
           {[
             { v: 6, l: 'Matches', c: 'text-rose-500' },
-            { v: 30, l: 'Likes', c: 'text-rose-500' },
+            { v: 30, l: 'Likes', c: 'text-purple-500' },
             { v: 'Active', l: 'Status', c: 'text-emerald-500' },
             { v: '18h', l: 'Last Seen', c: 'text-white' }
           ].map((s, i) => (
-            <div key={i} className="bg-[#0f172a] p-2 py-3 rounded-xl border border-slate-800 text-center shadow-md">
-              <p className={`text-lg font-black leading-none mb-1 ${s.c}`}>{s.v}</p>
-              <p className="text-[8px] text-slate-500 uppercase font-black tracking-widest">{s.l}</p>
+            <div key={i} className="bg-[#0f172a] p-2 rounded-lg border border-slate-700 text-center">
+              <p className={`text-xl font-bold ${s.c}`}>{s.v}</p>
+              <p className="text-[9px] text-slate-500 uppercase font-bold">{s.l}</p>
             </div>
           ))}
         </div>
 
-        {/* 4. RECENT MATCHES - CLEAN LIST */}
-        <div className="w-full bg-[#0f172a] rounded-[1.25rem] border border-slate-800 overflow-hidden shadow-lg">
-          <div className="bg-slate-800/40 p-3.5 px-4 border-b border-slate-800 flex justify-between items-center">
-            <span className="text-[11px] font-black text-slate-300 uppercase tracking-[0.15em] flex items-center gap-2">
-              <HeartCrack className="w-3.5 h-3.5 text-rose-500" /> RECENT MATCHES
+        {/* Matches Detected */}
+        <div className="bg-[#0f172a] rounded-xl border border-slate-700 overflow-hidden">
+          <div className="bg-slate-800/50 p-3 border-b border-slate-700 flex justify-between items-center">
+            <span className="text-xs font-bold text-slate-300 uppercase tracking-widest flex items-center gap-2">
+              <HeartCrack className="w-4 h-4 text-rose-500" /> Recent Matches
             </span>
-            <span className="bg-rose-500 text-white text-[9px] px-2 py-0.5 rounded-full font-black tracking-tighter">3 NEW</span>
+            <span className="bg-rose-500 text-white text-[9px] px-1.5 py-0.5 rounded font-bold">3 NEW</span>
           </div>
-          <div className="divide-y divide-slate-800/50">
-            {displayMatches.slice(0, 3).map((m, i) => (
+          <div className="divide-y divide-slate-800">
+            {displayMatches.slice(0, 3).map((m: Match, i: number) => (
               <div
                 key={i}
-                className="p-4 flex items-center gap-4 hover:bg-slate-800/30 cursor-pointer transition-colors"
+                className="p-3 flex items-center gap-3 hover:bg-slate-800/50 cursor-pointer transition-colors"
                 onClick={() => setSelectedMatch(m)}
               >
-                <div className="relative shrink-0">
-                  <img src={m.avatar} className="w-11 h-11 rounded-full object-cover border-2 border-slate-700" />
-                  <div className="absolute bottom-0.5 right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#0f172a]"></div>
+                <div className="relative">
+                  <img src={m.avatar} className="w-10 h-10 rounded-full object-cover border border-slate-600" />
+                  <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border border-black"></div>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex justify-between items-center mb-0.5">
-                    <p className="text-sm font-black text-white truncate">{m.name}, {m.age}</p>
-                    <p className="text-[10px] text-slate-500 font-bold whitespace-nowrap">Online</p>
+                <div className="flex-1">
+                  <div className="flex justify-between">
+                    <p className="text-sm font-bold text-white">{m.name}, {m.age}</p>
+                    <p className="text-[10px] text-slate-500">{m.lastSeen}</p>
                   </div>
-                  <p className="text-[10px] text-slate-400 font-medium font-mono truncate uppercase tracking-tighter">Within {m.distance} • {m.identity}</p>
+                  <p className="text-[10px] text-slate-400">Within {m.distance} • {m.identity}</p>
                 </div>
-                <div className="bg-slate-800/50 p-1.5 rounded-lg">
-                  <ChevronRight className="w-4 h-4 text-slate-600" />
-                </div>
+                <ChevronRight className="w-4 h-4 text-slate-600" />
               </div>
             ))}
           </div>
         </div>
 
-        {/* 5. RECENT CHATS - PULSING INDICATORS */}
-        <div className="w-full bg-[#0f172a] rounded-[1.25rem] border border-slate-800 overflow-hidden shadow-lg">
-          <div className="bg-slate-800/40 p-3.5 px-4 border-b border-slate-800">
+        {/* RECENT CHATS */}
+        <div className="bg-[#0f172a] rounded-xl border border-slate-700/50 overflow-hidden shadow-lg animate-fade-in delay-100">
+          <div className="bg-slate-800/50 p-3 border-b border-slate-700 flex justify-between items-center group">
             <div className="flex items-center gap-2">
-              <MessageCircle className="w-3.5 h-3.5 text-blue-400" />
-              <h3 className="text-[11px] font-black text-white uppercase tracking-[0.15em]">RECENT CHATS</h3>
+              <MessageCircle className="w-4 h-4 text-blue-400 group-hover:text-blue-300 transition-colors" />
+              <h3 className="text-xs font-bold text-white uppercase tracking-widest">Recent Chats</h3>
             </div>
           </div>
-          <div className="p-3.5 bg-slate-900/40 border-b border-slate-800 text-[10px] text-slate-500 font-medium px-4">
+          <div className="p-3 bg-slate-900/50 border-b border-slate-800 text-[10px] text-slate-400">
             Tap on a conversation to read their messages
           </div>
 
-          <div className="divide-y divide-slate-800/50">
-            {displayMatches.slice(3, 6).map((match, i) => (
+          <div className="divide-y divide-slate-800">
+            {displayMatches.slice(3, 6).map((match: Match, i: number) => (
               <div
                 key={i}
                 onClick={scrollToCheckout}
-                className="p-4 hover:bg-slate-800/30 cursor-pointer transition-colors flex items-center gap-4 group"
+                className="p-3 bg-[#0f172a] hover:bg-slate-800/80 cursor-pointer transition-colors flex items-center gap-3 group/chat"
               >
-                <div className="relative shrink-0">
-                  <img src={match.avatar} className="w-11 h-11 rounded-full object-cover border-2 border-slate-700 group-hover:border-blue-500/40" />
-                  <div className="absolute bottom-0.5 right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#0f172a]"></div>
+                <div className="relative">
+                  <img src={match.avatar} className="w-10 h-10 rounded-full object-cover border border-slate-700 group-hover/chat:border-blue-500/50 transition-colors" />
+                  <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-[#0f172a]"></div>
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-center mb-0.5">
-                    <h4 className="text-sm font-black text-white truncate">{match.name}, {match.age}</h4>
-                    <span className="text-[9px] text-slate-500 font-bold font-mono">JUST NOW</span>
+                    <h4 className="text-xs font-bold text-white truncate group-hover/chat:text-blue-400 transition-colors">{match.name}, {match.age}</h4>
+                    <span className="text-[9px] text-slate-500 font-medium">Just now</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse shadow-[0_0_5px_rgba(59,130,246,0.8)]"></span>
-                    <p className="text-[10px] text-blue-400 font-bold uppercase tracking-tight">Click to read messages...</p>
-                  </div>
+                  <p className="text-[10px] text-blue-400/80 flex items-center gap-1.5 font-medium truncate">
+                    <span className="w-1.5 h-1.5 bg-blue-500 rounded-full inline-block animate-pulse"></span> Click to read messages...
+                  </p>
                 </div>
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                   <ChevronRight className="w-4 h-4 text-blue-400/50" />
+                <div className="text-slate-600 group-hover/chat:text-slate-400">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="12" cy="5" r="1" /><circle cx="12" cy="19" r="1" /></svg>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* 6. SUSPICIOUS LOCATIONS - MAP PULSE */}
-        <div className="w-full bg-[#030712] rounded-[1.25rem] border border-slate-800 overflow-hidden shadow-2xl">
-          <div className="bg-slate-800/40 p-3.5 px-4 border-b border-slate-800 flex justify-between items-center">
-            <span className="text-[11px] font-black text-slate-300 uppercase tracking-[0.15em] flex items-center gap-2">
-              <MapPin className="w-3.5 h-3.5 text-rose-500" /> SUSPICIOUS LOCATIONS
-            </span>
-            <span className="text-[10px] text-rose-500 font-black animate-pulse uppercase tracking-tighter">Live Tracking</span>
-          </div>
-
-          <div className="relative h-48 bg-slate-900 overflow-hidden group cursor-pointer" onClick={scrollToCheckout}>
-            <iframe
-              title="Map"
-              src={`https://maps.google.com/maps?q=motel+near+${encodeURIComponent(location)}&output=embed&z=13`}
-              className="w-full h-full grayscale invert opacity-40 group-hover:opacity-60 transition-opacity"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="relative">
-                <div className="absolute inset-0 bg-rose-500 rounded-full animate-ping opacity-20 scale-[4]"></div>
-                <div className="absolute inset-0 bg-rose-500 rounded-full animate-pulse opacity-40 scale-[2]"></div>
-                <div className="w-4 h-4 bg-rose-500 rounded-full border-2 border-white shadow-lg"></div>
-              </div>
+        {/* SUSPICIOUS LOCATIONS */}
+        <div className="bg-[#0f172a] rounded-xl border border-slate-700/50 overflow-hidden shadow-lg animate-fade-in delay-200">
+          <div className="bg-slate-800/50 p-3 border-b border-slate-700 flex justify-between items-center group">
+            <div className="flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-rose-500 group-hover:text-rose-400 transition-colors" />
+              <h3 className="text-xs font-bold text-white uppercase tracking-widest">Suspicious Locations</h3>
             </div>
           </div>
 
-          <div className="p-4 bg-[#0f172a] border-t border-slate-800/50">
-             <div className="bg-rose-500/10 border border-rose-500/20 p-3 rounded-xl mb-3">
-               <p className="text-[10px] text-center text-slate-300 font-medium">
-                 <span className="font-black text-rose-500">3 SUSPICIOUS ACTIVITIES</span> DETECTED NEAR <span className="text-white font-black uppercase">{location}</span>
-               </p>
-             </div>
-             <div className="space-y-2">
-                {[
-                  { t: '14:22 PM', l: 'Motel Check-in Zone', d: '0.4 mi' },
-                  { t: 'Yesterday', l: 'Private Shared Location', d: '1.2 mi' }
-                ].map((loc, i) => (
-                  <div key={i} className="flex justify-between items-center bg-slate-900/50 p-3 rounded-xl border border-slate-800/50">
-                    <div className="flex flex-col">
-                      <span className="text-[9px] text-slate-500 font-black uppercase tracking-tighter">{loc.t}</span>
-                      <span className="text-xs text-white font-bold">{loc.l}</span>
-                    </div>
-                    <span className="text-[10px] text-rose-500 font-black font-mono">{loc.d}</span>
-                  </div>
-                ))}
-             </div>
+          <div className="p-4 space-y-4">
+            <div className="bg-rose-500/10 border border-rose-500/20 p-3 rounded-lg text-xs leading-relaxed text-slate-300">
+              <span className="font-bold text-rose-400">3 suspicious activities</span> detected near: <span className="font-bold text-white">{location}</span>
+            </div>
+
+            <div className="relative w-full h-40 bg-slate-900 rounded-lg overflow-hidden border border-slate-800 group cursor-pointer" onClick={scrollToCheckout}>
+              <iframe
+                title="Suspicious Location Map"
+                src={`https://maps.google.com/maps?q=motel+near+${encodeURIComponent(location)}&output=embed&z=13`}
+                className="w-full h-full opacity-50 hover:opacity-100 transition-opacity grayscale invert-[.85] hover:invert-0 hover:grayscale-0"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+                <div className="relative">
+                  <div className="w-4 h-4 bg-rose-500 rounded-full animate-ping absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-75"></div>
+                  <MapPin className="w-8 h-8 text-rose-500 drop-shadow-[0_0_10px_rgba(244,63,94,0.5)] relative z-10" />
+                </div>
+              </div>
+
+              <div className="absolute bottom-2 right-2 bg-slate-900/90 border border-slate-700 px-2 py-1 rounded flex items-center gap-1">
+                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                <span className="text-[8px] text-slate-400 font-bold uppercase">Live Tracking</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* 7. PRIVATE PHOTOS - BLURRED GRID */}
-        <div className="w-full bg-[#0f172a] rounded-[1.25rem] border border-slate-800 overflow-hidden shadow-lg">
-          <div className="bg-slate-800/40 p-3.5 px-4 border-b border-slate-800 flex justify-between items-center">
-            <span className="text-[11px] font-black text-slate-300 uppercase tracking-[0.15em] flex items-center gap-2">
-              <History className="w-3.5 h-3.5 text-rose-500" /> PRIVATE PHOTOS (27)
-            </span>
-            <Lock className="w-3 h-3 text-slate-500" />
+        {/* Censored Photos */}
+        <div className="bg-[#0f172a] rounded-xl border border-slate-700 p-4 space-y-3 relative overflow-hidden group">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
+              <Lock className="w-3 h-3 text-cyan-400" /> Private Photos
+            </h3>
           </div>
-
-          <div className="grid grid-cols-3 gap-1 p-1 bg-black/40">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="relative aspect-square bg-slate-800 overflow-hidden">
-                <img
-                  src={`https://images.unsplash.com/photo-${1500000000000 + i}?auto=format&fit=crop&w=200&q=10`}
-                  className="w-full h-full object-cover blur-md opacity-30"
-                  alt="Private"
-                />
+          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+            {dynamicHiddenPhotos.map((src: string, i: number) => (
+              <div key={i} className="flex-shrink-0 w-48 h-64 bg-slate-800 rounded relative overflow-hidden">
+                <img src={src} className="w-full h-full object-cover blur-sm opacity-50" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <Lock className="w-5 h-5 text-white/10" />
+                  <Eye className="text-white w-6 h-6 opacity-80" />
                 </div>
-                {i === 5 && (
-                  <div className="absolute inset-0 bg-black/70 flex items-center justify-center backdrop-blur-[2px]">
-                    <span className="text-[10px] text-white font-black tracking-tighter uppercase">+21 MORE</span>
-                  </div>
-                )}
+                <div className="absolute bottom-1 right-1 bg-black/80 px-1 rounded text-[8px] text-white">HIDDEN</div>
               </div>
             ))}
           </div>
-
-          <button
-            onClick={scrollToCheckout}
-            className="w-full p-4 border-t border-slate-800 bg-slate-900/20 hover:bg-rose-500/5 text-[10px] font-black text-rose-500 uppercase tracking-[0.2em] transition-colors flex items-center justify-center gap-3 group"
-          >
-            Decrypt All Hidden Photos <ChevronRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-          </button>
         </div>
 
-        {/* 8. UNLOCK WIDGET - PRECISE ANCHORING */}
-        <div ref={checkoutRef} className="w-full bg-[#0f172a] border-2 border-slate-800 rounded-[1.5rem] p-6 shadow-2xl relative overflow-hidden">
-          <div className="absolute -top-10 -right-10 w-32 h-32 bg-rose-500/5 rounded-full blur-3xl"></div>
-          
-          <div className="flex flex-col items-center text-center mb-8">
-            <div className="w-12 h-12 bg-rose-500/10 rounded-full flex items-center justify-center mb-4 border border-rose-500/20">
-              <Lock className="w-6 h-6 text-rose-500" />
-            </div>
-            <h2 className="text-xl font-black text-white uppercase tracking-tighter italic">Unlock Evidence Dossier</h2>
-            <p className="text-[10px] text-slate-500 font-medium max-w-[280px] mt-2">Get instant access to all deleted conversations, location history, and hidden photos.</p>
+        {/* UNLOCK WIDGET */}
+        <div ref={checkoutRef} className="bg-[#0B1120] border border-cyan-500/50 rounded-2xl shadow-[0_0_40px_rgba(6,182,212,0.15)] p-6 text-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 bg-rose-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg">
+            HIGH PRIORITY
           </div>
 
-          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 mb-6">
-            {/* PRICE ANCHORING RIGHT-ALIGNED */}
-            <div className="flex justify-between items-start">
-              <div className="flex flex-col gap-1">
-                 <span className="bg-rose-500/10 border border-rose-500/20 text-rose-500 text-[9px] px-2 py-0.5 rounded-full font-black tracking-wider uppercase inline-block self-start">High Priority</span>
-                 <p className="text-[9px] text-slate-500 font-medium mt-2">Link created for: {location}</p>
-              </div>
+          <div className="mx-auto w-14 h-14 rounded-full bg-cyan-500/10 flex items-center justify-center mb-4 border border-cyan-500/30 animate-pulse">
+            <LockOpen className="w-7 h-7 text-cyan-400" />
+          </div>
 
-              <div className="flex flex-col items-end gap-1">
-                <div className="flex items-center gap-1.5 mb-1">
-                   <span className="w-2 h-2 bg-rose-500 rounded-full animate-pulse"></span>
-                   <span className="text-xl font-mono font-black text-rose-500 tracking-tighter">{formatTime(timeLeft)}</span>
-                </div>
-                <div className="text-right">
-                  <p className="text-[11px] text-slate-500 line-through font-bold leading-none mb-1">Regular $149</p>
-                  <p className="text-3xl font-black text-emerald-400 leading-none">Today: $37</p>
-                </div>
-              </div>
+          <h2 className="text-xl font-black text-white uppercase tracking-wide mb-2">UNLOCK FULL DOSSIER</h2>
+          <p className="text-xs text-slate-400 mb-6 px-4">Get instant access to the full report with all chats, conversations, audio, videos, location history and photos exchanged.</p>
+
+          <div className="bg-slate-900 border border-slate-800 p-3 rounded-lg mb-6 flex flex-col items-center justify-center max-w-[280px] mx-auto space-y-2">
+            <div className="flex justify-between w-full items-center">
+              <span className="text-[10px] text-slate-500 uppercase font-bold">Offer Expires:</span>
+              <span className="font-mono font-bold text-rose-500 text-lg">{formatTime(timeLeft)}</span>
             </div>
+            <div className="w-full h-px bg-slate-800 my-1"></div>
+            <div className="flex justify-between w-full items-center">
+              <span className="text-xs text-slate-400 line-through">Regular: $149.00</span>
+              <span className="font-black text-emerald-400 text-2xl">Today: $37</span>
+            </div>
+            <p className="text-[9px] text-slate-500">Includes full evidence download & updates</p>
           </div>
 
           <a
             href="https://pay.mycheckoutt.com/0198c1be-98b4-7315-a3bc-8c0fa9120e5c?ref="
-            className="w-full bg-emerald-500 hover:bg-emerald-400 text-[#030712] font-black py-4 rounded-xl shadow-[0_0_40px_rgba(16,185,129,0.3)] transition-all flex items-center justify-center gap-3 uppercase tracking-[0.15em] text-xs"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full bg-emerald-500 hover:bg-emerald-400 text-[#0B1120] font-bold py-4 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all transform hover:scale-[1.02] uppercase tracking-widest text-sm relative z-10"
           >
-            Unlock Now <ChevronRight className="w-4 h-4" />
+            UNLOCK REPORT FOR $37
           </a>
 
-          <div className="flex justify-center gap-6 mt-6 pt-6 border-t border-slate-900/50 opacity-40">
-             <span className="flex items-center gap-1.5 text-[9px] font-black text-slate-400 uppercase"><Lock className="w-3 h-3" /> SSL Secure</span>
-             <span className="flex items-center gap-1.5 text-[9px] font-black text-slate-400 uppercase"><ShieldCheck className="w-3 h-3" /> Guaranteed</span>
+          <div className="flex justify-center items-center gap-4 mt-4 text-[10px] text-slate-500 font-mono">
+            <span className="flex items-center gap-1"><ShieldCheck className="w-3 h-3 text-emerald-500"/> 256-bit SSL</span>
+            <span className="flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-emerald-500"/> 7-Day Guarantee</span>
           </div>
         </div>
 
-        {/* 9. TESTIMONIALS - VIDEO + TEXT SIDE-BY-SIDE */}
-        <div className="w-full py-12">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter">WHAT THEY DISCOVERED</h2>
-            <p className="text-[11px] text-slate-500 font-bold mt-2 uppercase tracking-widest">Real stories from real users</p>
+        {/* VIDEO TESTIMONIALS */}
+        <div className="bg-[#0f172a] rounded-2xl border border-slate-700/50 p-6 space-y-4 shadow-2xl relative overflow-hidden mt-8 w-full block">
+          <div className="absolute top-0 right-0 w-[200px] h-[200px] bg-emerald-500/10 blur-[60px] rounded-full pointer-events-none"></div>
+
+          <div className="text-center relative z-10 w-full mb-2">
+            <h2 className="text-xl md:text-2xl font-black text-white uppercase tracking-wide">WHAT THEY DISCOVERED</h2>
+            <p className="text-xs text-slate-400 mt-2">Real reactions from people who unlocked their reports today.</p>
           </div>
 
-          <div className="relative max-w-[440px] mx-auto group">
-            {/* Arrows */}
+          <div className="relative group">
             <button 
-              onClick={() => setTestimonialIndex(prev => (prev > 0 ? prev - 1 : testimonials.length - 1))}
-              className="absolute -left-4 top-[40%] z-20 w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-white hover:bg-slate-800 shadow-xl transition-all active:scale-90"
+              onClick={() => scrollVideos('left')}
+              className="absolute left-0 top-1/2 -translate-y-1/2 -ml-3 z-20 bg-[#0B1120] hover:bg-slate-800 text-white rounded-full p-2 border border-slate-700 transition shadow-[0_0_10px_rgba(0,0,0,0.5)]"
             >
-              <ChevronLeft size={20} />
-            </button>
-            <button 
-              onClick={() => setTestimonialIndex(prev => (prev < testimonials.length - 1 ? prev + 1 : 0))}
-              className="absolute -right-4 top-[40%] z-20 w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-white hover:bg-slate-800 shadow-xl transition-all active:scale-90"
-            >
-              <ChevronRight size={20} />
+              <ChevronLeft className="w-5 h-5" />
             </button>
 
-            <div className="overflow-hidden rounded-[2rem]">
-               <div 
-                 className="flex transition-transform duration-700 ease-in-out"
-                 style={{ transform: `translateX(-${testimonialIndex * 100}%)` }}
-               >
-                 {testimonials.map((t, i) => (
-                   <div key={i} className="min-w-full p-2">
-                     <div className="bg-[#0f172a] border border-slate-800 rounded-[1.75rem] overflow-hidden shadow-2xl">
-                        {/* Video */}
-                        <div className="aspect-[4/5] bg-black relative group/vid">
-                           <iframe 
-                             src={t.video}
-                             className="w-full h-full object-cover pointer-events-none"
-                             allow="autoplay"
-                           />
-                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6">
-                              <div className="flex items-center gap-3">
-                                 <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
-                                    <Volume2 size={16} className="text-white" />
-                                 </div>
-                                 <div>
-                                    <p className="text-white font-black text-sm uppercase tracking-tighter">{t.name}</p>
-                                    <p className="text-[10px] text-slate-400 font-bold">Verified Result</p>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        {/* Quote Text */}
-                        <div className="p-6 bg-slate-900/40">
-                           <p className="text-slate-300 text-xs italic font-medium leading-relaxed">
-                             "{t.text}"
-                           </p>
-                        </div>
-                     </div>
-                   </div>
-                 ))}
-               </div>
+            <button 
+              onClick={() => scrollVideos('right')}
+              className="absolute right-0 top-1/2 -translate-y-1/2 -mr-3 z-20 bg-[#0B1120] hover:bg-slate-800 text-white rounded-full p-2 border border-slate-700 transition shadow-[0_0_10px_rgba(0,0,0,0.5)]"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+
+            <div 
+              ref={videoScrollRef}
+              className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 pt-2 relative z-10"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {/* JESSICA */}
+              <div className="w-[280px] shrink-0 snap-center flex flex-col gap-3">
+                <div className="w-full aspect-[9/16] rounded-xl overflow-hidden border border-slate-700 shadow-xl bg-black relative">
+                  <iframe
+                    src="https://play.tynk.ai/p/55c0525d-8354-4cd6-a98f-34a31df5b1aa"
+                    width="100%"
+                    height="100%"
+                    style={{ border: "none" }}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen>
+                  </iframe>
+                </div>
+                <div className="bg-slate-800/40 p-4 rounded-xl border border-slate-700/50 shadow-inner">
+                  <h4 className="font-bold text-white text-[13px] mb-2">Jessica, 31 — Orlando, FL</h4>
+                  <p className="text-xs text-slate-400 italic leading-relaxed">&quot;I honestly didn&apos;t think it would work, but the report pulled up deleted chats that explained everything. It felt like the missing piece.&quot;</p>
+                </div>
+              </div>
+
+              {/* AMANDA */}
+              <div className="w-[280px] shrink-0 snap-center flex flex-col gap-3">
+                <div className="w-full aspect-[9/16] rounded-xl overflow-hidden border border-slate-700 shadow-xl bg-black relative">
+                  <iframe
+                    src="https://play.tynk.ai/p/d04e1286-c92c-4f39-a679-2ce4b742cd59"
+                    width="100%"
+                    height="100%"
+                    style={{ border: "none" }}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen>
+                  </iframe>
+                </div>
+                <div className="bg-slate-800/40 p-4 rounded-xl border border-slate-700/50 shadow-inner">
+                  <h4 className="font-bold text-white text-[13px] mb-2">Amanda, 44 — Dallas, TX</h4>
+                  <p className="text-xs text-slate-400 italic leading-relaxed">&quot;I was nervous, but within minutes it showed hidden messages and even voice notes. That was the confirmation I needed.&quot;</p>
+                </div>
+              </div>
+
+              {/* DANIEL */}
+              <div className="w-[280px] shrink-0 snap-center flex flex-col gap-3">
+                <div className="w-full aspect-[9/16] rounded-xl overflow-hidden border border-slate-700 shadow-xl bg-black relative">
+                  <iframe
+                    src="https://play.tynk.ai/p/ac310c50-c224-4c0f-bdc0-ebf311ef7afa"
+                    width="100%"
+                    height="100%"
+                    style={{ border: "none" }}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen>
+                  </iframe>
+                </div>
+                <div className="bg-slate-800/40 p-4 rounded-xl border border-slate-700/50 shadow-inner">
+                  <h4 className="font-bold text-white text-[13px] mb-2">Daniel, 38 — Fresno, CA</h4>
+                  <p className="text-xs text-slate-400 italic leading-relaxed">&quot;It&apos;s not guesses or random alerts… it&apos;s actual proof. I saw the screenshots myself. It&apos;s worth it.&quot;</p>
+                </div>
+              </div>
             </div>
-
-            <div className="flex justify-center gap-2 mt-6">
-               {testimonials.map((_, i) => (
-                 <button 
-                   key={i}
-                   onClick={() => setTestimonialIndex(i)}
-                   className={`h-1.5 rounded-full transition-all duration-300 ${testimonialIndex === i ? 'bg-emerald-500 w-6' : 'bg-slate-800 w-1.5'}`}
-                 />
-               ))}
+            
+            <div className="w-full flex justify-center mt-2 gap-1.5 opacity-50">
+              <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+              <div className="w-2 h-2 rounded-full bg-slate-600"></div>
+              <div className="w-2 h-2 rounded-full bg-slate-600"></div>
             </div>
           </div>
         </div>
 
-        {/* 10. FAQ SECTION - BORDERED & COMPACT */}
-        <div className="w-full bg-[#0a0f1e] border-2 border-slate-800 rounded-[2rem] p-8 md:p-10 mb-12 shadow-2xl">
-          <h2 className="text-xl font-black text-white uppercase italic tracking-tighter text-center mb-8">FREQUENTLY ASKED</h2>
+        {/* FAQ & OBJECTIONS */}
+        <div className="bg-[#0f172a]/80 rounded-2xl border border-slate-700/30 p-6 space-y-6 shadow-xl mt-8 w-full">
+          <h2 className="text-xl font-bold text-white text-center mb-6 flex items-center justify-center gap-2">
+            <CheckCircle2 className="w-5 h-5 text-emerald-500" /> Frequently Asked Questions
+          </h2>
           
           <div className="space-y-4">
-             {[
-               { q: 'Is this 100% Anonymous?', a: 'Completely. There is no trace that you accessed this dossier. We don\'t notify them or need any special device access.' },
-               { q: 'What if I find nothing?', a: 'If the report comes back clean, you enjoy the peace of mind you deserve. You are covered by our 7-Day Guarantee.' },
-               { q: 'How long does it take?', a: 'Access is instant. Once unlocked, the dossier is available for download immediately.' }
-             ].map((f, i) => (
-               <div key={i} className="bg-slate-900/30 border border-slate-800 p-5 rounded-2xl">
-                 <h4 className="text-sm font-black text-white italic mb-2">Q: {f.q}</h4>
-                 <p className="text-[11px] text-slate-500 leading-relaxed font-medium">{f.a}</p>
-               </div>
-             ))}
-          </div>
+            <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50 flex flex-col items-start text-left">
+              <h4 className="font-bold text-sm text-white flex items-center gap-2 mb-2">
+                <Lock className="w-4 h-4 text-emerald-400" /> Is this 100% Anonymous?
+              </h4>
+              <p className="text-xs text-slate-400">Absolutely. There is no trace that you accessed this data. We don&apos;t notify them or need any access to their device.</p>
+            </div>
+            
+            <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50 flex flex-col items-start text-left">
+              <h4 className="font-bold text-sm text-white flex items-center gap-2 mb-2">
+                <Search className="w-4 h-4 text-emerald-400" /> What exactly is in the report?
+              </h4>
+              <p className="text-xs text-slate-400">You will instantly download a dossier containing hidden social media activity, deleted messages logs, GPS history, and hidden gallery items found in our database scan.</p>
+            </div>
 
-          <button
-            onClick={scrollToCheckout}
-            className="w-full mt-10 bg-emerald-500 text-[#030712] font-black py-5 rounded-xl uppercase tracking-widest text-xs shadow-[0_0_30px_rgba(16,185,129,0.2)]"
-          >
-            SECURE MY ACCESS NOW
-          </button>
+            <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50 flex flex-col items-start text-left">
+              <h4 className="font-bold text-sm text-white flex items-center gap-2 mb-2">
+                <ShieldCheck className="w-4 h-4 text-emerald-400" /> What if I don&apos;t find anything?
+              </h4>
+              <p className="text-xs text-slate-400">If our scan comes back completely clean, you have the peace of mind you deserve. You are covered by our 7-Day Guarantee.</p>
+            </div>
+          </div>
+          
+          {/* Secondary CTA */}
+          <div className="mt-8 pt-6 border-t border-slate-800/50 text-center">
+            <button
+               onClick={scrollToCheckout}
+               className="w-full bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold py-4 px-8 rounded-xl transition-all text-sm uppercase tracking-widest"
+            >
+              Get My Dossier Now
+            </button>
+          </div>
         </div>
+
       </div>
     )
   }
@@ -1207,7 +1230,7 @@ function DatingScannerContent() {
         className="fixed inset-0 bg-black/90 flex items-center justify-center z-[60] p-4 backdrop-blur-sm animate-in fade-in"
         onClick={() => setSelectedMatch(null)}
       >
-        <div className="bg-[#0f172a] rounded-2xl w-full max-w-sm max-h-[90vh] overflow-y-auto relative border border-slate-700 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+        <div className="bg-[#0f172a] rounded-2xl w-full max-w-sm max-h-[90vh] overflow-y-auto relative border border-slate-700 shadow-2xl" onClick={(e: React.MouseEvent) => e.stopPropagation()}>
           <button onClick={() => setSelectedMatch(null)} aria-label="Close modal" className="absolute top-3 right-3 bg-black/60 hover:bg-black/80 text-white rounded-full p-2 z-10 transition-colors">
             <X className="w-5 h-5" />
           </button>
