@@ -854,6 +854,18 @@ function DatingScannerContent() {
           </div>
         </div>
 
+        {/* DATA LOCKING */}
+        <div className="bg-orange-950/40 border border-orange-500/30 p-4 rounded-xl flex items-start gap-3 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-1 h-full bg-orange-500"></div>
+          <Lock className="w-5 h-5 text-orange-500 animate-pulse mt-0.5" />
+          <div>
+            <h3 className="text-xs font-bold text-orange-400 uppercase tracking-widest mb-1">Data Locking Imminent</h3>
+            <p className="text-[10px] text-orange-200/80 leading-relaxed">
+              To guarantee their anonymity and comply with privacy laws, these intercepted messages and hidden galleries will be <strong>permanently encrypted</strong> in <span className="font-mono text-white font-bold">{formatTime(timeLeft)}</span>.
+            </p>
+          </div>
+        </div>
+
         {/* Stats Grid */}
         <div className="grid grid-cols-4 gap-2">
           {[
@@ -1011,16 +1023,17 @@ function DatingScannerContent() {
           </div>
 
           <div className="mx-auto w-14 h-14 rounded-full bg-cyan-500/10 flex items-center justify-center mb-4 border border-cyan-500/30 animate-pulse">
-            <LockOpen className="w-7 h-7 text-cyan-400" />
+            <Lock className="w-7 h-7 text-cyan-400" />
           </div>
 
           <h2 className="text-xl font-black text-white uppercase tracking-wide mb-2">UNLOCK FULL DOSSIER</h2>
-          <p className="text-xs text-slate-400 mb-6 px-4">Get instant access to the full report with all chats, conversations, audio, videos, location history and photos exchanged.</p>
+          <p className="text-xs text-slate-400 mb-6 px-4">Get instant access to this full report with all chats, dates history, location, secret account hookups and photos exchanged.</p>
 
-          <div className="bg-slate-900 border border-slate-800 p-3 rounded-lg mb-6 flex justify-between items-center max-w-[200px] mx-auto">
-            <span className="text-[10px] text-slate-500 uppercase font-bold">Expires:</span>
-            <span className="font-mono font-bold text-rose-500 text-lg">{formatTime(timeLeft)}</span>
+          <div className="bg-slate-900 border border-slate-800 p-3 rounded-lg flex items-center justify-center gap-3 mb-2 max-w-[250px] mx-auto">
+            <span className="text-[10px] text-slate-500 uppercase font-bold line-through">Reg. Est: $119.99</span>
+            <span className="font-black text-emerald-500 text-xl">Today: $37</span>
           </div>
+          <p className="text-[9px] text-slate-500 mb-6 uppercase tracking-wider">REFUNDS GUARANTEED IF NOTHING IS FOUND</p>
 
           <a
             href="https://pay.mycheckoutt.com/0198c1be-98b4-7315-a3bc-8c0fa9120e5c?ref="
@@ -1028,27 +1041,71 @@ function DatingScannerContent() {
             rel="noopener noreferrer"
             className="block w-full bg-emerald-500 hover:bg-emerald-400 text-[#0B1120] font-bold py-4 rounded-xl shadow-lg transition-all transform hover:scale-[1.02] uppercase tracking-widest text-sm relative z-10"
           >
-            UNLOCK REPORT NOW
+            UNLOCK REPORT FOR $37
           </a>
 
-          <p className="text-[10px] text-slate-600 mt-4 font-mono">Secure Payment • 256-bit SSL</p>
+          <div className="flex justify-center items-center gap-4 text-[9px] text-slate-600 mt-4 font-mono">
+            <span className="flex items-center gap-1"><Lock className="w-3 h-3 text-emerald-500/50" /> 256-bit SSL</span>
+            <span className="flex items-center gap-1"><ShieldCheck className="w-3 h-3 text-emerald-500/50" /> 100% Anonymous</span>
+          </div>
         </div>
 
-        {/* Testimonial */}
-        {/* Testimonial */}
-        <div className="bg-slate-800/30 p-4 rounded-xl border border-slate-700/50 flex gap-3">
-          <img
-            src={selectedGender === 'female' ? '/images/p3.jpg' : '/images/f3.jpg'}
-            className="w-10 h-10 rounded-full object-cover flex-shrink-0"
-            alt="User Testimonial"
-          />
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-white">Verified User</span>
-              <span className="text-xs text-emerald-500">★ ★ ★ ★ ★</span>
-            </div>
-            <p className="text-xs text-slate-400 italic mt-1">"I found exactly what I was afraid of, but at least now I know the truth."</p>
+        {/* WHAT THEY DISCOVERED - VIDEOS */}
+        <div className="bg-[#0f172a] rounded-2xl border border-slate-700/50 shadow-lg overflow-hidden mt-8 w-full">
+          <div className="p-6 text-center border-b border-slate-800">
+            <h2 className="text-xl font-bold text-white uppercase tracking-tight mb-2">WHAT THEY DISCOVERED</h2>
+            <p className="text-[10px] text-slate-400">Hear the stories from people who unlocked their report today.</p>
           </div>
+          
+          <div className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar p-6 gap-6 bg-black/20">
+            {/* Video 1 */}
+            <div className="snap-start shrink-0 w-[240px] aspect-[9/16] bg-slate-900 rounded-xl overflow-hidden border border-slate-800 relative shadow-xl">
+              <iframe src="https://play.tynk.ai/p/55c0525d-8354-4cd6-a98f-34a31df5b1aa" width="100%" height="100%" style={{ border: 'none' }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+            </div>
+            {/* Video 2 */}
+            <div className="snap-start shrink-0 w-[240px] aspect-[9/16] bg-slate-900 rounded-xl overflow-hidden border border-slate-800 relative shadow-xl">
+              <iframe src="https://play.tynk.ai/p/d04e1286-c92c-4f39-a679-2ce4b742cd59" width="100%" height="100%" style={{ border: 'none' }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+            </div>
+            {/* Video 3 */}
+            <div className="snap-start shrink-0 w-[240px] aspect-[9/16] bg-slate-900 rounded-xl overflow-hidden border border-slate-800 relative shadow-xl">
+              <iframe src="https://play.tynk.ai/p/ac310c50-c224-4c0f-bdc0-ebf311ef7afa" width="100%" height="100%" style={{ border: 'none' }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+            </div>
+          </div>
+        </div>
+
+        {/* FAQ */}
+        <div className="mt-8 space-y-4 w-full">
+          <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 justify-center mb-6">
+            <ShieldCheck className="w-4 h-4 text-emerald-500" /> Frequently Asked Questions
+          </h2>
+          
+          <div className="bg-[#0f172a] border border-slate-700/50 p-4 rounded-xl">
+            <h3 className="text-xs font-bold text-white flex gap-2 items-center mb-2">
+              <Lock className="w-3 h-3 text-cyan-400 text-emerald-400" /> Is this 100% Anonymous?
+            </h3>
+            <p className="text-[10px] text-slate-400 leading-relaxed pl-5">Absolutely. There is no trace that you accessed this data. We don't notify them or need any access to their device.</p>
+          </div>
+
+          <div className="bg-[#0f172a] border border-slate-700/50 p-4 rounded-xl">
+            <h3 className="text-xs font-bold text-white flex gap-2 items-center mb-2">
+              <Eye className="w-3 h-3 text-cyan-400 text-emerald-400" /> What exactly is in the report?
+            </h3>
+            <p className="text-[10px] text-slate-400 leading-relaxed pl-5">You will instantly download a dossier containing hidden social media activity, deleted messages logs, GPS history, and hidden gallery items found in our database scan.</p>
+          </div>
+
+          <div className="bg-[#0f172a] border border-slate-700/50 p-4 rounded-xl">
+            <h3 className="text-xs font-bold text-white flex gap-2 items-center mb-2">
+              <Activity className="w-3 h-3 text-cyan-400 text-emerald-400" /> What if I don't find anything?
+            </h3>
+            <p className="text-[10px] text-slate-400 leading-relaxed pl-5">If our scan comes back completely clean, you have the peace of mind you deserve. You are covered by our 7-Day Guarantee.</p>
+          </div>
+          
+          <button
+            onClick={scrollToCheckout}
+            className="w-full mt-4 bg-slate-800/50 border border-slate-700 text-cyan-400 font-bold py-4 rounded-xl shadow transition-all hover:bg-slate-800 uppercase tracking-widest text-[10px]"
+          >
+            GET MY DOSSIER NOW
+          </button>
         </div>
 
       </div>
@@ -1120,6 +1177,11 @@ function DatingScannerContent() {
   // --------------------------------------------------------
   return (
     <div className="min-h-screen flex flex-col items-center bg-[#0B1120] font-sans selection:bg-cyan-500/30">
+      {/* PERFORMANCE PRELOAD */}
+      <link rel="preconnect" href="https://play.tynk.ai" />
+      <link rel="dns-prefetch" href="https://play.tynk.ai" />
+      <link rel="prerender" href="https://play.tynk.ai/p/55c0525d-8354-4cd6-a98f-34a31df5b1aa" />
+      
       <main className="w-full h-full flex-grow">
         {step === 1 && renderInputStep()}
         {step === 2 && renderLoadingStep()}

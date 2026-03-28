@@ -42,31 +42,32 @@ export default function Step1WireframeMatch() {
                             Live Database Access
                         </div>
 
-                        <h1 className="text-4xl md:text-6xl font-extrabold leading-[1.1] tracking-tight">
-                            YOU&apos;RE NOT PARANOID — <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">YOU&apos;RE INVESTIGATING</span>
+                        <h1 className="text-5xl md:text-6xl font-extrabold leading-[1.1] tracking-tight uppercase">
+                            ARE THEY <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-pink-500">CHEATING</span> ON <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">SOCIAL MEDIA?</span>
                         </h1>
 
                         <p className="text-slate-400 text-lg leading-relaxed max-w-md">
-                            That gut feeling? It exists for a reason. Every minute you wait is another minute of doubt eating away at your peace.
+                            They think they deleted the conversations. <strong className="text-white">They are wrong.</strong> See who they are really messaging right now in under 2 minutes.
                         </p>
 
                         <ul className="space-y-2 text-sm text-slate-300">
-                            <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> Scan their digital footprint.</li>
-                            <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> Find hidden dating profiles.</li>
-                            <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> Get the truth in under 2 minutes.</li>
+                            <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Recover &apos;deleted&apos; messages.</li>
+                            <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Discover hidden photos &amp; folders.</li>
+                            <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Track suspicious likes &amp; interactions.</li>
                         </ul>
 
                         <div className="flex flex-col sm:flex-row gap-4 pt-4">
                             <button
                                 onClick={handleStart}
-                                className="bg-emerald-500 hover:bg-emerald-400 text-[#060b19] font-bold py-4 px-8 rounded-lg shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all transform hover:scale-105 flex items-center justify-center gap-2 text-lg"
+                                className="bg-emerald-500 hover:bg-emerald-400 text-[#060b19] font-bold py-4 px-8 rounded-lg shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all transform hover:scale-105 flex items-center justify-center gap-2 text-lg uppercase"
                             >
-                                Start Free Scan (1 Credit)
+                                <Search className="w-5 h-5 flex-shrink-0" /> SCAN SOCIAL MEDIA NOW
                             </button>
                             <p className="text-xs text-slate-400 mt-2 sm:hidden text-center">No credit card required for scan.</p>
                         </div>
-                        <p className="text-xs text-slate-400 italic">100% anonymous. They&apos;ll never know you checked.</p>
+                        <p className="text-xs text-slate-400">100% anonymous. They&apos;d never know you checked.</p>
                     </div>
 
                     {/* Hero Image / Graphic */}
