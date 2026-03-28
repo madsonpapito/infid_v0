@@ -6,7 +6,7 @@ import {
   CheckCircle2, AlertTriangle, Lock, LockOpen, Search, MapPin,
   Smartphone, Fingerprint, Eye, User, HeartCrack, Activity,
   ScanFace, Globe, ShieldCheck, ChevronRight, X, MessageCircle,
-  ChevronLeft, Volume2, HelpCircle
+  ChevronLeft, Volume2, HelpCircle, History
 } from "lucide-react"
 import { getRandomProfile, MALE_NAMES, FEMALE_NAMES } from "@/lib/profile-data"
 import { COUNTRIES } from "@/components/Countries"
@@ -125,14 +125,6 @@ function DatingScannerContent() {
     checkoutRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }, [])
 
-  useEffect(() => {
-    fetch("/api/location")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.city) setLocation(data.city)
-      })
-      .catch(() => setLocation("New York, US"))
-  }, [])
 
   useEffect(() => {
     if (step === 3 && timeLeft > 0) {
