@@ -5,7 +5,8 @@ import { useSearchParams } from "next/navigation"
 import {
   CheckCircle2, AlertTriangle, Lock, LockOpen, Search, MapPin,
   Smartphone, Fingerprint, Eye, User, HeartCrack, Activity,
-  ScanFace, Globe, ShieldCheck, ChevronRight, X, MessageCircle
+  ScanFace, Globe, ShieldCheck, ChevronRight, X, MessageCircle,
+  ChevronLeft, Volume2, HelpCircle
 } from "lucide-react"
 import { getRandomProfile, MALE_NAMES, FEMALE_NAMES } from "@/lib/profile-data"
 import { COUNTRIES } from "@/components/Countries"
@@ -1057,16 +1058,15 @@ function DatingScannerContent() {
               <span className="text-rose-500 font-mono font-bold text-xl animate-pulse">{formatTime(timeLeft)}</span>
             </div>
 
-            <div className="flex flex-col gap-1 items-start">
+            <div className="flex flex-col gap-1 items-end">
               <div className="flex items-center gap-2">
                 <span className="text-xs text-slate-500 line-through">Regular: $149.00</span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-3xl font-black text-emerald-400">Today: $37</span>
+                <span className="text-4xl font-black text-emerald-400">Today: $37</span>
               </div>
+              <p className="text-[10px] text-slate-500 mt-4 italic">Includes full evidence download & updates</p>
             </div>
-            
-            <p className="text-[9px] text-slate-500 mt-4 text-left italic">Includes full evidence download & updates</p>
           </div>
 
           <a
@@ -1084,94 +1084,106 @@ function DatingScannerContent() {
           </div>
         </div>
 
-        {/* WHAT THEY DISCOVERED - VIDEOS */}
-        <div className="bg-[#0f172a] rounded-2xl border border-slate-700/50 shadow-lg overflow-hidden mt-8 w-full">
-          <div className="p-6 text-center border-b border-slate-800">
-            <h2 className="text-xl font-bold text-white uppercase tracking-tight mb-2">WHAT THEY DISCOVERED</h2>
-            <p className="text-[10px] text-slate-400">Real reactions from people who unlocked their reports today.</p>
+        {/* WHAT THEY DISCOVERED - REFINED SLIDER */}
+        <div className="bg-[#0a1220] rounded-[2.5rem] border border-slate-800 p-8 pt-12 mt-12 w-full max-w-4xl mx-auto shadow-2xl relative">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tighter italic leading-none">WHAT THEY DISCOVERED</h2>
+            <p className="text-slate-500 text-sm font-medium mt-3">Real reactions from people who unlocked their reports today.</p>
           </div>
-          
-          <div className="relative p-6 bg-black/20">
-            <div className="flex overflow-hidden relative">
-              <div className="flex w-full transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${testimonialIndex * 100}%)` }}>
+
+          <div className="relative group/slider px-4">
+            {/* Arrows */}
+            <button 
+              onClick={() => setTestimonialIndex(prev => (prev > 0 ? prev - 1 : testimonials.length - 1))}
+              className="absolute left-[-20px] top-[40%] z-30 w-12 h-12 rounded-full bg-[#1a2436] border border-slate-700 flex items-center justify-center text-white hover:bg-slate-800 transition-all shadow-xl"
+            >
+              <ChevronLeft size={24} />
+            </button>
+            <button 
+              onClick={() => setTestimonialIndex(prev => (prev < testimonials.length - 1 ? prev + 1 : 0))}
+              className="absolute right-[-20px] top-[40%] z-30 w-12 h-12 rounded-full bg-[#1a2436] border border-slate-700 flex items-center justify-center text-white hover:bg-slate-800 transition-all shadow-xl"
+            >
+              <ChevronRight size={24} />
+            </button>
+
+            <div className="overflow-hidden">
+              <div 
+                className="flex transition-transform duration-700 cubic-bezier(0.4, 0, 0.2, 1) gap-4"
+                style={{ transform: `translateX(-${testimonialIndex * 52}%)` }}
+              >
                 {testimonials.map((t, i) => (
-                  <div key={i} className="w-full flex-shrink-0 flex flex-col items-center gap-4 px-2">
-                    <div className="w-full max-w-[260px] aspect-[9/16] bg-slate-900 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl relative">
-                      <iframe src={t.video} width="100%" height="100%" style={{ border: 'none' }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                      <div className="absolute bottom-4 left-4 right-4 h-1 bg-slate-800 rounded-full overflow-hidden">
-                        <div className="h-full bg-rose-500 w-1/3"></div>
+                  <div key={i} className="min-w-[85%] md:min-w-[48%] flex-shrink-0 flex flex-col gap-4">
+                    {/* VIDEO CONTAINER */}
+                    <div className="w-full aspect-[9/16] bg-black rounded-[2rem] overflow-hidden border border-slate-800 shadow-2xl relative">
+                      <iframe 
+                        src={t.video}
+                        className="w-full h-full object-cover"
+                        allow="autoplay"
+                      />
+                      {/* Turn on sound badge */}
+                      <div className="absolute top-[45%] left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-lg border border-white/20 rounded-full py-2 px-5 flex items-center gap-2 pointer-events-none whitespace-nowrap">
+                        <Volume2 size={16} className="text-white fill-white/20" />
+                        <span className="text-[11px] font-black text-white uppercase tracking-wider">Turn on sound</span>
+                      </div>
+                      {/* Red Progress Bar */}
+                      <div className="absolute bottom-0 left-0 right-0 h-2 bg-slate-900/50 flex">
+                        <div className="h-full bg-red-600 shadow-[0_0_15px_rgba(220,38,38,0.6)]" style={{ width: i === 0 ? '100%' : '35%' }}></div>
                       </div>
                     </div>
-                    <div className="bg-slate-900/80 border border-slate-800 p-4 rounded-xl w-full max-w-[320px] text-left">
-                      <h4 className="text-white font-bold text-sm tracking-tight mb-1">{t.name} — {t.location}</h4>
-                      <p className="text-xs text-slate-400 italic leading-relaxed">"{t.text}"</p>
+
+                    {/* TEXT CARD */}
+                    <div className="bg-[#0f172a]/80 backdrop-blur-sm border border-slate-800/80 p-6 rounded-3xl flex-grow shadow-lg">
+                      <h4 className="text-white font-black text-sm tracking-tight mb-2 uppercase italic leading-none">{t.name}</h4>
+                      <p className="text-[12px] text-slate-400 italic font-medium leading-relaxed">"{t.text}"</p>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Navigation Arrows */}
-            <button 
-              onClick={() => setTestimonialIndex(prev => (prev > 0 ? prev - 1 : testimonials.length - 1))}
-              className="absolute left-2 top-[40%] -translate-y-1/2 w-8 h-8 rounded-full bg-slate-900/80 border border-slate-700 flex items-center justify-center text-white hover:bg-slate-800 z-10"
-            >
-              <ChevronRight className="w-5 h-5 rotate-180" />
-            </button>
-            <button 
-              onClick={() => setTestimonialIndex(prev => (prev < testimonials.length - 1 ? prev + 1 : 0))}
-              className="absolute right-2 top-[40%] -translate-y-1/2 w-8 h-8 rounded-full bg-slate-900/80 border border-slate-700 flex items-center justify-center text-white hover:bg-slate-800 z-10"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-
             {/* Pagination Dots */}
-            <div className="flex justify-center gap-2 mt-6">
+            <div className="flex justify-center gap-2.5 mt-10">
               {testimonials.map((_, i) => (
                 <button 
-                  key={i} 
+                  key={i}
                   onClick={() => setTestimonialIndex(i)}
-                  className={`w-2 h-2 rounded-full transition-all ${testimonialIndex === i ? 'bg-emerald-500 w-4' : 'bg-slate-700'}`}
+                  className={`h-2.5 rounded-full transition-all duration-500 ${testimonialIndex === i ? 'bg-emerald-500 w-8' : 'bg-slate-800 w-2.5 hover:bg-slate-700'}`}
                 />
               ))}
             </div>
           </div>
         </div>
 
-        <div className="mt-8 bg-[#0f172a] border border-slate-700/50 rounded-3xl p-6 md:p-8 space-y-6 w-full shadow-2xl">
-          <h2 className="text-sm font-black text-white uppercase tracking-[0.2em] flex items-center gap-3 justify-center mb-10 pb-4 border-b border-slate-800/50">
-            <span className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/30">
-               <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-            </span>
+        {/* FAQ Section Refined */}
+        <div className="mt-12 bg-[#0f172a] border border-slate-800 rounded-[2.5rem] p-8 md:p-12 space-y-8 w-full shadow-2xl relative overflow-hidden">
+          <div className="absolute -top-10 -right-10 w-40 h-40 bg-emerald-500/5 rounded-full blur-3xl" />
+          <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-cyan-500/5 rounded-full blur-3xl" />
+          
+          <h2 className="text-xl font-black text-white uppercase tracking-[0.2em] text-center mb-8 flex items-center justify-center gap-3">
+            <HelpCircle className="w-5 h-5 text-emerald-500" />
             Frequently Asked Questions
           </h2>
           
-          <div className="space-y-4">
-            <div className="bg-slate-900/50 border border-slate-800 hover:border-cyan-500/30 p-5 rounded-2xl transition-all group">
-              <h3 className="text-sm font-bold text-white flex gap-3 items-center mb-3">
-                <Lock className="w-4 h-4 text-emerald-500 group-hover:scale-110 transition-transform" /> Is this 100% Anonymous?
-              </h3>
-              <p className="text-[13px] text-slate-400 leading-relaxed font-medium">Absolutely. There is no trace that you accessed this data. We don't notify them or need any access to their device.</p>
-            </div>
-
-            <div className="bg-slate-900/50 border border-slate-800 hover:border-cyan-500/30 p-5 rounded-2xl transition-all group">
-              <h3 className="text-sm font-bold text-white flex gap-3 items-center mb-3">
-                <Search className="w-4 h-4 text-emerald-500 group-hover:scale-110 transition-transform" /> What exactly is in the report?
-              </h3>
-              <p className="text-[13px] text-slate-400 leading-relaxed font-medium">You will instantly download a dossier containing hidden social media activity, deleted messages logs, GPS history, and hidden gallery items found in our database scan.</p>
-            </div>
-
-            <div className="bg-slate-900/50 border border-slate-800 hover:border-cyan-500/30 p-5 rounded-2xl transition-all group">
-              <h3 className="text-sm font-bold text-white flex gap-3 items-center mb-3">
-                <ShieldCheck className="w-4 h-4 text-emerald-500 group-hover:scale-110 transition-transform" /> What if I don't find anything?
-              </h3>
-              <p className="text-[13px] text-slate-400 leading-relaxed font-medium">If our scan comes back completely clean, you have the peace of mind you deserve. You are covered by our 7-Day Guarantee.</p>
-            </div>
+          <div className="space-y-4 relative z-10">
+            {[
+              { q: 'Is this 100% Anonymous?', a: 'Absolutely. There is no trace that you accessed this data. We don\'t notify them or need any access to their device.', i: <ShieldCheck className="w-5 h-5 text-emerald-500" /> },
+              { q: 'What exactly is in the report?', a: 'You will instantly download a dossier containing hidden social media activity, deleted messages logs, GPS history, and hidden gallery items found in our database scan.', i: <Search className="w-5 h-5 text-emerald-500" /> },
+              { q: 'What if I don\'t find anything?', a: 'If our scan comes back completely clean, you have the peace of mind you deserve. You are covered by our 7-Day Guarantee.', i: <Lock className="w-5 h-5 text-emerald-500" /> }
+            ].map((faq, idx) => (
+              <div key={idx} className="bg-[#0a1220]/40 border border-slate-800/80 hover:border-emerald-500/30 p-6 rounded-3xl transition-all group">
+                <h3 className="text-[15px] font-bold text-white flex gap-4 items-center mb-3">
+                  <span className="group-hover:rotate-12 transition-transform">{faq.i}</span> {faq.q}
+                </h3>
+                <p className="text-[13px] text-slate-400 leading-relaxed font-medium pl-9">
+                  {faq.a}
+                </p>
+              </div>
+            ))}
           </div>
           
           <button
             onClick={scrollToCheckout}
-            className="w-full mt-10 bg-emerald-500 hover:bg-emerald-400 text-[#0B1120] font-black py-5 rounded-2xl shadow-[0_0_40px_rgba(16,185,129,0.3)] transition-all transform hover:scale-[1.02] active:scale-95 uppercase tracking-[0.1em] text-sm"
+            className="w-full mt-6 bg-emerald-500 hover:bg-emerald-400 text-[#0B1120] font-black py-6 rounded-2xl shadow-[0_0_50px_rgba(16,185,129,0.3)] transition-all transform hover:scale-[1.02] active:scale-95 uppercase tracking-widest text-sm relative z-10"
           >
             GET MY DOSSIER NOW
           </button>
