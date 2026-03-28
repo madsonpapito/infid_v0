@@ -850,345 +850,357 @@ function DatingScannerContent() {
   // STEP 3: RESULTS (DARK MODE)
   // --------------------------------------------------------
   const renderResultsStep = () => {
-    // Dynamic Image Paths based on selectedGender
-    // If target is MALE, show Male photos. If target is FEMALE, show Female photos.
-    // Default to 'male' if not set
     const genderFolder = selectedGender === 'female' ? 'female' : 'male';
-
-    // Use the randomMatches state which is populated on mount/step change
     const displayMatches = randomMatches.length > 0 ? randomMatches : [];
 
-    // Construct Hidden Photos List dynamically based on directory structure found
-    // Male folder has 'censored-f-X.jpg', Female folder has 'censored-h-X.jpg' (or generic names if changed)
-    // We use the file names we found in the directory audit to form the paths correctly.
     const dynamicHiddenPhotos = genderFolder === 'male'
       ? ["censored-f-1.jpg", "censored-f-2.jpg", "censored-f-3.jpg", "censored-f-4.jpg"].map(f => `/images/male/tinder/censored/${f}`)
       : ["censored-h-1.jpg", "censored-h-2.jpg", "censored-h-3.jpg", "censored-h-4.jpg"].map(f => `/images/female/tinder/censored/${f}`);
 
     return (
-      <div className="space-y-6 animate-fade-in w-full max-w-lg mx-auto pb-20">
+      <div className="flex flex-col items-center w-full max-w-[440px] mx-auto space-y-5 animate-fade-in pb-32 pt-6 px-4">
 
-        {/* Alert Main */}
-        <div className="bg-rose-500 text-white p-4 rounded-xl shadow-[0_0_30px_rgba(244,63,94,0.4)] flex items-center gap-4 border border-rose-400">
-          <AlertTriangle className="w-8 h-8 shrink-0 animate-bounce" />
+        {/* 1. POSITIVE MATCH ALERT - ROSE SOLID */}
+        <div className="w-full bg-[#f43f5e] text-white p-4 rounded-[1.25rem] shadow-lg flex items-center gap-4 border border-rose-400/30">
+          <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+            <AlertTriangle className="w-6 h-6 animate-bounce" />
+          </div>
           <div>
-            <h1 className="font-bold text-lg uppercase tracking-tight">Positive Match Found</h1>
-            <p className="text-xs text-rose-100">User is currently <span className="font-bold underline">ONLINE</span> in {location}.</p>
+            <h1 className="font-black text-sm uppercase tracking-wider leading-none mb-1">POSITIVE MATCH FOUND</h1>
+            <p className="text-[11px] text-rose-100 font-medium">Target is currently <span className="underline font-black">ONLINE</span> in Unknown Location.</p>
           </div>
         </div>
 
-        {/* DATA LOCKING */}
-        <div className="bg-orange-950/40 border border-orange-500/30 p-4 rounded-xl flex items-start gap-3 relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-1 h-full bg-orange-500"></div>
-          <Lock className="w-5 h-5 text-orange-500 animate-pulse mt-0.5" />
+        {/* 2. DATA LOCKING ALERT - ORANGE DARK */}
+        <div className="w-full bg-[#7c2d12]/20 border border-orange-600/40 p-4 rounded-[1.25rem] flex items-start gap-4 relative overflow-hidden backdrop-blur-sm">
+          <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-600"></div>
+          <Activity className="w-5 h-5 text-orange-500 animate-pulse mt-0.5 shrink-0" />
           <div>
-            <h3 className="text-xs font-bold text-orange-400 uppercase tracking-widest mb-1">Data Locking Imminent</h3>
-            <p className="text-[10px] text-orange-200/80 leading-relaxed">
-              To guarantee their anonymity and comply with privacy laws, these intercepted messages and hidden galleries will be <strong>permanently encrypted</strong> in <span className="font-mono text-white font-bold">{formatTime(timeLeft)}</span>.
+            <h3 className="text-[11px] font-black text-orange-400 uppercase tracking-widest mb-1">DATA LOCKING IMMINENT</h3>
+            <p className="text-[10px] text-orange-200/70 leading-relaxed font-medium">
+              To guarantee their anonymity, these intercepted messages will be <strong>permanently encrypted</strong> in <span className="font-mono text-white font-bold">{formatTime(timeLeft)} min</span>.
             </p>
           </div>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-4 gap-2">
+        {/* 3. STATS GRID - COMPACT PILLS */}
+        <div className="w-full grid grid-cols-4 gap-2">
           {[
             { v: 6, l: 'Matches', c: 'text-rose-500' },
-            { v: 30, l: 'Likes', c: 'text-purple-500' },
+            { v: 30, l: 'Likes', c: 'text-rose-500' },
             { v: 'Active', l: 'Status', c: 'text-emerald-500' },
             { v: '18h', l: 'Last Seen', c: 'text-white' }
           ].map((s, i) => (
-            <div key={i} className="bg-[#0f172a] p-2 rounded-lg border border-slate-700 text-center">
-              <p className={`text-xl font-bold ${s.c}`}>{s.v}</p>
-              <p className="text-[9px] text-slate-500 uppercase font-bold">{s.l}</p>
+            <div key={i} className="bg-[#0f172a] p-2 py-3 rounded-xl border border-slate-800 text-center shadow-md">
+              <p className={`text-lg font-black leading-none mb-1 ${s.c}`}>{s.v}</p>
+              <p className="text-[8px] text-slate-500 uppercase font-black tracking-widest">{s.l}</p>
             </div>
           ))}
         </div>
 
-        {/* Matches Detected */}
-        <div className="bg-[#0f172a] rounded-xl border border-slate-700 overflow-hidden">
-          <div className="bg-slate-800/50 p-3 border-b border-slate-700 flex justify-between items-center">
-            <span className="text-xs font-bold text-slate-300 uppercase tracking-widest flex items-center gap-2">
-              <HeartCrack className="w-4 h-4 text-rose-500" /> Recent Matches
+        {/* 4. RECENT MATCHES - CLEAN LIST */}
+        <div className="w-full bg-[#0f172a] rounded-[1.25rem] border border-slate-800 overflow-hidden shadow-lg">
+          <div className="bg-slate-800/40 p-3.5 px-4 border-b border-slate-800 flex justify-between items-center">
+            <span className="text-[11px] font-black text-slate-300 uppercase tracking-[0.15em] flex items-center gap-2">
+              <HeartCrack className="w-3.5 h-3.5 text-rose-500" /> RECENT MATCHES
             </span>
-            <span className="bg-rose-500 text-white text-[9px] px-1.5 py-0.5 rounded font-bold">3 NEW</span>
+            <span className="bg-rose-500 text-white text-[9px] px-2 py-0.5 rounded-full font-black tracking-tighter">3 NEW</span>
           </div>
-          <div className="divide-y divide-slate-800">
+          <div className="divide-y divide-slate-800/50">
             {displayMatches.slice(0, 3).map((m, i) => (
               <div
                 key={i}
-                className="p-3 flex items-center gap-3 hover:bg-slate-800/50 cursor-pointer transition-colors"
+                className="p-4 flex items-center gap-4 hover:bg-slate-800/30 cursor-pointer transition-colors"
                 onClick={() => setSelectedMatch(m)}
               >
-                <div className="relative">
-                  <img src={m.avatar} className="w-10 h-10 rounded-full object-cover border border-slate-600" />
-                  <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border border-black"></div>
+                <div className="relative shrink-0">
+                  <img src={m.avatar} className="w-11 h-11 rounded-full object-cover border-2 border-slate-700" />
+                  <div className="absolute bottom-0.5 right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#0f172a]"></div>
                 </div>
-                <div className="flex-1">
-                  <div className="flex justify-between">
-                    <p className="text-sm font-bold text-white">{m.name}, {m.age}</p>
-                    <p className="text-[10px] text-slate-500">{m.lastSeen}</p>
+                <div className="flex-1 min-w-0">
+                  <div className="flex justify-between items-center mb-0.5">
+                    <p className="text-sm font-black text-white truncate">{m.name}, {m.age}</p>
+                    <p className="text-[10px] text-slate-500 font-bold whitespace-nowrap">Online</p>
                   </div>
-                  <p className="text-[10px] text-slate-400">Within {m.distance} • {m.identity}</p>
+                  <p className="text-[10px] text-slate-400 font-medium font-mono truncate uppercase tracking-tighter">Within {m.distance} • {m.identity}</p>
                 </div>
-                <ChevronRight className="w-4 h-4 text-slate-600" />
+                <div className="bg-slate-800/50 p-1.5 rounded-lg">
+                  <ChevronRight className="w-4 h-4 text-slate-600" />
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* RECENT CHATS (NEW CARD) */}
-        <div className="bg-[#0f172a] rounded-xl border border-slate-700/50 overflow-hidden shadow-lg animate-fade-in delay-100">
-          <div className="bg-slate-800/50 p-3 border-b border-slate-700 flex justify-between items-center group">
+        {/* 5. RECENT CHATS - PULSING INDICATORS */}
+        <div className="w-full bg-[#0f172a] rounded-[1.25rem] border border-slate-800 overflow-hidden shadow-lg">
+          <div className="bg-slate-800/40 p-3.5 px-4 border-b border-slate-800">
             <div className="flex items-center gap-2">
-              <MessageCircle className="w-4 h-4 text-blue-400 group-hover:text-blue-300 transition-colors" />
-              <h3 className="text-xs font-bold text-white uppercase tracking-widest">Recent Chats</h3>
+              <MessageCircle className="w-3.5 h-3.5 text-blue-400" />
+              <h3 className="text-[11px] font-black text-white uppercase tracking-[0.15em]">RECENT CHATS</h3>
             </div>
           </div>
-          <div className="p-3 bg-slate-900/50 border-b border-slate-800 text-[10px] text-slate-400">
+          <div className="p-3.5 bg-slate-900/40 border-b border-slate-800 text-[10px] text-slate-500 font-medium px-4">
             Tap on a conversation to read their messages
           </div>
 
-          <div className="divide-y divide-slate-800">
+          <div className="divide-y divide-slate-800/50">
             {displayMatches.slice(3, 6).map((match, i) => (
               <div
                 key={i}
                 onClick={scrollToCheckout}
-                className="p-3 bg-[#0f172a] hover:bg-slate-800/80 cursor-pointer transition-colors flex items-center gap-3 group/chat"
+                className="p-4 hover:bg-slate-800/30 cursor-pointer transition-colors flex items-center gap-4 group"
               >
-                <div className="relative">
-                  <img src={match.avatar} className="w-10 h-10 rounded-full object-cover border border-slate-700 group-hover/chat:border-blue-500/50 transition-colors" />
-                  <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-[#0f172a]"></div>
+                <div className="relative shrink-0">
+                  <img src={match.avatar} className="w-11 h-11 rounded-full object-cover border-2 border-slate-700 group-hover:border-blue-500/40" />
+                  <div className="absolute bottom-0.5 right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#0f172a]"></div>
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-center mb-0.5">
-                    <h4 className="text-xs font-bold text-white truncate group-hover/chat:text-blue-400 transition-colors">{match.name}, {match.age}</h4>
-                    <span className="text-[9px] text-slate-500 font-medium">Just now</span>
+                    <h4 className="text-sm font-black text-white truncate">{match.name}, {match.age}</h4>
+                    <span className="text-[9px] text-slate-500 font-bold font-mono">JUST NOW</span>
                   </div>
-                  <p className="text-[10px] text-blue-400/80 flex items-center gap-1.5 font-medium truncate">
-                    <span className="w-1.5 h-1.5 bg-blue-500 rounded-full inline-block animate-pulse"></span> Click to read messages...
-                  </p>
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse shadow-[0_0_5px_rgba(59,130,246,0.8)]"></span>
+                    <p className="text-[10px] text-blue-400 font-bold uppercase tracking-tight">Click to read messages...</p>
+                  </div>
                 </div>
-                <div className="text-slate-600 group-hover/chat:text-slate-400">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="12" cy="5" r="1" /><circle cx="12" cy="19" r="1" /></svg>
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                   <ChevronRight className="w-4 h-4 text-blue-400/50" />
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* SUSPICIOUS LOCATIONS */}
-        <div className="bg-[#0f172a] rounded-xl border border-slate-700/50 overflow-hidden shadow-lg animate-fade-in delay-200">
-          <div className="bg-slate-800/50 p-3 border-b border-slate-700 flex justify-between items-center group">
-            <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-rose-500 group-hover:text-rose-400 transition-colors" />
-              <h3 className="text-xs font-bold text-white uppercase tracking-widest">Suspicious Locations</h3>
+        {/* 6. SUSPICIOUS LOCATIONS - MAP PULSE */}
+        <div className="w-full bg-[#030712] rounded-[1.25rem] border border-slate-800 overflow-hidden shadow-2xl">
+          <div className="bg-slate-800/40 p-3.5 px-4 border-b border-slate-800 flex justify-between items-center">
+            <span className="text-[11px] font-black text-slate-300 uppercase tracking-[0.15em] flex items-center gap-2">
+              <MapPin className="w-3.5 h-3.5 text-rose-500" /> SUSPICIOUS LOCATIONS
+            </span>
+            <span className="text-[10px] text-rose-500 font-black animate-pulse uppercase tracking-tighter">Live Tracking</span>
+          </div>
+
+          <div className="relative h-48 bg-slate-900 overflow-hidden group cursor-pointer" onClick={scrollToCheckout}>
+            <iframe
+              title="Map"
+              src={`https://maps.google.com/maps?q=motel+near+${encodeURIComponent(location)}&output=embed&z=13`}
+              className="w-full h-full grayscale invert opacity-40 group-hover:opacity-60 transition-opacity"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="relative">
+                <div className="absolute inset-0 bg-rose-500 rounded-full animate-ping opacity-20 scale-[4]"></div>
+                <div className="absolute inset-0 bg-rose-500 rounded-full animate-pulse opacity-40 scale-[2]"></div>
+                <div className="w-4 h-4 bg-rose-500 rounded-full border-2 border-white shadow-lg"></div>
+              </div>
             </div>
           </div>
 
-          <div className="p-4 space-y-4">
-            <div className="bg-rose-500/10 border border-rose-500/20 p-3 rounded-lg text-xs leading-relaxed text-slate-300">
-              <span className="font-bold text-rose-400">3 suspicious activities</span> detected near: <span className="font-bold text-white">{location}</span>
-            </div>
-
-            <div className="relative w-full h-40 bg-slate-900 rounded-lg overflow-hidden border border-slate-800 group cursor-pointer" onClick={scrollToCheckout}>
-              {/* Google Map Embed */}
-              <iframe
-                title="Suspicious Location Map"
-                src={`https://maps.google.com/maps?q=motel+near+${encodeURIComponent(location)}&output=embed&z=13`}
-                className="w-full h-full opacity-50 hover:opacity-100 transition-opacity grayscale invert-[.85] hover:invert-0 hover:grayscale-0"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-
-              {/* Pin Animation Overlay */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-                <div className="relative">
-                  <div className="w-4 h-4 bg-rose-500 rounded-full animate-ping absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-75"></div>
-                  <MapPin className="w-8 h-8 text-rose-500 drop-shadow-[0_0_10px_rgba(244,63,94,0.5)] relative z-10" />
-                </div>
-              </div>
-
-              {/* Map UI Overlay */}
-              <div className="absolute bottom-2 right-2 bg-slate-900/90 border border-slate-700 px-2 py-1 rounded flex items-center gap-1">
-                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                <span className="text-[8px] text-slate-400 font-bold uppercase">Live Tracking</span>
-              </div>
-            </div>
+          <div className="p-4 bg-[#0f172a] border-t border-slate-800/50">
+             <div className="bg-rose-500/10 border border-rose-500/20 p-3 rounded-xl mb-3">
+               <p className="text-[10px] text-center text-slate-300 font-medium">
+                 <span className="font-black text-rose-500">3 SUSPICIOUS ACTIVITIES</span> DETECTED NEAR <span className="text-white font-black uppercase">{location}</span>
+               </p>
+             </div>
+             <div className="space-y-2">
+                {[
+                  { t: '14:22 PM', l: 'Motel Check-in Zone', d: '0.4 mi' },
+                  { t: 'Yesterday', l: 'Private Shared Location', d: '1.2 mi' }
+                ].map((loc, i) => (
+                  <div key={i} className="flex justify-between items-center bg-slate-900/50 p-3 rounded-xl border border-slate-800/50">
+                    <div className="flex flex-col">
+                      <span className="text-[9px] text-slate-500 font-black uppercase tracking-tighter">{loc.t}</span>
+                      <span className="text-xs text-white font-bold">{loc.l}</span>
+                    </div>
+                    <span className="text-[10px] text-rose-500 font-black font-mono">{loc.d}</span>
+                  </div>
+                ))}
+             </div>
           </div>
         </div>
 
-        {/* Censored Photos */}
-        <div className="bg-[#0f172a] rounded-xl border border-slate-700 p-4 space-y-3 relative overflow-hidden group">
-          <div className="flex items-center justify-between">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
-              <Lock className="w-3 h-3 text-cyan-400" /> Private Photos
-            </h3>
+        {/* 7. PRIVATE PHOTOS - BLURRED GRID */}
+        <div className="w-full bg-[#0f172a] rounded-[1.25rem] border border-slate-800 overflow-hidden shadow-lg">
+          <div className="bg-slate-800/40 p-3.5 px-4 border-b border-slate-800 flex justify-between items-center">
+            <span className="text-[11px] font-black text-slate-300 uppercase tracking-[0.15em] flex items-center gap-2">
+              <History className="w-3.5 h-3.5 text-rose-500" /> PRIVATE PHOTOS (27)
+            </span>
+            <Lock className="w-3 h-3 text-slate-500" />
           </div>
-          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-            {dynamicHiddenPhotos.map((src, i) => (
-              <div key={i} className="flex-shrink-0 w-48 h-64 bg-slate-800 rounded relative overflow-hidden">
-                <img src={src} className="w-full h-full object-cover blur-sm opacity-50" />
+
+          <div className="grid grid-cols-3 gap-1 p-1 bg-black/40">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="relative aspect-square bg-slate-800 overflow-hidden">
+                <img
+                  src={`https://images.unsplash.com/photo-${1500000000000 + i}?auto=format&fit=crop&w=200&q=10`}
+                  className="w-full h-full object-cover blur-md opacity-30"
+                  alt="Private"
+                />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <Eye className="text-white w-6 h-6 opacity-80" />
+                  <Lock className="w-5 h-5 text-white/10" />
                 </div>
-                <div className="absolute bottom-1 right-1 bg-black/80 px-1 rounded text-[8px] text-white">HIDDEN</div>
+                {i === 5 && (
+                  <div className="absolute inset-0 bg-black/70 flex items-center justify-center backdrop-blur-[2px]">
+                    <span className="text-[10px] text-white font-black tracking-tighter uppercase">+21 MORE</span>
+                  </div>
+                )}
               </div>
             ))}
           </div>
+
+          <button
+            onClick={scrollToCheckout}
+            className="w-full p-4 border-t border-slate-800 bg-slate-900/20 hover:bg-rose-500/5 text-[10px] font-black text-rose-500 uppercase tracking-[0.2em] transition-colors flex items-center justify-center gap-3 group"
+          >
+            Decrypt All Hidden Photos <ChevronRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+          </button>
         </div>
 
-        {/* UNLOCK WIDGET */}
-        <div ref={checkoutRef} className="bg-[#0B1120] border border-cyan-500/50 rounded-2xl shadow-[0_0_40px_rgba(6,182,212,0.15)] p-6 text-center relative overflow-hidden">
-          <div className="absolute top-0 right-0 bg-rose-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg">
-            HIGH PRIORITY
-          </div>
-
-          <div className="mx-auto w-14 h-14 rounded-full bg-cyan-500/10 flex items-center justify-center mb-4 border border-cyan-500/30 animate-pulse">
-            <Lock className="w-7 h-7 text-cyan-400" />
-          </div>
-
-          <h2 className="text-xl font-black text-white uppercase tracking-wide mb-2">UNLOCK FULL DOSSIER</h2>
-          <p className="text-xs text-slate-400 mb-6 px-4">Get instant access to this full report with all chats, conversations, audio, videos, location history and photos exchanged.</p>
-
-          <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6 mb-6 max-w-[320px] mx-auto relative group">
-            <div className="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
-              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Offer Expires:</span>
-              <span className="text-rose-500 font-mono font-bold text-xl animate-pulse">{formatTime(timeLeft)}</span>
+        {/* 8. UNLOCK WIDGET - PRECISE ANCHORING */}
+        <div ref={checkoutRef} className="w-full bg-[#0f172a] border-2 border-slate-800 rounded-[1.5rem] p-6 shadow-2xl relative overflow-hidden">
+          <div className="absolute -top-10 -right-10 w-32 h-32 bg-rose-500/5 rounded-full blur-3xl"></div>
+          
+          <div className="flex flex-col items-center text-center mb-8">
+            <div className="w-12 h-12 bg-rose-500/10 rounded-full flex items-center justify-center mb-4 border border-rose-500/20">
+              <Lock className="w-6 h-6 text-rose-500" />
             </div>
+            <h2 className="text-xl font-black text-white uppercase tracking-tighter italic">Unlock Evidence Dossier</h2>
+            <p className="text-[10px] text-slate-500 font-medium max-w-[280px] mt-2">Get instant access to all deleted conversations, location history, and hidden photos.</p>
+          </div>
 
-            <div className="flex flex-col gap-1 items-end">
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-slate-500 line-through">Regular: $149.00</span>
+          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 mb-6">
+            {/* PRICE ANCHORING RIGHT-ALIGNED */}
+            <div className="flex justify-between items-start">
+              <div className="flex flex-col gap-1">
+                 <span className="bg-rose-500/10 border border-rose-500/20 text-rose-500 text-[9px] px-2 py-0.5 rounded-full font-black tracking-wider uppercase inline-block self-start">High Priority</span>
+                 <p className="text-[9px] text-slate-500 font-medium mt-2">Link created for: {location}</p>
               </div>
-              <div className="flex items-center gap-3">
-                <span className="text-4xl font-black text-emerald-400">Today: $37</span>
+
+              <div className="flex flex-col items-end gap-1">
+                <div className="flex items-center gap-1.5 mb-1">
+                   <span className="w-2 h-2 bg-rose-500 rounded-full animate-pulse"></span>
+                   <span className="text-xl font-mono font-black text-rose-500 tracking-tighter">{formatTime(timeLeft)}</span>
+                </div>
+                <div className="text-right">
+                  <p className="text-[11px] text-slate-500 line-through font-bold leading-none mb-1">Regular $149</p>
+                  <p className="text-3xl font-black text-emerald-400 leading-none">Today: $37</p>
+                </div>
               </div>
-              <p className="text-[10px] text-slate-500 mt-4 italic">Includes full evidence download & updates</p>
             </div>
           </div>
 
           <a
             href="https://pay.mycheckoutt.com/0198c1be-98b4-7315-a3bc-8c0fa9120e5c?ref="
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block w-full bg-emerald-500 hover:bg-emerald-400 text-[#0B1120] font-bold py-5 rounded-xl shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all transform hover:scale-[1.02] active:scale-95 uppercase tracking-widest text-sm relative z-10"
+            className="w-full bg-emerald-500 hover:bg-emerald-400 text-[#030712] font-black py-4 rounded-xl shadow-[0_0_40px_rgba(16,185,129,0.3)] transition-all flex items-center justify-center gap-3 uppercase tracking-[0.15em] text-xs"
           >
-            UNLOCK REPORT FOR $37
+            Unlock Now <ChevronRight className="w-4 h-4" />
           </a>
 
-          <div className="flex justify-center items-center gap-6 text-[10px] text-slate-500 mt-6 pt-4 border-t border-slate-900">
-            <span className="flex items-center gap-1.5"><Lock className="w-3.5 h-3.5 text-emerald-500/50" /> 256-bit SSL</span>
-            <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-emerald-500/50" /> 7-Day Guarantee</span>
+          <div className="flex justify-center gap-6 mt-6 pt-6 border-t border-slate-900/50 opacity-40">
+             <span className="flex items-center gap-1.5 text-[9px] font-black text-slate-400 uppercase"><Lock className="w-3 h-3" /> SSL Secure</span>
+             <span className="flex items-center gap-1.5 text-[9px] font-black text-slate-400 uppercase"><ShieldCheck className="w-3 h-3" /> Guaranteed</span>
           </div>
         </div>
 
-        {/* WHAT THEY DISCOVERED - REFINED SLIDER */}
-        <div className="bg-[#0a1220] rounded-[2.5rem] border border-slate-800 p-8 pt-12 mt-12 w-full max-w-4xl mx-auto shadow-2xl relative">
+        {/* 9. TESTIMONIALS - VIDEO + TEXT SIDE-BY-SIDE */}
+        <div className="w-full py-12">
           <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tighter italic leading-none">WHAT THEY DISCOVERED</h2>
-            <p className="text-slate-500 text-sm font-medium mt-3">Real reactions from people who unlocked their reports today.</p>
+            <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter">WHAT THEY DISCOVERED</h2>
+            <p className="text-[11px] text-slate-500 font-bold mt-2 uppercase tracking-widest">Real stories from real users</p>
           </div>
 
-          <div className="relative group/slider px-4">
+          <div className="relative max-w-[440px] mx-auto group">
             {/* Arrows */}
             <button 
               onClick={() => setTestimonialIndex(prev => (prev > 0 ? prev - 1 : testimonials.length - 1))}
-              className="absolute left-[-20px] top-[40%] z-30 w-12 h-12 rounded-full bg-[#1a2436] border border-slate-700 flex items-center justify-center text-white hover:bg-slate-800 transition-all shadow-xl"
+              className="absolute -left-4 top-[40%] z-20 w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-white hover:bg-slate-800 shadow-xl transition-all active:scale-90"
             >
-              <ChevronLeft size={24} />
+              <ChevronLeft size={20} />
             </button>
             <button 
               onClick={() => setTestimonialIndex(prev => (prev < testimonials.length - 1 ? prev + 1 : 0))}
-              className="absolute right-[-20px] top-[40%] z-30 w-12 h-12 rounded-full bg-[#1a2436] border border-slate-700 flex items-center justify-center text-white hover:bg-slate-800 transition-all shadow-xl"
+              className="absolute -right-4 top-[40%] z-20 w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-white hover:bg-slate-800 shadow-xl transition-all active:scale-90"
             >
-              <ChevronRight size={24} />
+              <ChevronRight size={20} />
             </button>
 
-            <div className="overflow-hidden">
-              <div 
-                className="flex transition-transform duration-700 cubic-bezier(0.4, 0, 0.2, 1) gap-4"
-                style={{ transform: `translateX(-${testimonialIndex * 52}%)` }}
-              >
-                {testimonials.map((t, i) => (
-                  <div key={i} className="min-w-[85%] md:min-w-[48%] flex-shrink-0 flex flex-col gap-4">
-                    {/* VIDEO CONTAINER */}
-                    <div className="w-full aspect-[9/16] bg-black rounded-[2rem] overflow-hidden border border-slate-800 shadow-2xl relative">
-                      <iframe 
-                        src={t.video}
-                        className="w-full h-full object-cover"
-                        allow="autoplay"
-                      />
-                      {/* Turn on sound badge */}
-                      <div className="absolute top-[45%] left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-lg border border-white/20 rounded-full py-2 px-5 flex items-center gap-2 pointer-events-none whitespace-nowrap">
-                        <Volume2 size={16} className="text-white fill-white/20" />
-                        <span className="text-[11px] font-black text-white uppercase tracking-wider">Turn on sound</span>
-                      </div>
-                      {/* Red Progress Bar */}
-                      <div className="absolute bottom-0 left-0 right-0 h-2 bg-slate-900/50 flex">
-                        <div className="h-full bg-red-600 shadow-[0_0_15px_rgba(220,38,38,0.6)]" style={{ width: i === 0 ? '100%' : '35%' }}></div>
-                      </div>
-                    </div>
-
-                    {/* TEXT CARD */}
-                    <div className="bg-[#0f172a]/80 backdrop-blur-sm border border-slate-800/80 p-6 rounded-3xl flex-grow shadow-lg">
-                      <h4 className="text-white font-black text-sm tracking-tight mb-2 uppercase italic leading-none">{t.name}</h4>
-                      <p className="text-[12px] text-slate-400 italic font-medium leading-relaxed">"{t.text}"</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <div className="overflow-hidden rounded-[2rem]">
+               <div 
+                 className="flex transition-transform duration-700 ease-in-out"
+                 style={{ transform: `translateX(-${testimonialIndex * 100}%)` }}
+               >
+                 {testimonials.map((t, i) => (
+                   <div key={i} className="min-w-full p-2">
+                     <div className="bg-[#0f172a] border border-slate-800 rounded-[1.75rem] overflow-hidden shadow-2xl">
+                        {/* Video */}
+                        <div className="aspect-[4/5] bg-black relative group/vid">
+                           <iframe 
+                             src={t.video}
+                             className="w-full h-full object-cover pointer-events-none"
+                             allow="autoplay"
+                           />
+                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6">
+                              <div className="flex items-center gap-3">
+                                 <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+                                    <Volume2 size={16} className="text-white" />
+                                 </div>
+                                 <div>
+                                    <p className="text-white font-black text-sm uppercase tracking-tighter">{t.name}</p>
+                                    <p className="text-[10px] text-slate-400 font-bold">Verified Result</p>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        {/* Quote Text */}
+                        <div className="p-6 bg-slate-900/40">
+                           <p className="text-slate-300 text-xs italic font-medium leading-relaxed">
+                             "{t.text}"
+                           </p>
+                        </div>
+                     </div>
+                   </div>
+                 ))}
+               </div>
             </div>
 
-            {/* Pagination Dots */}
-            <div className="flex justify-center gap-2.5 mt-10">
-              {testimonials.map((_, i) => (
-                <button 
-                  key={i}
-                  onClick={() => setTestimonialIndex(i)}
-                  className={`h-2.5 rounded-full transition-all duration-500 ${testimonialIndex === i ? 'bg-emerald-500 w-8' : 'bg-slate-800 w-2.5 hover:bg-slate-700'}`}
-                />
-              ))}
+            <div className="flex justify-center gap-2 mt-6">
+               {testimonials.map((_, i) => (
+                 <button 
+                   key={i}
+                   onClick={() => setTestimonialIndex(i)}
+                   className={`h-1.5 rounded-full transition-all duration-300 ${testimonialIndex === i ? 'bg-emerald-500 w-6' : 'bg-slate-800 w-1.5'}`}
+                 />
+               ))}
             </div>
           </div>
         </div>
 
-        {/* FAQ Section Refined */}
-        <div className="mt-12 bg-[#0f172a] border border-slate-800 rounded-[2.5rem] p-8 md:p-12 space-y-8 w-full shadow-2xl relative overflow-hidden">
-          <div className="absolute -top-10 -right-10 w-40 h-40 bg-emerald-500/5 rounded-full blur-3xl" />
-          <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-cyan-500/5 rounded-full blur-3xl" />
+        {/* 10. FAQ SECTION - BORDERED & COMPACT */}
+        <div className="w-full bg-[#0a0f1e] border-2 border-slate-800 rounded-[2rem] p-8 md:p-10 mb-12 shadow-2xl">
+          <h2 className="text-xl font-black text-white uppercase italic tracking-tighter text-center mb-8">FREQUENTLY ASKED</h2>
           
-          <h2 className="text-xl font-black text-white uppercase tracking-[0.2em] text-center mb-8 flex items-center justify-center gap-3">
-            <HelpCircle className="w-5 h-5 text-emerald-500" />
-            Frequently Asked Questions
-          </h2>
-          
-          <div className="space-y-4 relative z-10">
-            {[
-              { q: 'Is this 100% Anonymous?', a: 'Absolutely. There is no trace that you accessed this data. We don\'t notify them or need any access to their device.', i: <ShieldCheck className="w-5 h-5 text-emerald-500" /> },
-              { q: 'What exactly is in the report?', a: 'You will instantly download a dossier containing hidden social media activity, deleted messages logs, GPS history, and hidden gallery items found in our database scan.', i: <Search className="w-5 h-5 text-emerald-500" /> },
-              { q: 'What if I don\'t find anything?', a: 'If our scan comes back completely clean, you have the peace of mind you deserve. You are covered by our 7-Day Guarantee.', i: <Lock className="w-5 h-5 text-emerald-500" /> }
-            ].map((faq, idx) => (
-              <div key={idx} className="bg-[#0a1220]/40 border border-slate-800/80 hover:border-emerald-500/30 p-6 rounded-3xl transition-all group">
-                <h3 className="text-[15px] font-bold text-white flex gap-4 items-center mb-3">
-                  <span className="group-hover:rotate-12 transition-transform">{faq.i}</span> {faq.q}
-                </h3>
-                <p className="text-[13px] text-slate-400 leading-relaxed font-medium pl-9">
-                  {faq.a}
-                </p>
-              </div>
-            ))}
+          <div className="space-y-4">
+             {[
+               { q: 'Is this 100% Anonymous?', a: 'Completely. There is no trace that you accessed this dossier. We don\'t notify them or need any special device access.' },
+               { q: 'What if I find nothing?', a: 'If the report comes back clean, you enjoy the peace of mind you deserve. You are covered by our 7-Day Guarantee.' },
+               { q: 'How long does it take?', a: 'Access is instant. Once unlocked, the dossier is available for download immediately.' }
+             ].map((f, i) => (
+               <div key={i} className="bg-slate-900/30 border border-slate-800 p-5 rounded-2xl">
+                 <h4 className="text-sm font-black text-white italic mb-2">Q: {f.q}</h4>
+                 <p className="text-[11px] text-slate-500 leading-relaxed font-medium">{f.a}</p>
+               </div>
+             ))}
           </div>
-          
+
           <button
             onClick={scrollToCheckout}
-            className="w-full mt-6 bg-emerald-500 hover:bg-emerald-400 text-[#0B1120] font-black py-6 rounded-2xl shadow-[0_0_50px_rgba(16,185,129,0.3)] transition-all transform hover:scale-[1.02] active:scale-95 uppercase tracking-widest text-sm relative z-10"
+            className="w-full mt-10 bg-emerald-500 text-[#030712] font-black py-5 rounded-xl uppercase tracking-widest text-xs shadow-[0_0_30px_rgba(16,185,129,0.2)]"
           >
-            GET MY DOSSIER NOW
+            SECURE MY ACCESS NOW
           </button>
         </div>
-
       </div>
     )
   }
