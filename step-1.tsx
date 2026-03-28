@@ -41,12 +41,14 @@ export default function Step1() {
             <Instagram className="h-10 w-10 text-white-600" />
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 leading-tight">
-            Are you feeling that something <span className="text-red-500">isn't right</span> <span className="text-red-500"></span>in your relationship?<br />
+          <h1 className="text-5xl md:text-6xl font-extrabold leading-[1.1] tracking-tight uppercase text-center">
+            ARE THEY <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-pink-500">CHEATING</span> ON <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">SOCIAL MEDIA?</span>
           </h1>
 
-          <p className="text-lg text-gray-300 mb-8 max-w-xl">
-            With every passing minute, your worst fears may be coming true.
+          <p className="text-slate-400 text-lg leading-relaxed max-w-md text-center">
+            They think they deleted the conversations. <strong className="text-white">They are wrong.</strong> See who they are really messaging right now in under 2 minutes.
           </p>
 
           <p className="text-lg text-white font-bold mb-8 max-w-xl">
@@ -58,49 +60,17 @@ export default function Step1() {
             <span>Advanced Detection System - Updated November 2025</span>
           </div>
 
-          <div className="w-full max-w-lg space-y-4 text-left mb-8">
-            {/* Item 1 */}
-            <div className="bg-white/10 p-4 rounded-lg flex items-start gap-4 border-l-[6px] border-pink-500 shadow-md">
-              <div className="text-3xl mt-1">👤</div>
-              <div className="text-sm text-gray-200 leading-relaxed">
-                <span className="font-bold text-white text-base block mb-1">Stories and posts that "disappeared"?</span>
-                Discover content that was purposely hidden from you.
-              </div>
-            </div>
-
-            {/* Item 2 */}
-            <div className="bg-white/10 p-4 rounded-lg flex items-start gap-4 border-l-[6px] border-pink-500 shadow-md">
-              <div className="text-3xl mt-1">🔥</div>
-              <div className="text-sm text-gray-200 leading-relaxed">
-                <span className="font-bold text-white text-base block mb-1">Suspicious likes on intimate photos</span>
-                of people you don't even know. Monitor every compromising interaction.
-              </div>
-            </div>
-
-            {/* Item 3 */}
-            <div className="bg-white/10 p-4 rounded-lg flex items-start gap-4 border-l-[6px] border-pink-500 shadow-md">
-              <div className="text-3xl mt-1">📸</div>
-              <div className="text-sm text-gray-200 leading-relaxed">
-                <span className="font-bold text-white text-base block mb-1">Photos and videos saved in hidden folders.</span>
-                See what is really being kept.
-              </div>
-            </div>
-
-            {/* Item 4 */}
-            <div className="bg-white/10 p-4 rounded-lg flex items-start gap-4 border-l-[6px] border-pink-500 shadow-md">
-              <div className="text-3xl mt-1">💬</div>
-              <div className="text-sm text-gray-200 leading-relaxed">
-                <span className="font-bold text-white text-base block mb-1">"Deleted" messages recovered.</span>
-                Technology doesn't forget. Discover the conversations they tried to hide.
-              </div>
-            </div>
-          </div>
+          <ul className="w-full max-w-lg space-y-2 text-sm text-slate-300 mb-8">
+            <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Recover &apos;deleted&apos; messages.</li>
+            <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Discover hidden photos &amp; folders.</li>
+            <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" /> Track suspicious likes &amp; interactions.</li>
+          </ul>
 
           <button
             onClick={handleNavigate}
-            className="w-full max-w-lg bg-gradient-to-r from-red-500 to-pink-600 hover:opacity-90 text-white font-bold py-4 px-6 rounded-full text-lg shadow-lg transition-transform transform hover:scale-105"
+            className="w-full max-w-lg bg-emerald-500 hover:bg-emerald-400 text-[#060b19] font-bold py-4 px-8 rounded-lg shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all transform hover:scale-105 flex items-center justify-center gap-2 text-lg uppercase"
           >
-            🔍 DISCOVER THE TRUTH NOW
+            <Search className="w-5 h-5 flex-shrink-0" /> SCAN SOCIAL MEDIA NOW
           </button>
           <p className="text-xs text-gray-400 mt-2">100% anonymous investigation. They'll never know you checked.</p>
         </div>
