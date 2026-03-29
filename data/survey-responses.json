@@ -321,20 +321,32 @@
       "redFlags": [
         "appearance"
       ]
+    },
+    {
+      "id": 1774819293598,
+      "timestamp": "2026-03-29T21:21:33.598Z",
+      "gender": "male",
+      "ageRange": "25-34",
+      "relationshipStatus": "relationship",
+      "suspicionLevel": "gut",
+      "redFlags": [
+        "changed_passwords",
+        "late_nights"
+      ]
     }
   ],
   "summary": {
-    "totalResponses": 29,
+    "totalResponses": 30,
     "gender": [
       {
         "value": "female",
         "count": 19,
-        "percentage": 66
+        "percentage": 63
       },
       {
         "value": "male",
-        "count": 9,
-        "percentage": 31
+        "count": 10,
+        "percentage": 33
       },
       {
         "value": "non-binary",
@@ -345,18 +357,18 @@
     "ageRange": [
       {
         "value": "25-34",
-        "count": 20,
-        "percentage": 69
+        "count": 21,
+        "percentage": 70
       },
       {
         "value": "18-24",
         "count": 4,
-        "percentage": 14
+        "percentage": 13
       },
       {
         "value": "35-44",
         "count": 4,
-        "percentage": 14
+        "percentage": 13
       },
       {
         "value": "45+",
@@ -368,17 +380,17 @@
       {
         "value": "married",
         "count": 19,
-        "percentage": 66
+        "percentage": 63
       },
       {
         "value": "relationship",
-        "count": 4,
-        "percentage": 14
+        "count": 5,
+        "percentage": 17
       },
       {
         "value": "complicated",
         "count": 4,
-        "percentage": 14
+        "percentage": 13
       },
       {
         "value": "dating",
@@ -389,13 +401,13 @@
     "suspicionLevel": [
       {
         "value": "gut",
-        "count": 14,
-        "percentage": 48
+        "count": 15,
+        "percentage": 50
       },
       {
         "value": "certain",
         "count": 9,
-        "percentage": 31
+        "percentage": 30
       },
       {
         "value": "unsure",
@@ -412,7 +424,12 @@
       {
         "value": "hide_phone",
         "count": 15,
-        "percentage": 52
+        "percentage": 50
+      },
+      {
+        "value": "late_nights",
+        "count": 6,
+        "percentage": 20
       },
       {
         "value": "deleting_messages",
@@ -420,14 +437,9 @@
         "percentage": 17
       },
       {
-        "value": "late_nights",
-        "count": 5,
-        "percentage": 17
-      },
-      {
         "value": "changed_passwords",
-        "count": 3,
-        "percentage": 10
+        "count": 4,
+        "percentage": 13
       },
       {
         "value": "appearance_change",

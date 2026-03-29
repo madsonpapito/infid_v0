@@ -204,6 +204,10 @@ function DatingScannerContent() {
     }, 7000)
 
     setTimeout(() => {
+      // Mark as scanned to prevent future free attempts
+      document.cookie = "has_scanned=true; path=/; max-age=2592000"; // 30 days
+      localStorage.setItem("has_scanned", "true");
+      
       setStep(3)
       setScanPhase(0)
     }, 10000)
@@ -486,10 +490,28 @@ function DatingScannerContent() {
         </p>
 
         {/* Tabs */}
-        <div className="flex bg-slate-900 p-1 rounded-lg border border-slate-800">
-          <button onClick={() => { setActiveInputTab('instagram'); setErrorMessage(null); }} className={`flex-1 py-2 text-[10px] font-bold uppercase rounded-md transition-all ${activeInputTab === 'instagram' ? 'bg-slate-700 text-white shadow' : 'text-slate-500 hover:text-slate-300'}`}>Instagram</button>
-          <button onClick={() => { setActiveInputTab('photo'); setErrorMessage(null); }} className={`flex-1 py-2 text-[10px] font-bold uppercase rounded-md transition-all ${activeInputTab === 'photo' ? 'bg-slate-700 text-white shadow' : 'text-slate-500 hover:text-slate-300'}`}>Photo Upload</button>
-          <button onClick={() => { setActiveInputTab('whatsapp'); setErrorMessage(null); }} className={`flex-1 py-2 text-[10px] font-bold uppercase rounded-md transition-all ${activeInputTab === 'whatsapp' ? 'bg-emerald-900/30 text-emerald-400 border border-emerald-500/30 shadow' : 'text-slate-500 hover:text-slate-300'}`}>WhatsApp</button>
+        <div className="flex bg-slate-900 p-1.5 rounded-xl border border-slate-800 shadow-inner">
+          <button 
+            type="button"
+            onClick={() => { setActiveInputTab('instagram'); setErrorMessage(null); }} 
+            className={`flex-1 py-3 text-xs font-bold uppercase rounded-lg transition-all ${activeInputTab === 'instagram' ? 'bg-slate-700 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
+          >
+            Instagram
+          </button>
+          <button 
+            type="button"
+            onClick={() => { setActiveInputTab('photo'); setErrorMessage(null); }} 
+            className={`flex-1 py-3 text-xs font-bold uppercase rounded-lg transition-all ${activeInputTab === 'photo' ? 'bg-slate-700 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
+          >
+            Photo
+          </button>
+          <button 
+            type="button"
+            onClick={() => { setActiveInputTab('whatsapp'); setErrorMessage(null); }} 
+            className={`flex-1 py-3 text-xs font-bold uppercase rounded-lg transition-all ${activeInputTab === 'whatsapp' ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
+          >
+            WhatsApp
+          </button>
         </div>
 
         {/* Content Area */}
@@ -497,8 +519,8 @@ function DatingScannerContent() {
 
           {/* PHOTO UPLOAD */}
           {activeInputTab === 'photo' && (
-            <label className="block w-full h-32 border-2 border-dashed border-slate-600 rounded-xl hover:border-cyan-500 hover:bg-cyan-500/5 transition-all cursor-pointer relative flex flex-col items-center justify-center gap-2 group">
-              <input type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
+            <label className="block w-full h-40 border-2 border-dashed border-slate-600 rounded-2xl hover:border-cyan-500 hover:bg-cyan-500/5 transition-all cursor-pointer relative flex flex-col items-center justify-center gap-3 group overflow-hidden">
+              <input type="file" accept="image/*" className="sr-only" onChange={handleImageChange} />
               {imagePreview && activeInputTab === 'photo' ? (
                 <img src={imagePreview} className="absolute inset-0 w-full h-full object-cover rounded-xl opacity-50" />
               ) : (
@@ -1284,11 +1306,13 @@ function DatingScannerContent() {
   // MAIN RENDER
   // --------------------------------------------------------
   return (
-    <div className="min-h-screen flex flex-col items-center bg-[#0B1120] font-sans selection:bg-cyan-500/30">
-      {/* PERFORMANCE PRELOAD */}
+    <>
+      {/* PERFORMANCE PRELOAD HOISTED BY NEXT.JS */}
       <link rel="preconnect" href="https://play.tynk.ai" />
       <link rel="dns-prefetch" href="https://play.tynk.ai" />
       <link rel="prerender" href="https://play.tynk.ai/p/55c0525d-8354-4cd6-a98f-34a31df5b1aa" />
+
+      <div className="min-h-[100dvh] flex flex-col items-center bg-[#0B1120] font-sans selection:bg-cyan-500/30">
       
       <main className="w-full h-full flex-grow">
         {step === 1 && renderInputStep()}
@@ -1303,7 +1327,8 @@ function DatingScannerContent() {
       )}
 
       {renderMatchModal()}
-    </div>
+      </div>
+    </>
   )
 }
 

@@ -9,17 +9,18 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark bg-[#0B1120]">
       <head>
         <GoogleTagManager gtmId="GTM-PK6HB293" />
         <Script
           type="text/javascript"
           src="https://app.monetizze.com.br/upsell_incorporado.php"
           strategy="beforeInteractive"
+          async
         />
 
       </head>
-      <body>{children}</body>
+      <body className="bg-[#0B1120]">{children}</body>
     </html>
   )
 }

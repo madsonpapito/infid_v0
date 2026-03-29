@@ -15,7 +15,7 @@ export default function HomeWireframeMatch() {
   };
 
   return (
-    <div className="min-h-screen bg-[#060b19] text-white font-sans selection:bg-emerald-500/30">
+    <div className="min-h-[100dvh] bg-[#0B1120] text-white font-sans selection:bg-emerald-500/30">
 
       {/* HEADER / NAV (Implicit in style) */}
       <nav className="flex justify-between items-center p-6 container mx-auto absolute top-0 left-0 right-0 z-20">
