@@ -25,36 +25,24 @@ export default function RootLayout({
           }}
         />
 
-        {/* UTMify Config & Pixel */}
-        <Script
-          id="utmify-pixel"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-             __html: `
-              window.pixelId = "682dffae44b8147a3883c0f";
-              var a = document.createElement("script");
-              a.setAttribute("async", "");
-              a.setAttribute("defer", "");
-              a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-              document.head.appendChild(a);
+        {/* UTMify Config */}
+        <Script id="pixel-config" strategy="beforeInteractive">
+          {`
+            window.pixelId = "682dffae44b8147a3883c0f";
+            window.tiktokPixelId = "65c3e4a682a84c95c83125a5";
+          `}
+        </Script>
 
-              window.tiktokPixelId = "65c3e4a682a84c95c83125a5";
-              var b = document.createElement("script");
-              b.setAttribute("async", "");
-              b.setAttribute("defer", "");
-              b.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel-tiktok.js");
-              document.head.appendChild(b);
-             `
-          }}
-        />
+        {/* Load Tracking Pixels */}
+        <Script src="https://cdn.utmify.com.br/scripts/pixel/pixel.js" strategy="afterInteractive" />
+        <Script src="https://cdn.utmify.com.br/scripts/pixel/pixel-tiktok.js" strategy="afterInteractive" />
 
         {/* UTMify Passagem */}
-        <Script
-          id="utmify-passagem"
-          strategy="beforeInteractive"
-          src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-          data-utmify-prevent-sck="true"
-          data-utmify-prevent-subids="true"
+        <Script 
+          src="https://cdn.utmify.com.br/scripts/utms/latest.js" 
+          data-utmify-prevent-sck="true" 
+          data-utmify-prevent-subids="true" 
+          strategy="afterInteractive" 
         />
 
         <Script
