@@ -11,7 +11,8 @@ export default function Step1WireframeMatch() {
     const router = useRouter();
 
     const handleStart = () => {
-        router.push('/step-2');
+        const searchParams = typeof window !== 'undefined' ? window.location.search : '';
+        router.push(`/step-2${searchParams}`);
     };
 
     return (
