@@ -25,17 +25,31 @@ export default function RootLayout({
           }}
         />
 
-        {/* UTMify Config */}
-        <Script id="pixel-config" strategy="beforeInteractive">
-          {`
-            window.pixelId = "682dffae44b8147a3883c0f";
-            window.tiktokPixelId = "65c3e4a682a84c95c83125a5";
-          `}
-        </Script>
-
         {/* Load Tracking Pixels */}
-        <Script src="https://cdn.utmify.com.br/scripts/pixel/pixel.js" strategy="afterInteractive" />
-        <Script src="https://cdn.utmify.com.br/scripts/pixel/pixel-tiktok.js" strategy="afterInteractive" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.pixelId = "692dffaa44e0d147a3883c6f";
+              var a = document.createElement("script");
+              a.setAttribute("async", "");
+              a.setAttribute("defer", "");
+              a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+              document.head.appendChild(a);
+            `,
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.tikTokPixelId = "69c3efdd82a84d95c63125a5";
+              var b = document.createElement("script");
+              b.setAttribute("async", "");
+              b.setAttribute("defer", "");
+              b.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel-tiktok.js");
+              document.head.appendChild(b);
+            `,
+          }}
+        />
 
         {/* UTMify Passagem */}
         <Script 
