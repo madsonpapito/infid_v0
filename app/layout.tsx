@@ -1,4 +1,5 @@
 import type React from "react"
+import { GoogleTagManager } from "@next/third-parties/google"
 import Script from "next/script"
 import "./globals.css"
 
@@ -10,6 +11,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark bg-[#0B1120]">
       <head>
+        <GoogleTagManager gtmId="GTM-PK6HB293" />
+
         {/* Microsoft Clarity */}
         <Script
           id="clarity-script"
@@ -22,32 +25,6 @@ export default function RootLayout({
                   y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
               })(window, document, "clarity", "script", "utn9owtst6");
             `
-          }}
-        />
-
-        {/* Load Tracking Pixels */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.pixelId = "692dffaa44e0d147a3883c6f";
-              var a = document.createElement("script");
-              a.setAttribute("async", "");
-              a.setAttribute("defer", "");
-              a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-              document.head.appendChild(a);
-            `,
-          }}
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.tikTokPixelId = "69c3efdd82a84d95c63125a5";
-              var b = document.createElement("script");
-              b.setAttribute("async", "");
-              b.setAttribute("defer", "");
-              b.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel-tiktok.js");
-              document.head.appendChild(b);
-            `,
           }}
         />
 
