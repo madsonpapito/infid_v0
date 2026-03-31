@@ -45,6 +45,10 @@ const photosList = ["/images/censored/photo1.jpg", "/images/censored/photo2.jpg"
 function DatingScannerContent() {
   const searchParams = useSearchParams()
   const searchQuery = searchParams.get('q')
+
+  const queryString = searchParams.toString();
+  const checkoutHref = queryString ? `https://etr.tindercheck.xyz/trk/offer/1?${queryString}` : "https://etr.tindercheck.xyz/trk/offer/1";
+
   const [step, setStep] = useState(1)
 
   // Inputs
@@ -1092,7 +1096,7 @@ function DatingScannerContent() {
           </div>
 
           <a
-            href="https://etr.tindercheck.xyz/trk/offer/1"
+            href={checkoutHref}
             className="block w-full bg-emerald-500 hover:bg-emerald-400 text-[#0B1120] font-bold py-4 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all transform hover:scale-[1.02] uppercase tracking-widest text-sm relative z-10"
           >
             UNLOCK REPORT FOR $37
