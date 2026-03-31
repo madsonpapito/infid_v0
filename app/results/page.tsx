@@ -15,11 +15,11 @@ function RemarketingResultsContent() {
   
   // Link para os usuários (dinâmico)
   const checkoutLink = queryString 
-    ? `https://etr.tindercheck.xyz/trk/offer/2?${queryString}` 
-    : "https://etr.tindercheck.xyz/trk/offer/2"
+    ? `https://etr.tindercheck.xyz/trk/offer/3?${queryString}` 
+    : "https://etr.tindercheck.xyz/trk/offer/3"
 
   // Link para o Robô do EasyTracker validar (estático)
-  const crawlerLink = "https://etr.tindercheck.xyz/trk/offer/2"
+  const crawlerLink = "https://etr.tindercheck.xyz/trk/offer/3"
 
   const [timeLeft, setTimeLeft] = useState(415) // ~7 minutes
   const [progress, setProgress] = useState(0)
