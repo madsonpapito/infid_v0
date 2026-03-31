@@ -1092,9 +1092,7 @@ function DatingScannerContent() {
           </div>
 
           <a
-            href="https://pay.mycheckoutt.com/0198c1be-98b4-7315-a3bc-8c0fa9120e5c?ref="
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#"
             className="block w-full bg-emerald-500 hover:bg-emerald-400 text-[#0B1120] font-bold py-4 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all transform hover:scale-[1.02] uppercase tracking-widest text-sm relative z-10 easyt-next-page"
           >
             UNLOCK REPORT FOR $37
