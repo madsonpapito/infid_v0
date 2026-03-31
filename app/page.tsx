@@ -60,12 +60,12 @@ export default function HomeWireframeMatch() {
             </ul>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <button
-                onClick={handleStart}
-                className="bg-emerald-500 hover:bg-emerald-400 text-[#060b19] font-bold py-4 px-8 rounded-lg shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all transform hover:scale-105 flex items-center justify-center gap-2 text-lg uppercase mx-auto"
+              <a
+                href="#"
+                className="bg-emerald-500 hover:bg-emerald-400 text-[#060b19] font-bold py-4 px-8 rounded-lg shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all transform hover:scale-105 flex items-center justify-center gap-2 text-lg uppercase mx-auto easyt-next-page"
               >
                 <Search className="w-5 h-5 flex-shrink-0" /> SCAN SOCIAL MEDIA NOW
-              </button>
+              </a>
               <p className="text-xs text-slate-500 mt-2 sm:hidden text-center">No credit card required for scan.</p>
             </div>
             <p className="text-xs text-slate-500 italic">100% anonymous. They&apos;ll never know you checked.</p>
@@ -341,12 +341,12 @@ export default function HomeWireframeMatch() {
           <p className="text-slate-400 text-lg mb-8">
             You can keep wondering. Keep losing sleep. Keep checking their phone when they&apos;re not looking. Or you can get answers in the next 2 minutes.
           </p>
-          <button
-            onClick={handleStart}
-            className="bg-emerald-500 hover:bg-emerald-400 text-[#060b19] font-bold py-5 px-10 rounded-full text-xl shadow-[0_0_30px_rgba(16,185,129,0.5)] transition-all transform hover:scale-105"
+          <a
+            href="#"
+            className="inline-block bg-emerald-500 hover:bg-emerald-400 text-[#060b19] font-bold py-5 px-10 rounded-full text-xl shadow-[0_0_30px_rgba(16,185,129,0.5)] transition-all transform hover:scale-105 easyt-next-page"
           >
             START INVESTIGATION NOW
-          </button>
+          </a>
           <div className="mt-6 flex flex-col md:flex-row justify-center gap-4 text-xs text-slate-500">
             <span className="flex items-center gap-1 justify-center"><Lock className="w-3 h-3" /> 100% Anonymous</span>
             <span className="flex items-center gap-1 justify-center"><CheckCircle2 className="w-3 h-3" /> 127,000+ Scans Completed</span>
