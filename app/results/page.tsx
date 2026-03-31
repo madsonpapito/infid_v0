@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, Suspense } from "react"
+import { useSearchParams } from "next/navigation"
 import { 
   CheckCircle2, ShieldCheck, Lock, AlertTriangle, 
   Clock, Ghost, Database, Zap, ArrowRight,
@@ -8,7 +9,13 @@ import {
   ChevronLeft, ChevronRight, LockOpen, Eye
 } from "lucide-react"
 
-export default function RemarketingResultsPage() {
+function RemarketingResultsContent() {
+  const searchParams = useSearchParams()
+  const queryString = searchParams.toString()
+  const checkoutLink = queryString 
+    ? `https://etr.tindercheck.xyz/trk/offer/1?${queryString}` 
+    : "https://etr.tindercheck.xyz/trk/offer/1"
+
   const [timeLeft, setTimeLeft] = useState(415) // ~7 minutes
   const [progress, setProgress] = useState(0)
   const [location, setLocation] = useState("Your Location")
@@ -50,8 +57,6 @@ export default function RemarketingResultsPage() {
       videoScrollRef.current.scrollBy({ left: dir === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
     }
   }
-
-  const checkoutLink = "https://pay.mycheckoutt.com/019d05e9-aebd-72bc-a523-1eeac448b138?ref="
 
   return (
     <div className="min-h-screen bg-[#0B1120] text-slate-100 font-sans selection:bg-rose-500/30 overflow-x-hidden">
@@ -353,5 +358,13 @@ export default function RemarketingResultsPage() {
         }
       `}</style>
     </div>
+  )
+}
+
+export default function RemarketingResultsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-black text-white flex items-center justify-center p-4"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-rose-500"></div></div>}>
+      <RemarketingResultsContent />
+    </Suspense>
   )
 }
