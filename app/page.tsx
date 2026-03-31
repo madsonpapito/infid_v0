@@ -1,6 +1,10 @@
 "use client"
 
 import {
+  useState,
+  useEffect
+} from "react"
+import {
   Search, ShieldCheck, Lock, Smartphone, Moon, Clock, HeartCrack,
   CheckCircle2, Star, MapPin, ChevronRight, Menu
 } from 'lucide-react'
@@ -9,6 +13,14 @@ import { useRouter } from 'next/navigation'
 
 export default function HomeWireframeMatch() {
   const router = useRouter();
+
+  // Retention: Redirect to results campaign if already scanned
+  useEffect(() => {
+    const hasScanned = localStorage.getItem("has_scanned");
+    if (hasScanned === "true") {
+      window.location.href = "https://etr.tindercheck.xyz/trk/019d2690-ac41-721b-90ad-16cd63cf50f9/019d43d2-ac88-723c-bab8-346a25008cf5";
+    }
+  }, []);
 
   const handleStart = () => {
     const searchParams = typeof window !== 'undefined' ? window.location.search : '';

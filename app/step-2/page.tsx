@@ -44,6 +44,14 @@ const photosList = ["/images/censored/photo1.jpg", "/images/censored/photo2.jpg"
 
 function DatingScannerContent() {
   const searchParams = useSearchParams()
+
+  // Retention: Redirect to results campaign if already scanned
+  useEffect(() => {
+    const hasScanned = localStorage.getItem("has_scanned");
+    if (hasScanned === "true") {
+      window.location.href = "https://etr.tindercheck.xyz/trk/019d2690-ac41-721b-90ad-16cd63cf50f9/019d43d2-ac88-723c-bab8-346a25008cf5";
+    }
+  }, []);
   const searchQuery = searchParams.get('q')
 
   const queryString = searchParams.toString();
