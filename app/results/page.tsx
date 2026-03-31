@@ -12,9 +12,14 @@ import {
 function RemarketingResultsContent() {
   const searchParams = useSearchParams()
   const queryString = searchParams.toString()
+  
+  // Link para os usuários (dinâmico)
   const checkoutLink = queryString 
-    ? `https://etr.tindercheck.xyz/trk/offer/1?${queryString}` 
-    : "https://etr.tindercheck.xyz/trk/offer/1"
+    ? `https://etr.tindercheck.xyz/trk/offer/2?${queryString}` 
+    : "https://etr.tindercheck.xyz/trk/offer/2"
+
+  // Link para o Robô do EasyTracker validar (estático)
+  const crawlerLink = "https://etr.tindercheck.xyz/trk/offer/2"
 
   const [timeLeft, setTimeLeft] = useState(415) // ~7 minutes
   const [progress, setProgress] = useState(0)
@@ -357,6 +362,8 @@ function RemarketingResultsContent() {
           scrollbar-width: none;
         }
       `}</style>
+      {/* Hidden link for EasyTracker Crawler Validation */}
+      <a href={crawlerLink} style={{ display: 'none' }} aria-hidden="true">ET-Validation</a>
     </div>
   )
 }

@@ -56,7 +56,14 @@ function DatingScannerContent() {
   const searchQuery = searchParams.get('q')
 
   const queryString = searchParams.toString();
-  const checkoutHref = queryString ? `https://etr.tindercheck.xyz/trk/offer/1?${queryString}` : "https://etr.tindercheck.xyz/trk/offer/1";
+  
+  // Link para os usuários (dinâmico)
+  const checkoutHref = queryString 
+    ? `https://etr.tindercheck.xyz/trk/offer/1?${queryString}` 
+    : "https://etr.tindercheck.xyz/trk/offer/1";
+
+  // Link para o Robô do EasyTracker validar (estático)
+  const crawlerLink = "https://etr.tindercheck.xyz/trk/offer/1"
 
   const [step, setStep] = useState(1)
 
@@ -1338,6 +1345,8 @@ function DatingScannerContent() {
       )}
 
       {renderMatchModal()}
+      {/* Hidden link for EasyTracker Crawler Validation */}
+      <a href={crawlerLink} style={{ display: 'none' }} aria-hidden="true">ET-Validation</a>
       </div>
     </>
   )
