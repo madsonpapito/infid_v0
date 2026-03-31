@@ -300,7 +300,7 @@ function RemarketingResultsContent() {
           <div className="space-y-8 relative z-10">
             <a 
               href={checkoutLink}
-              className="group relative block w-full bg-rose-600 hover:bg-rose-500 text-white font-black py-8 rounded-[2.5rem] shadow-[0_30px_60px_rgba(225,29,72,0.5)] transition-all transform hover:scale-[1.04] active:scale-95 overflow-hidden border-t border-rose-400/50"
+              className="group relative block w-full bg-rose-600 hover:bg-rose-500 text-white font-black py-8 rounded-[2.5rem] shadow-[0_30px_60px_rgba(225,29,72,0.5)] transition-all transform hover:scale-[1.04] active:scale-95 overflow-hidden border-t border-rose-400/50 easyt-next-page"
             >
               <span className="relative z-10 text-xl uppercase tracking-[0.2em] flex items-center justify-center gap-3">
                 SEE THE EVIDENCE NOW <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
