@@ -42,11 +42,6 @@ export default function Downsell1MZPage() {
 
     return (
         <div className="bg-[#0B1120] min-h-screen font-sans flex flex-col items-center pb-20 selection:bg-rose-500/30">
-            <Script 
-                src="https://app.monetizze.com.br/upsell_incorporado.php" 
-                strategy="afterInteractive"
-            />
-            
             {/* --- TOP BANNER --- */}
             <div className="w-full bg-rose-600/20 text-center py-2 px-4 sticky top-0 z-50 backdrop-blur-md border-b border-rose-500/30">
                 <p className="text-[10px] font-bold text-rose-500 uppercase tracking-widest animate-pulse flex items-center justify-center gap-2">
@@ -144,6 +139,10 @@ export default function Downsell1MZPage() {
                         </div>
 
                         <div className="w-full flex flex-col items-center gap-3">
+                            <Script 
+                                src="https://app.monetizze.com.br/upsell_incorporado.php" 
+                                strategy="lazyOnload"
+                            />
                             {/* MONETIZZE ONE-CLICK IFRAME */}
                             <div className="w-full bg-white rounded-xl overflow-hidden p-2">
                                 <iframe 

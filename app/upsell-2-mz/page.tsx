@@ -160,16 +160,11 @@ export default function Upsell2MZPage() {
     const cleanUsername = username.replace('@', '').trim();
 
     return (
-        <div className="bg-[#0B1120] min-h-screen font-sans text-slate-200 pb-20 selection:bg-rose-500/30">
-            <Script 
-                src="https://app.monetizze.com.br/upsell_incorporado.php" 
-                strategy="afterInteractive"
-            />
-
-            <div className="bg-rose-600/10 border-b border-rose-500/20 text-center py-2 px-4 sticky top-0 z-50 backdrop-blur-md">
-                <p className="text-[10px] font-bold text-rose-400 uppercase tracking-widest animate-pulse flex items-center justify-center gap-2">
-                    <AlertTriangle className="w-3 h-3" />
-                    Warning: Do not close console via Monetizze
+        <div className="bg-[#0B1120] min-h-screen font-sans text-slate-200 selection:bg-cyan-500/30 overflow-x-hidden">
+            <div className="w-full bg-rose-600 backdrop-blur-md text-center py-2 px-4 sticky top-0 z-50 border-b border-rose-500/50">
+                <p className="text-xs font-bold text-white uppercase tracking-widest animate-pulse flex items-center justify-center gap-2">
+                    <AlertTriangle className="w-4 h-4" />
+                    CRITICAL ALERT: INVESTIGATION TERMINATING VIA MONETIZZE
                 </p>
             </div>
 
@@ -581,6 +576,10 @@ export default function Upsell2MZPage() {
                                 <h2 className="text-lg font-black text-white mb-2 uppercase tracking-wide">UNLOCK FULL REPORT</h2>
                                 <p className="text-xs text-slate-400 mb-6 px-4">Instant access via Monetizze. 100% Anonymous.</p>
                                 <div className="w-full flex flex-col items-center gap-3 pt-2">
+                                    <Script 
+                                        src="https://app.monetizze.com.br/upsell_incorporado.php" 
+                                        strategy="lazyOnload"
+                                    />
                                     {/* MONETIZZE ONE-CLICK IFRAME */}
                                     <div className="w-full bg-white rounded-xl overflow-hidden p-2">
                                         <iframe 

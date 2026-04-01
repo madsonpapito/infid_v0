@@ -253,10 +253,6 @@ export default function Upsell1MZPage() {
 
   return (
     <div className="bg-[#0B1120] min-h-screen font-sans text-slate-200 selection:bg-cyan-500/30">
-      <Script 
-        src="https://app.monetizze.com.br/upsell_incorporado.php" 
-        strategy="afterInteractive"
-      />
       <div className="w-full bg-rose-600/90 backdrop-blur-md text-center py-2 px-4 sticky top-0 z-50 border-b border-rose-500/50">
         <p className="text-xs font-bold text-white uppercase tracking-widest animate-pulse flex items-center justify-center gap-2">
           <AlertTriangle className="w-4 h-4" />
@@ -488,6 +484,10 @@ export default function Upsell1MZPage() {
                   <span className="font-mono font-bold text-rose-500">{formatTime(timeLeft)}</span>
                 </div>
                 <div className="w-full flex flex-col items-center gap-3 pt-2">
+                  <Script 
+                    src="https://app.monetizze.com.br/upsell_incorporado.php" 
+                    strategy="lazyOnload"
+                  />
                   {/* MONETIZZE ONE-CLICK IFRAME */}
                   <div className="w-full bg-white rounded-xl overflow-hidden p-2">
                     <iframe 

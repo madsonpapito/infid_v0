@@ -29,11 +29,6 @@ export default function Downsell2MZPage() {
 
     return (
         <div className="bg-[#0B1120] min-h-screen font-sans flex flex-col items-center pb-20 selection:bg-rose-500/30">
-            <Script 
-                src="https://app.monetizze.com.br/upsell_incorporado.php" 
-                strategy="afterInteractive"
-            />
-
             {/* Banner */}
             <div className="w-full bg-rose-600/20 text-center py-2 px-4 sticky top-0 z-50 backdrop-blur-md border-b border-rose-500/30">
                 <p className="text-[10px] font-bold text-rose-500 uppercase tracking-widest animate-pulse flex items-center justify-center gap-2">
@@ -136,22 +131,26 @@ export default function Downsell2MZPage() {
                     </div>
 
                     {/* PERFECTPAY */}
-                    <div className="w-full flex flex-col items-center gap-3">
-                        {/* MONETIZZE ONE-CLICK IFRAME */}
-                        <div className="w-full bg-white rounded-xl overflow-hidden p-2">
-                            <iframe 
-                                className="iframeUpsell w-full min-h-[100px]" 
-                                data-chave="8cab820db9585cfc5e26336180ac06e2"
-                                style={{ border: 'none' }}
-                            ></iframe>
+                        <div className="w-full flex flex-col items-center gap-3">
+                            <Script 
+                                src="https://app.monetizze.com.br/upsell_incorporado.php" 
+                                strategy="lazyOnload"
+                            />
+                            {/* MONETIZZE ONE-CLICK IFRAME */}
+                            <div className="w-full bg-white rounded-xl overflow-hidden p-2">
+                                <iframe 
+                                    className="iframeUpsell w-full min-h-[100px]" 
+                                    data-chave="8cab820db9585cfc5e26336180ac06e2"
+                                    style={{ border: 'none' }}
+                                ></iframe>
+                            </div>
+                            <a
+                                href="/tk.html"
+                                className="text-blue-500 text-sm hover:underline"
+                            >
+                                I don&apos;t want access
+                            </a>
                         </div>
-                        <a
-                            href="/tk.html"
-                            className="text-blue-500 text-sm hover:underline"
-                        >
-                            I don&apos;t want access
-                        </a>
-                    </div>
                 </div>
 
                 <p className="text-center text-[10px] text-slate-600 font-mono uppercase">
