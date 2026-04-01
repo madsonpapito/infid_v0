@@ -161,7 +161,7 @@ export default function Downsell1MZPage() {
                             {/* MONETIZZE ONE-CLICK IFRAME */}
                             <div className="w-full bg-white rounded-xl overflow-hidden p-2">
                                 <iframe 
-                                    className="iframeUpsell w-full min-h-[480px]" 
+                                    className="iframeUpsell w-full min-h-[360px]" 
                                     data-chave="fbcca0dee7e45612187337906c8d4d71"
                                     style={{ border: 'none' }}
                                 ></iframe>
