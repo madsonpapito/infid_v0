@@ -204,7 +204,7 @@ export default function InitPage2() {
 
                     <div className="pt-2">
                         <Link
-                            href="/member"
+                            href="/thanks"
                             className="text-slate-400 hover:text-slate-600 text-sm transition-colors inline-block border-b border-transparent hover:border-slate-400 pb-0.5"
                         >
                             No thanks. I am confident I can control my emotions during the confrontation without help. I will risk getting overwhelmed.

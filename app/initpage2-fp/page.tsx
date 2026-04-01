@@ -195,7 +195,7 @@ export default function InitPage2FP() {
                             href="https://go.plataformafortpay.com.br/mdyshb7mie"
                             className="block w-full md:max-w-xl mx-auto bg-teal-600 hover:bg-teal-700 text-white text-lg md:text-xl font-bold py-5 px-10 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1"
                         >
-                            ✅ YES! Add The &ldquo;Emotional Shielding Protocol&rdquo; To My Order
+                            YES! Add The &ldquo;Emotional Shielding Protocol&rdquo; To My Order
                         </Link>
                         <p className="text-slate-500 text-sm">
                             Instant Digital Access • Secure Payment
@@ -204,7 +204,7 @@ export default function InitPage2FP() {
 
                     <div className="pt-2">
                         <Link
-                            href="/member"
+                            href="/thanks"
                             className="text-slate-400 hover:text-slate-600 text-sm transition-colors inline-block border-b border-transparent hover:border-slate-400 pb-0.5"
                         >
                             No thanks. I am confident I can control my emotions during the confrontation without help. I will risk getting overwhelmed.

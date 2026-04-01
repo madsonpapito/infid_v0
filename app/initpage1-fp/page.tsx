@@ -188,6 +188,27 @@ export default function InitPage1FP() {
                 </div>
             </section>
 
+            {/* Urgency Section */}
+            <section className="py-16 px-4 md:px-8 bg-amber-50 border-y-4 border-amber-400">
+                <div className="max-w-3xl mx-auto text-center space-y-6">
+                    <h3 className="text-2xl md:text-3xl font-bold text-amber-900">
+                        Why You Need This Right Now:
+                    </h3>
+                    <p className="text-lg text-amber-800 leading-relaxed">
+                        If you leave this page, you might never find this offer again. But more importantly, <strong>digital evidence disappears with time.</strong>
+                    </p>
+                    <p className="text-lg text-amber-900 font-semibold">
+                        Every day you wait is a day they might clear the cache or update the software.
+                    </p>
+                    <p className="text-amber-800 leading-relaxed">
+                        You don&apos;t need to be a tech genius. You don&apos;t need to guess passwords. You just need to follow the checklist.
+                    </p>
+                    <p className="text-xl font-bold text-amber-900 pt-4">
+                        Get the Peace of Mind You Deserve.
+                    </p>
+                </div>
+            </section>
+
             {/* Offer Section */}
             <section className="py-20 px-4 md:px-8 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white">
                 <div className="max-w-3xl mx-auto text-center space-y-8">
