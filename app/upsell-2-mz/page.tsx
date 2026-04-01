@@ -35,14 +35,20 @@ export default function Upsell2MZPage() {
     // Instagram posts state
     const [posts, setPosts] = useState<{ id: string; imageUrl: string }[]>([]);
 
-    // Shuffled image pools — computed once per scan, stable across re-renders
     const [shuffledLiked, setShuffledLiked] = useState<string[]>([]);
     const [shuffledPerfil, setShuffledPerfil] = useState<string[]>([]);
 
-    // Lógica PerfectPay One Click será injetada aqui
+    // MONETIZZE ONE-CLICK SCRIPT INJECTION
     useEffect(() => {
-        if (step !== 'results') return;
-        // Placeholder para script da PerfectPay
+        if (step === 'results') {
+            const timer = setTimeout(() => {
+                const script = document.createElement('script');
+                script.src = "https://app.monetizze.com.br/upsell_incorporado.php";
+                script.async = true;
+                document.body.appendChild(script);
+            }, 300);
+            return () => clearTimeout(timer);
+        }
     }, [step]);
 
     // Auto-search Instagram profile as user types
@@ -576,10 +582,6 @@ export default function Upsell2MZPage() {
                                 <h2 className="text-lg font-black text-white mb-2 uppercase tracking-wide">UNLOCK FULL REPORT</h2>
                                 <p className="text-xs text-slate-400 mb-6 px-4">Instant access via Monetizze. 100% Anonymous.</p>
                                 <div className="w-full flex flex-col items-center gap-3 pt-2">
-                                    <Script 
-                                        src="https://app.monetizze.com.br/upsell_incorporado.php" 
-                                        strategy="lazyOnload"
-                                    />
                                     {/* MONETIZZE ONE-CLICK IFRAME */}
                                     <div className="w-full bg-white rounded-xl overflow-hidden p-2">
                                         <iframe 

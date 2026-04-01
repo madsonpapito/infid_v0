@@ -247,6 +247,20 @@ export default function Upsell1MZPage() {
     return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
 
+  // MONETIZZE ONE-CLICK SCRIPT INJECTION
+  useEffect(() => {
+    if (step === 'report') {
+      // Small delay to ensure iframe is truly in DOM
+      const timer = setTimeout(() => {
+        const script = document.createElement('script');
+        script.src = "https://app.monetizze.com.br/upsell_incorporado.php";
+        script.async = true;
+        document.body.appendChild(script);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [step]);
+
   const genderKey = gender === 'Male' ? 'male' : 'female';
   const recentLogImages = RECENT_LOGS_IMAGES[genderKey];
   const recoveredImages = RECOVERED_MEDIA_IMAGES[genderKey];
@@ -484,10 +498,6 @@ export default function Upsell1MZPage() {
                   <span className="font-mono font-bold text-rose-500">{formatTime(timeLeft)}</span>
                 </div>
                 <div className="w-full flex flex-col items-center gap-3 pt-2">
-                  <Script 
-                    src="https://app.monetizze.com.br/upsell_incorporado.php" 
-                    strategy="lazyOnload"
-                  />
                   {/* MONETIZZE ONE-CLICK IFRAME */}
                   <div className="w-full bg-white rounded-xl overflow-hidden p-2">
                     <iframe 

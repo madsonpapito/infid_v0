@@ -20,12 +20,7 @@ export default function RootLayout({
           strategy="beforeInteractive"
           async
         />
-        
-        <Script
-          type="text/javascript"
-          src="https://app.monetizze.com.br/upsell_incorporado.php"
-          strategy="beforeInteractive"
-        />
+
       </head>
       <body className="bg-[#0B1120]">{children}</body>
     </html>

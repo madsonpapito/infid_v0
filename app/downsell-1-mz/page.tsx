@@ -29,9 +29,15 @@ export default function Downsell1MZPage() {
         }
     }, [timeLeft]);
 
-    // Lógica PerfectPay One Click será injetada aqui
+    // MONETIZZE ONE-CLICK SCRIPT INJECTION
     useEffect(() => {
-        // Placeholder para script da PerfectPay
+        const timer = setTimeout(() => {
+            const script = document.createElement('script');
+            script.src = "https://app.monetizze.com.br/upsell_incorporado.php";
+            script.async = true;
+            document.body.appendChild(script);
+        }, 300);
+        return () => clearTimeout(timer);
     }, []);
 
     const formatTime = (seconds: number) => {
@@ -139,10 +145,6 @@ export default function Downsell1MZPage() {
                         </div>
 
                         <div className="w-full flex flex-col items-center gap-3">
-                            <Script 
-                                src="https://app.monetizze.com.br/upsell_incorporado.php" 
-                                strategy="lazyOnload"
-                            />
                             {/* MONETIZZE ONE-CLICK IFRAME */}
                             <div className="w-full bg-white rounded-xl overflow-hidden p-2">
                                 <iframe 
