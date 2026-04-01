@@ -32,5 +32,7 @@ export default function RootLayout({
 }
 
 export const metadata = {
+  title: "Infidelity Finder - Exposed Hidden Profiles",
+  description: "Check if your partner is hiding something on social media and dating apps.",
   generator: "v0.app",
 }

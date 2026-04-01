@@ -879,11 +879,12 @@ function DatingScannerContent() {
             <div className="text-center space-y-2">
               <h2 className="text-xl font-bold text-white uppercase tracking-widest">Scanning Deep Web</h2>
               <p className="text-cyan-400 font-mono text-sm">
-                {scanPhase === 1 && "Accessing Tinder API..."}
+                {scanPhase === 1 && "Accessing Social Media Databases..."}
                 {scanPhase === 2 && "Running Facial Recognition..."}
                 {scanPhase === 3 && "Triangulating GPS Data..."}
-                {scanPhase === 4 && "Decrypting Private Logs..."}
+                {scanPhase === 4 && "Recovering Cloud Backups..."}
                 {scanPhase === 5 && "Compiling Evidence..."}
+                {scanPhase === 0 && "Locating User Device..."}
               </p>
             </div>
 

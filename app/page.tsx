@@ -35,7 +35,7 @@ export default function HomeWireframeMatch() {
       <nav className="flex justify-between items-center p-6 container mx-auto absolute top-0 left-0 right-0 z-20">
         <div className="flex items-center gap-2 font-bold text-lg tracking-tight">
           <Search className="w-5 h-5 text-emerald-400" />
-          <span>TinderCheck</span>
+          <span>Infidelity Finder</span>
         </div>
         <div className="hidden md:flex gap-6 text-sm text-slate-400 font-medium">
           <a href="#" className="hover:text-white transition-colors">Home</a>
@@ -210,7 +210,7 @@ export default function HomeWireframeMatch() {
                   <div className="p-4 border-b border-slate-800/50 flex justify-between items-center">
                     <div className="flex items-center gap-1 opacity-50">
                       <Search className="w-3 h-3 text-emerald-500" />
-                      <span className="text-[10px] font-bold text-white tracking-widest">TINDERCHECK</span>
+                      <span className="text-[10px] font-bold text-white tracking-widest text-uppercase">INFIDELITY FINDER</span>
                     </div>
                     <div className="h-1.5 w-8 bg-slate-800 rounded-full"></div>
                   </div>
@@ -303,7 +303,7 @@ export default function HomeWireframeMatch() {
               Weeks of Doubt <br /> <span className="text-rose-400 font-bold text-lg">Priceless Suffering</span>
             </div>
             <div className="bg-emerald-500/10 p-4 rounded-xl text-emerald-400 border border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
-              TinderCheck Scan <br /> <span className="text-white font-bold text-lg">1 Free Trial Credit</span>
+              Infidelity Finder Scan <br /> <span className="text-white font-bold text-lg">1 Free Trial Credit</span>
             </div>
           </div>
         </div>
@@ -380,9 +380,9 @@ export default function HomeWireframeMatch() {
           </div>
           <div className="flex items-center justify-center gap-2 mb-4">
             <Search className="w-4 h-4 text-emerald-500" />
-            <span className="font-bold text-white">TinderCheck</span>
+            <span className="font-bold text-white">Infidelity Finder</span>
           </div>
-          <p className="text-xs text-slate-600">Disclaimer: TinderCheck is for informational purposes only. We do not guarantee the accuracy of information.</p>
+          <p className="text-xs text-slate-600">Disclaimer: Infidelity Finder is for informational purposes only. We do not guarantee the accuracy of information.</p>
           <p className="text-xs text-slate-600 mt-2">© 2026 Infidelity Find. All rights reserved.</p>
         </div>
       </footer>
