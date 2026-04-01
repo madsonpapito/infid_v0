@@ -74,7 +74,7 @@ export default function HomeWireframeMatch() {
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <a
-                href="#"
+                href="/step-1"
                 className="bg-emerald-500 hover:bg-emerald-400 text-[#060b19] font-bold py-4 px-8 rounded-lg shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all transform hover:scale-105 flex items-center justify-center gap-2 text-lg uppercase mx-auto easyt-next-page"
               >
                 <Search className="w-5 h-5 flex-shrink-0" /> SCAN SOCIAL MEDIA NOW
@@ -355,7 +355,7 @@ export default function HomeWireframeMatch() {
             You can keep wondering. Keep losing sleep. Keep checking their phone when they&apos;re not looking. Or you can get answers in the next 2 minutes.
           </p>
           <a
-            href="#"
+            href="/step-1"
             className="inline-block bg-emerald-500 hover:bg-emerald-400 text-[#060b19] font-bold py-5 px-10 rounded-full text-xl shadow-[0_0_30px_rgba(16,185,129,0.5)] transition-all transform hover:scale-105 easyt-next-page"
           >
             START INVESTIGATION NOW
