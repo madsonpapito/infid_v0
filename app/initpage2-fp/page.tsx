@@ -5,12 +5,6 @@ import Link from "next/link"
 export default function InitPage2FP() {
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
-            {/* Warning Header Strip */}
-            <div className="bg-amber-100 text-amber-800 py-3 px-4 text-center border-b border-amber-200">
-                <p className="text-sm md:text-base font-bold uppercase tracking-wide">
-                    ⚠️ FINAL STEP: THIS IS YOUR LAST UPGRADE OPTION.
-                </p>
-            </div>
 
             {/* Hero Section */}
             <section className="bg-white pt-12 pb-16 px-4 md:px-8 shadow-sm">
@@ -202,14 +196,6 @@ export default function InitPage2FP() {
                         </p>
                     </div>
 
-                    <div className="pt-2">
-                        <Link
-                            href="/thanks"
-                            className="text-slate-400 hover:text-slate-600 text-sm transition-colors inline-block border-b border-transparent hover:border-slate-400 pb-0.5"
-                        >
-                            No thanks. I am confident I can control my emotions during the confrontation without help. I will risk getting overwhelmed.
-                        </Link>
-                    </div>
                 </div>
             </section>
 

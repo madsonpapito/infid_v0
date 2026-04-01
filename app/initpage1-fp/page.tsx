@@ -5,12 +5,6 @@ import Link from "next/link"
 export default function InitPage1FP() {
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
-            {/* Warning Header Strip */}
-            <div className="bg-red-600 text-white py-3 px-4 text-center">
-                <p className="text-sm md:text-base font-bold uppercase tracking-wide animate-pulse">
-                    ⚠️ WAIT! YOUR ORDER IS NOT COMPLETE YET. DO NOT CLOSE THIS PAGE. ⚠️
-                </p>
-            </div>
 
             {/* Hero Section */}
             <section className="bg-white pt-12 pb-16 px-4 md:px-8 shadow-sm">
@@ -235,14 +229,6 @@ export default function InitPage1FP() {
                         </p>
                     </div>
 
-                    <div className="pt-4">
-                        <Link
-                            href="/initpage2-fp"
-                            className="text-slate-400 hover:text-slate-300 text-sm underline transition-colors inline-block"
-                        >
-                            No thanks, I don&apos;t want the digital proof. I will rely only on my intuition and body language signs.
-                        </Link>
-                    </div>
                 </div>
             </section>
 
