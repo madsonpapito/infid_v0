@@ -1341,7 +1341,7 @@ function DatingScannerContent() {
 
       {step !== 2 && (
         <footer className="py-6 text-center border-t border-slate-800 w-full mt-auto">
-          <p className="text-[10px] text-slate-600 uppercase tracking-widest">© 2026 Digital Truth Check. All rights reserved.</p>
+          <p className="text-[10px] text-slate-600 uppercase tracking-widest">© 2026 Infidelity Finder. All rights reserved.</p>
         </footer>
       )}
 

@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 import {
     Instagram, AlertTriangle, EyeOff, Lock, Clock, ShieldAlert, FileWarning
 } from 'lucide-react';
+import Script from 'next/script';
 
-export default function Downsell2FPPage() {
+export default function Downsell2MZPage() {
     const [timeLeft, setTimeLeft] = useState(299); // 04:59
 
     useEffect(() => {
@@ -15,21 +16,9 @@ export default function Downsell2FPPage() {
         }
     }, [timeLeft]);
 
-    // Injeta o script da FortPay manualmente para garantir compatibilidade com React
+    // Lógica PerfectPay One Click será injetada aqui
     useEffect(() => {
-        const existing = document.getElementById('fortpay-oneclick-d2');
-        if (existing) existing.remove();
-
-        const script = document.createElement('script');
-        script.id = 'fortpay-oneclick-d2';
-        script.src = 'https://app.plataformafortpay.com.br/js/oneclick.js';
-        script.async = true;
-        document.body.appendChild(script);
-
-        return () => {
-            const added = document.getElementById('fortpay-oneclick-d2');
-            if (added) added.remove();
-        };
+        // Placeholder para script da PerfectPay
     }, []);
 
     const formatTime = (seconds: number) => {
@@ -40,12 +29,16 @@ export default function Downsell2FPPage() {
 
     return (
         <div className="bg-[#0B1120] min-h-screen font-sans flex flex-col items-center pb-20 selection:bg-rose-500/30">
+            <Script 
+                src="https://app.monetizze.com.br/upsell_incorporado.php" 
+                strategy="afterInteractive"
+            />
 
             {/* Banner */}
             <div className="w-full bg-rose-600/20 text-center py-2 px-4 sticky top-0 z-50 backdrop-blur-md border-b border-rose-500/30">
                 <p className="text-[10px] font-bold text-rose-500 uppercase tracking-widest animate-pulse flex items-center justify-center gap-2">
                     <FileWarning className="w-4 h-4" />
-                    CRITICAL ALERT: EVIDENCE DELETION SCHEDULED
+                    CRITICAL ALERT: EVIDENCE DELETION SCHEDULED VIA MONETIZZE
                 </p>
             </div>
 
@@ -63,7 +56,7 @@ export default function Downsell2FPPage() {
 
                     <p className="text-slate-400 text-xs leading-relaxed max-w-xs mx-auto font-mono text-center">
                         The scan results are stored in temporary cache. <br />
-                        <span className="text-white font-bold text-sm">Unlock everything for 50% less.</span>
+                        <span className="text-white font-bold text-sm">Unlock everything (Monetizze) for 50% less.</span>
                     </p>
                 </div>
 
@@ -81,7 +74,7 @@ export default function Downsell2FPPage() {
                     <div className="p-4 bg-rose-500/5 border-b border-slate-700/50 flex items-start gap-3">
                         <ShieldAlert className="text-rose-500 shrink-0 w-5 h-5 mt-0.5" />
                         <p className="text-xs text-rose-400 font-medium leading-relaxed">
-                            Suspicious DMs and hidden stories found. <br />
+                            Suspicious DMs and hidden stories found via Monetizze. <br />
                             <span className="text-white font-bold">Last chance to view before permanent purge.</span>
                         </p>
                     </div>
@@ -131,7 +124,7 @@ export default function Downsell2FPPage() {
 
                     <h2 className="text-lg font-black text-rose-500 uppercase tracking-widest">UNLOCK FULL REPORT</h2>
                     <div className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded text-[10px] font-bold inline-block mb-4 tracking-wider shadow-[0_0_15px_rgba(16,185,129,0.2)] uppercase">
-                        ADMIN DISCOUNT: 50% APPLIED
+                        ADMIN DISCOUNT: 50% APPLIED VIA MONETIZZE
                     </div>
 
                     <div className="bg-rose-500/5 border border-rose-500/20 rounded-lg p-3 mb-4 flex justify-between items-center px-6">
@@ -142,15 +135,19 @@ export default function Downsell2FPPage() {
                         <p className="text-xl font-mono font-bold text-rose-500 tracking-tight">{formatTime(timeLeft)}</p>
                     </div>
 
-                    {/* FORTPAY */}
+                    {/* PERFECTPAY */}
                     <div className="w-full flex flex-col items-center gap-3">
-                        <button type="button" data-fortpay="pat5wfnksy"
-                            className="fortpay_btn w-full py-4 bg-gradient-to-r from-[#3d94f6] to-[#1e62d0] hover:from-[#4da3ff] hover:to-[#2a75e8] text-white font-bold rounded-xl shadow-lg transition-all transform hover:scale-[1.02] text-center"
-                        >
-                            VIEW FULL REPORT</button>
+                        {/* MONETIZZE ONE-CLICK IFRAME */}
+                        <div className="w-full bg-white rounded-xl overflow-hidden p-2">
+                            <iframe 
+                                className="iframeUpsell w-full min-h-[100px]" 
+                                data-chave="8cab820db9585cfc5e26336180ac06e2"
+                                style={{ border: 'none' }}
+                            ></iframe>
+                        </div>
                         <a
                             href="/tk.html"
-                            className="text-[#004faa] text-sm hover:underline"
+                            className="text-blue-500 text-sm hover:underline"
                         >
                             I don&apos;t want access
                         </a>

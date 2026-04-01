@@ -11,6 +11,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark bg-[#0B1120]">
       <head>
+        <title>Infidelity Finder | Deep Scan</title>
         <GoogleTagManager gtmId="GTM-WQ3KMTB3" />
 
         {/* EasyTracker */}

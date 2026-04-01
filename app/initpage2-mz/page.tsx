@@ -2,15 +2,9 @@ import { LegalFooter } from "@/components/legal-footer"
 import { Check, Shield, Headphones, Mic, Scroll, Brain, Lock, XCircle, Heart } from "lucide-react"
 import Link from "next/link"
 
-export default function InitPage2() {
+export default function InitPage2PP() {
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
-            {/* Warning Header Strip */}
-            <div className="bg-amber-100 text-amber-800 py-3 px-4 text-center border-b border-amber-200">
-                <p className="text-sm md:text-base font-bold uppercase tracking-wide">
-                    ⚠️ FINAL STEP: THIS IS YOUR LAST UPGRADE OPTION.
-                </p>
-            </div>
 
             {/* Hero Section */}
             <section className="bg-white pt-12 pb-16 px-4 md:px-8 shadow-sm">
@@ -191,25 +185,18 @@ export default function InitPage2() {
                     </div>
 
                     <div className="space-y-4 pt-4">
+                        {/* LINK DA MONETIZZE */}
                         <Link
-                            href="https://pay.mycheckoutt.com/019827bf-dd10-703f-a9cf-64bad0eeb361?ref="
+                            href="https://app.monetizze.com.br/checkout/KLU420702"
                             className="block w-full md:max-w-xl mx-auto bg-teal-600 hover:bg-teal-700 text-white text-lg md:text-xl font-bold py-5 px-10 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1"
                         >
                             YES! Add The &ldquo;Emotional Shielding Protocol&rdquo; To My Order
                         </Link>
                         <p className="text-slate-500 text-sm">
-                            Instant Digital Access • Secure Payment
+                            Instant Digital Access • Secure Payment via Monetizze
                         </p>
                     </div>
 
-                    <div className="pt-2">
-                        <Link
-                            href="/tk.html"
-                            className="text-slate-400 hover:text-slate-600 text-sm transition-colors inline-block border-b border-transparent hover:border-slate-400 pb-0.5"
-                        >
-                            No thanks. I am confident I can control my emotions during the confrontation without help. I will risk getting overwhelmed.
-                        </Link>
-                    </div>
                 </div>
             </section>
 
