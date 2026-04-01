@@ -247,16 +247,28 @@ export default function Upsell1MZPage() {
     return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
 
-  // MONETIZZE ONE-CLICK SCRIPT INJECTION
+  // MONETIZZE ONE-CLICK SCRIPT INJECTION (FORCED START)
   useEffect(() => {
     if (step === 'report') {
-      // Small delay to ensure iframe is truly in DOM
       const timer = setTimeout(() => {
-        const script = document.createElement('script');
-        script.src = "https://app.monetizze.com.br/upsell_incorporado.php";
-        script.async = true;
-        document.body.appendChild(script);
-      }, 300);
+        // 1. Manually set src for all iframes with class iframeUpsell
+        const iframes = document.getElementsByClassName("iframeUpsell");
+        for (let i = 0; i < iframes.length; i++) {
+          const iframe = iframes[i] as HTMLIFrameElement;
+          const chave = iframe.getAttribute("data-chave");
+          if (chave && (!iframe.src || iframe.src.includes("about:blank"))) {
+            iframe.src = `https://app.monetizze.com.br/1buyclick_incorporado.php?u=${chave}&i=${i}`;
+          }
+        }
+
+        // 2. Inject official script for operational logic
+        if (!document.querySelector('script[src="https://app.monetizze.com.br/upsell_incorporado.php"]')) {
+          const script = document.createElement("script");
+          script.src = "https://app.monetizze.com.br/upsell_incorporado.php";
+          script.async = true;
+          document.body.appendChild(script);
+        }
+      }, 500);
       return () => clearTimeout(timer);
     }
   }, [step]);
