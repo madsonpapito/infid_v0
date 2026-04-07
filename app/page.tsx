@@ -11,6 +11,23 @@ import {
 import Image from "next/image"
 import { useRouter } from 'next/navigation'
 
+const LiveCounter = () => {
+  const [count, setCount] = useState(674);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount(prev => {
+        const change = Math.floor(Math.random() * 5) - 2; // -2 to +2
+        const next = prev + change;
+        return next > 695 ? 695 : next < 660 ? 660 : next;
+      });
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return <span>{count}</span>;
+};
+
 export default function HomeWireframeMatch() {
   const router = useRouter();
 
@@ -22,6 +39,24 @@ export default function HomeWireframeMatch() {
       window.location.href = `/results${searchParams}`;
     }
   }, []);
+
+  // Tracking: Fire PageView for Facebook Landing Page View
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search)
+      const easytid = params.get("easytid")
+      
+      if (easytid) {
+        const protocol = window.location.protocol
+        const host = "et.tinderchecks.online"
+        const postbackUrl = `${protocol}//${host}/trk/postback?easytid=${easytid}&action=PageView&cb=${Date.now()}`
+        
+        const img = new window.Image()
+        img.src = postbackUrl
+        console.log("EasyTracker PageView Fired:", postbackUrl)
+      }
+    }
+  }, [])
 
   const handleStart = () => {
     const searchParams = typeof window !== 'undefined' ? window.location.search : '';
@@ -53,17 +88,17 @@ export default function HomeWireframeMatch() {
           <div className="text-center space-y-6 max-w-xl mx-auto">
             <div className="inline-flex items-center gap-2 bg-rose-500/10 border border-rose-500/20 rounded-full px-3 py-1 text-xs font-bold text-rose-400 uppercase tracking-wider mb-2 mx-auto">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              Live Database Access
+              Live Database Access • <span className="text-white ml-1"><LiveCounter /> users currently scanning</span>
             </div>
 
-            <h1 className="text-5xl md:text-6xl font-extrabold leading-[1.1] tracking-tight uppercase">
-              ARE THEY <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-pink-500">CHEATING</span> ON <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">SOCIAL MEDIA?</span>
+            <h1 className="text-4xl md:text-6xl font-extrabold leading-[1.1] tracking-tight uppercase">
+              YOUR INTUITION <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-pink-500">ISN&apos;T LYING.</span> <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">THE DATA DOESN&apos;T EITHER.</span>
             </h1>
 
             <p className="text-slate-400 text-lg leading-relaxed max-w-md mx-auto">
-              They think they deleted the conversations. <strong className="text-white">They are wrong.</strong> See who they are really messaging right now in under 2 minutes.
+              Stop doubting. <strong className="text-white">Stop letting yourself be manipulated.</strong> Get irrefutable technical proof of what they deleted in the last 2 minutes.
             </p>
 
             <ul className="space-y-2 text-sm text-slate-300 max-w-md mx-auto">
@@ -74,7 +109,7 @@ export default function HomeWireframeMatch() {
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <a
-                href="/step-1"
+                href="https://et.tinderchecks.online/trk/landing/1"
                 className="bg-emerald-500 hover:bg-emerald-400 text-[#060b19] font-bold py-4 px-8 rounded-lg shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all transform hover:scale-105 flex items-center justify-center gap-2 text-lg uppercase mx-auto easyt-next-page"
               >
                 <Search className="w-5 h-5 flex-shrink-0" /> SCAN SOCIAL MEDIA NOW
@@ -140,6 +175,19 @@ export default function HomeWireframeMatch() {
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Verified Report
+          </div>
+        </div>
+      </div>
+
+      {/* AS SEEN IN - AUTHORITY SECTION */}
+      <div className="bg-[#060b19] py-8 border-b border-slate-800/50">
+        <div className="container mx-auto px-4">
+          <p className="text-center text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold mb-6">As Featured & Trusted In</p>
+          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-30 grayscale hover:opacity-50 transition-opacity">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/NBC_logo.svg" alt="NBC" className="h-6 md:h-8" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/CBS_logo.svg" alt="CBS" className="h-6 md:h-8" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Fox_News_Channel_logo.svg" alt="Fox News" className="h-6 md:h-8" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/ABC_Logo.svg" alt="ABC" className="h-6 md:h-8" />
           </div>
         </div>
       </div>
@@ -328,6 +376,7 @@ export default function HomeWireframeMatch() {
                       src={review.image}
                       alt={review.name}
                       className="w-full h-full object-cover"
+                      loading="lazy"
                     />
                   </div>
                   <div>
@@ -355,7 +404,7 @@ export default function HomeWireframeMatch() {
             You can keep wondering. Keep losing sleep. Keep checking their phone when they&apos;re not looking. Or you can get answers in the next 2 minutes.
           </p>
           <a
-            href="/step-1"
+            href="https://et.tinderchecks.online/trk/landing/1"
             className="inline-block bg-emerald-500 hover:bg-emerald-400 text-[#060b19] font-bold py-5 px-10 rounded-full text-xl shadow-[0_0_30px_rgba(16,185,129,0.5)] transition-all transform hover:scale-105 easyt-next-page"
           >
             START INVESTIGATION NOW

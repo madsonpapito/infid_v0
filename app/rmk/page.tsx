@@ -13,13 +13,13 @@ function RemarketingResultsContent() {
   const searchParams = useSearchParams()
   const queryString = searchParams.toString()
   
-  // Link atualizado para Fortpay (dinâmico com parâmetros)
+  // Link para EasyTracker Offers (dinâmico com parâmetros UTM)
   const checkoutLink = queryString 
-    ? `https://go.plataformafortpay.com.br/oavin?${queryString}` 
-    : "https://go.plataformafortpay.com.br/oavin"
+    ? `https://et.tinderchecks.online/trk/offer?${queryString}` 
+    : "https://et.tinderchecks.online/trk/offer"
 
-  // Link para validação (se necessário)
-  const crawlerLink = "https://go.plataformafortpay.com.br/oavin"
+  // Link para o Robô do EasyTracker validar (estático)
+  const crawlerLink = "https://et.tinderchecks.online/trk/offer"
 
   const [timeLeft, setTimeLeft] = useState(415) // ~7 minutes
   const [progress, setProgress] = useState(0)
@@ -65,16 +65,15 @@ function RemarketingResultsContent() {
 
   return (
     <div className="min-h-screen bg-[#0B1120] text-slate-100 font-sans selection:bg-rose-500/30 overflow-x-hidden">
-      {/* 100% Complete Progress Bar */}
+      {/* SCARCITY BAR (V1 STYLE) */}
       <div className="fixed top-0 left-0 w-full z-50">
-        <div className="bg-rose-600 h-9 flex items-center justify-center relative overflow-hidden">
-          <div 
-            className="absolute left-0 top-0 h-full bg-rose-500 transition-all duration-1000 ease-out"
-            style={{ width: `${progress}%` }}
-          ></div>
-          <span className="relative z-10 text-[10px] font-black uppercase tracking-[0.25em] text-white animate-pulse">
-             FINAL DOSSIER: 100% RECOVERED
-          </span>
+        <div className="bg-rose-600 h-10 flex items-center justify-center px-4 shadow-[0_4px_20px_rgba(225,29,72,0.4)]">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+            <span className="text-[10px] font-black uppercase tracking-widest text-white whitespace-nowrap">
+              YOUR PRIVATE REPORT WILL EXPIRE IN: <span className="underline">{formatTime(timeLeft)}</span>
+            </span>
+          </div>
         </div>
       </div>
 
@@ -264,7 +263,7 @@ function RemarketingResultsContent() {
               {/* JESSICA */}
               <div className="w-[280px] shrink-0 snap-center flex flex-col gap-4">
                 <div className="w-full aspect-[9/16] rounded-[1.5rem] overflow-hidden border border-slate-800 shadow-2xl bg-black relative">
-                  <iframe src="https://play.tynk.ai/p/55c0525d-8354-4cd6-a98f-34a31df5b1aa" width="100%" height="100%" style={{ border: "none" }} allowFullScreen></iframe>
+                  <iframe src="https://play.tynk.ai/p/55c0525d-8354-4cd6-a98f-34a31df5b1aa" width="100%" height="100%" style={{ border: "none" }} allowFullScreen loading="lazy"></iframe>
                 </div>
                 <div className="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 shadow-inner">
                   <h4 className="font-black text-white text-xs mb-2 uppercase tracking-wide">Jessica, 31 — Orlando, FL</h4>
@@ -275,7 +274,7 @@ function RemarketingResultsContent() {
               {/* AMANDA */}
               <div className="w-[280px] shrink-0 snap-center flex flex-col gap-4">
                 <div className="w-full aspect-[9/16] rounded-[1.5rem] overflow-hidden border border-slate-800 shadow-2xl bg-black relative">
-                  <iframe src="https://play.tynk.ai/p/d04e1286-c92c-4f39-a679-2ce4b742cd59" width="100%" height="100%" style={{ border: "none" }} allowFullScreen></iframe>
+                  <iframe src="https://play.tynk.ai/p/d04e1286-c92c-4f39-a679-2ce4b742cd59" width="100%" height="100%" style={{ border: "none" }} allowFullScreen loading="lazy"></iframe>
                 </div>
                 <div className="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 shadow-inner">
                   <h4 className="font-black text-white text-xs mb-2 uppercase tracking-wide">Amanda, 44 — Dallas, TX</h4>

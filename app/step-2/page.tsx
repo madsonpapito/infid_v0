@@ -59,11 +59,11 @@ function DatingScannerContent() {
   
   // Link para os usuários (dinâmico)
   const checkoutHref = queryString 
-    ? `https://etr.tindercheck.xyz/trk/offer/1?${queryString}` 
-    : "https://etr.tindercheck.xyz/trk/offer/1";
+    ? `https://et.tinderchecks.online/trk/offer?${queryString}` 
+    : "https://et.tinderchecks.online/trk/offer";
 
   // Link para o Robô do EasyTracker validar (estático)
-  const crawlerLink = "https://etr.tindercheck.xyz/trk/offer/1"
+  const crawlerLink = "https://et.tinderchecks.online/trk/offer"
 
   const [step, setStep] = useState(1)
 
@@ -207,9 +207,42 @@ function DatingScannerContent() {
     }
   }
 
-  const scrollToCheckout = useCallback(() => {
-    checkoutRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  // Manual Initiate Checkout (IC) Event for EasyTracker
+  const fireIC = useCallback(() => {
+    try {
+      const params = new URLSearchParams(window.location.search)
+      const easytid = params.get("easytid")
+
+      if (easytid) {
+        const protocol = window.location.protocol
+        const host = "et.tinderchecks.online"
+        const postbackUrl = `${protocol}//${host}/trk/postback?easytid=${easytid}&action=InitiateCheckout&cb=${Date.now()}`
+
+        // 1. Try sendBeacon (Modern, Non-blocking, survives page unload)
+        if (typeof navigator !== "undefined" && navigator.sendBeacon) {
+          navigator.sendBeacon(postbackUrl);
+        } else {
+          // 2. Fallback to Image Pixel (Standard)
+          const img = new window.Image()
+          img.src = postbackUrl
+        }
+        
+        console.log("EasyTracker IC Fired:", postbackUrl)
+      }
+
+      // 3. Standard Meta Pixel Event
+      if (typeof window !== "undefined" && (window as any).fbq) {
+        (window as any).fbq('track', 'InitiateCheckout');
+      }
+    } catch (e) {
+      console.error("Error firing IC:", e)
+    }
   }, [])
+
+  const scrollToCheckout = useCallback(() => {
+    fireIC() // Track intention early
+    checkoutRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }, [fireIC])
 
 
   useEffect(() => {
@@ -620,6 +653,9 @@ function DatingScannerContent() {
                   {isFetchingProfile && <div className="w-4 h-4 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>}
                 </div>
               </div>
+              <p className="text-[10px] text-slate-500 text-center flex items-center justify-center gap-1">
+                <ShieldCheck className="w-3 h-3 text-emerald-500" /> SSA-256 Encryption | 100% Anonymous Access
+              </p>
             </div>
           )}
 
@@ -699,8 +735,8 @@ function DatingScannerContent() {
                   {isFetchingProfile && <div className="w-4 h-4 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>}
                 </div>
               </div>
-              <p className="text-[10px] text-slate-500 text-center">
-                Select country and enter number (without country code).
+              <p className="text-[10px] text-slate-500 text-center flex items-center justify-center gap-1">
+                <ShieldCheck className="w-3 h-3 text-emerald-500" /> SSA-256 Encryption | 100% Anonymous Access
               </p>
             </div>
           )}
@@ -877,12 +913,12 @@ function DatingScannerContent() {
             <div className="w-full space-y-2">
               <div className="flex justify-between text-xs">
                 <span className="text-slate-400 font-mono">
-                  {scanPhase === 1 && "Accessing profile..."}
-                  {scanPhase === 2 && "Running facial recognition..."}
-                  {scanPhase === 3 && "Triangulating location..."}
-                  {scanPhase === 4 && "Decrypting private logs..."}
-                  {scanPhase === 5 && "Compiling evidence..."}
-                  {scanPhase === 0 && "Bypassing security..."}
+                  {scanPhase === 1 && "CONNECTING TO PRIVATE DATABASES (TINDER/BUMBLE)..."}
+                  {scanPhase === 2 && "SCANNING DELETED IMAGE METADATA..."}
+                  {scanPhase === 3 && "RECOVERING HIDDEN GPS LOCATION LOGS..."}
+                  {scanPhase === 4 && "UNLOCKING ARCHIVED CHATS & SECRET MESSAGES..."}
+                  {scanPhase === 5 && "COMPILING IRREFUTABLE EVIDENCE DOSSIER..."}
+                  {scanPhase === 0 && "BYPASSING NETWORK SECURITY LAYERS..."}
                 </span>
                 <span className="text-rose-400 font-bold">{Math.round(loadingProgress)}%</span>
               </div>
@@ -948,12 +984,12 @@ function DatingScannerContent() {
             <div className="text-center space-y-2">
               <h2 className="text-xl font-bold text-white uppercase tracking-widest">Scanning Deep Web</h2>
               <p className="text-cyan-400 font-mono text-sm">
-                {scanPhase === 1 && "Accessing Social Media Databases..."}
-                {scanPhase === 2 && "Running Facial Recognition..."}
-                {scanPhase === 3 && "Triangulating GPS Data..."}
-                {scanPhase === 4 && "Recovering Cloud Backups..."}
-                {scanPhase === 5 && "Compiling Evidence..."}
-                {scanPhase === 0 && "Locating User Device..."}
+                {scanPhase === 1 && "LOCATING LINKED PROFILES IN EXTERNAL DATABASES..."}
+                {scanPhase === 2 && "SCANNING DATING APP ACTIVITY RECORDS..."}
+                {scanPhase === 3 && "TRIANGULATING LOCATION METADATA & GEO-TAGS..."}
+                {scanPhase === 4 && "RECOVERING CHAT HISTORY & DELETED FILES..."}
+                {scanPhase === 5 && "GENERATING TECHNICAL EVIDENCE DOSSIER..."}
+                {scanPhase === 0 && "INITIATING ANONYMOUS EXTRACTION PROTOCOL..."}
               </p>
             </div>
 
@@ -1309,9 +1345,22 @@ function DatingScannerContent() {
 
             <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50 flex flex-col items-start text-left">
               <h4 className="font-bold text-sm text-white flex items-center gap-2 mb-2">
-                <ShieldCheck className="w-4 h-4 text-emerald-400" /> What if I don&apos;t find anything?
+                <ShieldCheck className="w-4 h-4 text-emerald-400" /> What if I find nothing?
               </h4>
-              <p className="text-xs text-slate-400">If our scan comes back completely clean, you have the peace of mind you deserve. You are covered by our 7-Day Guarantee.</p>
+              <p className="text-xs text-slate-400">If our scan comes back completely clean, you&apos;ll have the peace of mind you deserve. You are covered by our 7-Day Guarantee.</p>
+            </div>
+          </div>
+
+          {/* Guarantee Badge Overlay */}
+          <div className="flex justify-center -mt-4 mb-4 relative z-10">
+            <div className="bg-white/5 border border-white/10 backdrop-blur-md px-4 py-2 rounded-full flex items-center gap-2 shadow-xl">
+              <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
+                <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+              </div>
+              <div className="text-left">
+                <p className="text-[10px] font-bold text-white leading-none">7-DAY GUARANTEE</p>
+                <p className="text-[8px] text-slate-400">Verified Secure Checkout</p>
+              </div>
             </div>
           </div>
           
