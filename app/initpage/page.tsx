@@ -32,7 +32,7 @@ export default function InitPage() {
 
                     <div className="flex flex-col md:flex-row items-center justify-center gap-4 mt-8">
                         <Link
-                            href="https://pay.mycheckoutt.com/01982eae-80c3-70d5-ac4c-5d97f149e0e3?ref="
+                            href="https://pay.mycheckoutt.com/0198c1be-98b4-7315-a3bc-8c0fa9120e5c?ref="
                             className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold py-4 px-10 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1"
                         >
                             Get Access Now For $37
@@ -121,13 +121,13 @@ export default function InitPage() {
                     </p>
                     <div className="flex flex-col items-center gap-4">
                         <Link
-                            href="https://pay.mycheckoutt.com/01982eae-80c3-70d5-ac4c-5d97f149e0e3?ref="
+                            href="https://pay.mycheckoutt.com/019bc3ae-63ca-7242-97fd-5ca7d86778fd?ref="
                             className="bg-white text-blue-700 hover:bg-slate-100 text-lg font-bold py-4 px-10 rounded-xl shadow-lg transition-all transform hover:-translate-y-1 w-full md:w-auto"
                         >
                             Yes! I Want Immediate Access
                         </Link>
                         <div className="flex items-center gap-2 text-sm text-blue-200 opacity-90">
-                            <Lock className="w-4 h-4" /> Secure Payment via Checkout
+                            <Lock className="w-4 h-4" /> Secure Payment via Kirvano
                         </div>
                     </div>
                 </div>
@@ -141,7 +141,7 @@ export default function InitPage() {
                         {/* FAQ Item 1 */}
                         <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
                             <h3 className="font-bold text-lg mb-2 text-slate-800">Is it safe to buy?</h3>
-                            <p className="text-slate-600">Yes, 100% safe. The payment is processed by an extremely secure platform. Your data is protected.</p>
+                            <p className="text-slate-600">Yes, 100% safe. The payment is processed by Kirvano, one of the most secure platforms. Your data is protected.</p>
                         </div>
                         {/* FAQ Item 2 */}
                         <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100">

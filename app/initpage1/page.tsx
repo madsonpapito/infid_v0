@@ -235,7 +235,7 @@ export default function InitPage1() {
 
                     <div className="space-y-4">
                         <Link
-                            href="https://pay.mycheckoutt.com/0198c1c3-4ca4-73ab-9c28-9bb28ca24957?ref="
+                            href="https://pay.mycheckoutt.com/019bc677-f5bc-70ee-8e14-7f2ad8946394?ref="
                             className="block w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg md:text-xl font-bold py-5 px-10 rounded-xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-1 border-2 border-orange-400"
                         >
                             ✅ YES! Add The &ldquo;Digital Audit Kit&rdquo; To My Order
@@ -277,7 +277,7 @@ export default function InitPage1() {
             <section className="py-12 px-4 md:px-8 bg-slate-100">
                 <div className="max-w-3xl mx-auto text-center space-y-6">
                     <Link
-                        href="https://pay.mycheckoutt.com/0198c1c3-4ca4-73ab-9c28-9bb28ca24957?ref="
+                        href="https://pay.mycheckoutt.com/019bc677-f5bc-70ee-8e14-7f2ad8946394?ref="
                         className="inline-block w-full md:w-auto bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg font-bold py-4 px-10 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1"
                     >
                         ✅ YES! Add The Digital Audit Kit - Only $47

@@ -192,7 +192,7 @@ export default function InitPage2() {
 
                     <div className="space-y-4 pt-4">
                         <Link
-                            href="https://pay.mycheckoutt.com/0198c1bb-0daf-7044-8dc6-059b04c13a0a?ref="
+                            href="https://pay.mycheckoutt.com/0198c1bb-0daf-7044-8dc6-059b04c13c0a?ref="
                             className="block w-full md:max-w-xl mx-auto bg-teal-600 hover:bg-teal-700 text-white text-lg md:text-xl font-bold py-5 px-10 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1"
                         >
                             YES! Add The &ldquo;Emotional Shielding Protocol&rdquo; To My Order

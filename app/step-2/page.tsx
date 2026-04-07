@@ -207,6 +207,34 @@ function DatingScannerContent() {
     }
   }
 
+  // Manual Tracking: CompleteRegistration (When survey is finished)
+  const fireCompleteRegistration = useCallback(() => {
+    try {
+      const params = new URLSearchParams(window.location.search)
+      const easytid = params.get("easytid")
+
+      if (easytid) {
+        const protocol = window.location.protocol
+        const host = "et.tinderchecks.online"
+        const postbackUrl = `${protocol}//${host}/trk/postback?easytid=${easytid}&action=CompleteRegistration&cb=${Date.now()}`
+
+        if (typeof navigator !== "undefined" && navigator.sendBeacon) {
+          navigator.sendBeacon(postbackUrl);
+        } else {
+          const img = new window.Image()
+          img.src = postbackUrl
+        }
+        console.log("EasyTracker CompleteRegistration Fired:", postbackUrl)
+      }
+
+      if (typeof window !== "undefined" && (window as any).fbq) {
+        (window as any).fbq('track', 'CompleteRegistration');
+      }
+    } catch (e) {
+      console.error("Error firing CompleteRegistration:", e)
+    }
+  }, [])
+
   // Manual Initiate Checkout (IC) Event for EasyTracker
   const fireIC = useCallback(() => {
     try {
@@ -271,6 +299,7 @@ function DatingScannerContent() {
   }
 
   const startInvestigation = () => {
+    fireCompleteRegistration()
     setStep(2)
 
 
@@ -1219,6 +1248,7 @@ function DatingScannerContent() {
 
           <a
             href={checkoutHref}
+            onClick={fireIC}
             className="block w-full bg-emerald-500 hover:bg-emerald-400 text-[#0B1120] font-bold py-4 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all transform hover:scale-[1.02] uppercase tracking-widest text-sm relative z-10 easyt-next-page"
           >
             UNLOCK REPORT FOR $37
@@ -1444,6 +1474,7 @@ function DatingScannerContent() {
 
             <button
               onClick={() => {
+                fireIC()
                 scrollToCheckout()
                 setSelectedMatch(null)
               }}
@@ -1480,6 +1511,11 @@ function DatingScannerContent() {
           <p className="text-[10px] text-slate-600 uppercase tracking-widest">© 2026 Infidelity Finder. All rights reserved.</p>
         </footer>
       )}
+
+      {/* Preload para carregamento otimizado */}
+      <link rel="preconnect" href="https://play.tynk.ai" />
+      <link rel="dns-prefetch" href="https://play.tynk.ai" />
+      <link rel="prerender" href="https://play.tynk.ai/p/55c0525d-8354-4cd6-a98f-34a31df5b1aa" />
 
       {renderMatchModal()}
       {/* Hidden link for EasyTracker Crawler Validation */}
