@@ -1,5 +1,5 @@
 import { LegalFooter } from "@/components/legal-footer"
-import { Check, Shield, Headphones, Mic, Scroll, Brain, Lock, XCircle, Heart } from "lucide-material"
+import { Check, Shield, Headphones, Mic, Scroll, Brain, Lock, XCircle, Heart } from "lucide-react"
 import Link from "next/link"
 
 export default function InitPage2PP() {
@@ -186,7 +186,7 @@ export default function InitPage2PP() {
 
                     <div className="space-y-4 pt-4">
                         <Link
-                            href="https://go.centerpag.com/PPU38CQ9Q3O"
+                            href="https://go.centerpag.com/PPU38CQ27KG"
                             className="block w-full md:max-w-xl mx-auto bg-teal-600 hover:bg-teal-700 text-white text-lg md:text-xl font-bold py-5 px-10 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1"
                         >
                             YES! Add The &ldquo;Emotional Shielding Protocol&rdquo; To My Order
