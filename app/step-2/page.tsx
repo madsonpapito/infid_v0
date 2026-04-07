@@ -6,7 +6,7 @@ import {
   CheckCircle2, AlertTriangle, Lock, LockOpen, Search, MapPin,
   Smartphone, Fingerprint, Eye, User, HeartCrack, Activity,
   ScanFace, Globe, ShieldCheck, ChevronRight, X, MessageCircle,
-  ChevronLeft, Volume2, HelpCircle, History
+  ChevronLeft, Volume2, HelpCircle, History, Unlock
 } from "lucide-react"
 import { getRandomProfile, MALE_NAMES, FEMALE_NAMES } from "@/lib/profile-data"
 import { COUNTRIES } from "@/components/Countries"
@@ -83,6 +83,9 @@ function DatingScannerContent() {
   const [timeLeft, setTimeLeft] = useState(5 * 60)
   const [selectedMatch, setSelectedMatch] = useState<Match | null>(null)
   const [testimonialIndex, setTestimonialIndex] = useState(0)
+  
+  // Dynamic floating notification (Conversion Pill)
+  const [notification, setNotification] = useState<string | null>(null)
 
   const testimonials = [
     {
@@ -137,6 +140,32 @@ function DatingScannerContent() {
       })
   }, [])
 
+  // Floating Pills notification loop for Step 3
+  useEffect(() => {
+    if (step === 3) {
+      const messages = [
+        "Extracting 14 deleted chats...",
+        "Recovering GPS history logs...",
+        "Checking hidden camera roll...",
+        "Decrypting social media footprints...",
+        "Scanning secondary WhatsApp accounts...",
+        "Compiling connection map..."
+      ];
+      let msgIndex = 0;
+      
+      const interval = setInterval(() => {
+        setNotification(messages[msgIndex]);
+        msgIndex = (msgIndex + 1) % messages.length;
+        
+        setTimeout(() => {
+          setNotification(null);
+        }, 3000);
+      }, 4500);
+      
+      return () => clearInterval(interval);
+    }
+  }, [step]);
+
   useEffect(() => {
     // Generate matches when component mounts or step changes to 3 (Results)
     // Matches should be opposite gender of the target (suspect)
@@ -154,6 +183,20 @@ function DatingScannerContent() {
   const checkoutRef = useRef<HTMLDivElement>(null)
   const videoScrollRef = useRef<HTMLDivElement>(null)
 
+  // Refs for Auto-Scroll (Conversion Optimization)
+  const ageRef = useRef<HTMLDivElement>(null)
+  const relationshipRef = useRef<HTMLDivElement>(null)
+  const suspicionRef = useRef<HTMLDivElement>(null)
+  const flagsRef = useRef<HTMLDivElement>(null)
+  const idRef = useRef<HTMLDivElement>(null)
+  const submitRef = useRef<HTMLDivElement>(null)
+
+  const scrollToSection = (ref: React.RefObject<HTMLDivElement | null>) => {
+    setTimeout(() => {
+      ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }, 200)
+  }
+
   const scrollVideos = (direction: 'left' | 'right') => {
     if (videoScrollRef.current) {
       const scrollAmount = 300
@@ -163,7 +206,6 @@ function DatingScannerContent() {
       })
     }
   }
-
 
   const scrollToCheckout = useCallback(() => {
     checkoutRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
@@ -391,9 +433,9 @@ function DatingScannerContent() {
         <div className="grid grid-cols-2 gap-3">
           {['male', 'female'].map(g => (
             <button
-              key={g}
-              onClick={() => setSelectedGender(g)}
-              className={`p-3 rounded-lg border transition-all flex flex-col items-center gap-1 ${selectedGender === g
+               key={g}
+               onClick={() => { setSelectedGender(g); scrollToSection(ageRef); }}
+               className={`p-3 rounded-lg border flex flex-col items-center gap-1 transition-all transform active:scale-95 ${selectedGender === g
                 ? 'bg-cyan-500/10 border-cyan-500 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]'
                 : 'bg-slate-800 border-slate-700 text-slate-500 hover:border-slate-600'
                 }`}
@@ -406,16 +448,16 @@ function DatingScannerContent() {
       </div>
 
       {/* 2. Age */}
-      <div className="bg-[#0f172a] rounded-xl border border-slate-700 p-5 space-y-4">
+      <div ref={ageRef} className="bg-[#0f172a] rounded-xl border border-slate-700 p-5 space-y-4 scroll-mt-20">
         <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
           <Activity className="w-4 h-4" /> Target Age
         </h2>
         <div className="grid grid-cols-4 gap-2">
           {['18-24', '25-34', '35-44', '45+'].map(val => (
             <button
-              key={val}
-              onClick={() => setAgeRange(val)}
-              className={`py-2 rounded-lg border text-xs font-bold transition-all ${ageRange === val
+               key={val}
+               onClick={() => { setAgeRange(val); scrollToSection(relationshipRef); }}
+               className={`py-2 rounded-lg border text-xs font-bold transition-all transform active:scale-95 ${ageRange === val
                 ? 'bg-cyan-500/10 border-cyan-500 text-cyan-400'
                 : 'bg-slate-800 border-slate-700 text-slate-400'
                 }`}
@@ -427,7 +469,7 @@ function DatingScannerContent() {
       </div>
 
       {/* 3. Relationship */}
-      <div className="bg-[#0f172a] rounded-xl border border-slate-700 p-5 space-y-4">
+      <div ref={relationshipRef} className="bg-[#0f172a] rounded-xl border border-slate-700 p-5 space-y-4 scroll-mt-20">
         <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
           <HeartCrack className="w-4 h-4" /> Status
         </h2>
@@ -437,9 +479,9 @@ function DatingScannerContent() {
             { v: 'complicated', l: 'Complicated' }, { v: 'dating', l: 'Dating' }
           ].map(o => (
             <button
-              key={o.v}
-              onClick={() => setRelationshipStatus(o.v)}
-              className={`p-3 text-left rounded-lg border text-xs font-bold transition-all ${relationshipStatus === o.v
+               key={o.v}
+               onClick={() => { setRelationshipStatus(o.v); scrollToSection(suspicionRef); }}
+               className={`p-3 text-left rounded-lg border text-xs font-bold transition-all transform active:scale-95 ${relationshipStatus === o.v
                 ? 'bg-cyan-500/10 border-cyan-500 text-cyan-400'
                 : 'bg-slate-800 border-slate-700 text-slate-400'
                 }`}
@@ -451,7 +493,7 @@ function DatingScannerContent() {
       </div>
 
       {/* 4. Suspicion */}
-      <div className="bg-[#0f172a] rounded-xl border border-slate-700 p-5 space-y-4">
+      <div ref={suspicionRef} className="bg-[#0f172a] rounded-xl border border-slate-700 p-5 space-y-4 scroll-mt-20">
         <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
           <AlertTriangle className="w-4 h-4" /> Suspicion Level
         </h2>
@@ -462,9 +504,9 @@ function DatingScannerContent() {
             { v: 'unsure', l: "Not sure, just checking" }
           ].map(o => (
             <button
-              key={o.v}
-              onClick={() => setSuspicionLevel(o.v)}
-              className={`w-full p-3 text-left rounded-lg border text-xs font-medium transition-all ${suspicionLevel === o.v
+               key={o.v}
+               onClick={() => { setSuspicionLevel(o.v); scrollToSection(flagsRef); }}
+               className={`w-full p-3 text-left rounded-lg border text-xs font-medium transition-all transform active:scale-[0.98] ${suspicionLevel === o.v
                 ? 'bg-rose-500/10 border-rose-500 text-rose-400'
                 : 'bg-slate-800 border-slate-700 text-slate-400'
                 }`}
@@ -476,7 +518,7 @@ function DatingScannerContent() {
       </div>
 
       {/* 5. Red Flags */}
-      <div className="bg-[#0f172a] rounded-xl border border-slate-700 p-5 space-y-4">
+      <div ref={flagsRef} className="bg-[#0f172a] rounded-xl border border-slate-700 p-5 space-y-4 scroll-mt-20">
         <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
           <ShieldCheck className="w-4 h-4" /> Detected Signs
         </h2>
@@ -487,21 +529,29 @@ function DatingScannerContent() {
             { v: 'distant', l: 'Distant' }, { v: 'appearance', l: 'New Look' }
           ].map(o => (
             <button
-              key={o.v}
-              onClick={() => toggleRedFlag(o.v)}
-              className={`p-2 text-center rounded border text-[10px] uppercase font-bold transition-all ${redFlags.includes(o.v)
-                ? 'bg-rose-500/10 border-rose-500 text-rose-400'
-                : 'bg-slate-800 border-slate-700 text-slate-500'
-                }`}
+               key={o.v}
+               onClick={() => toggleRedFlag(o.v)}
+               className={`p-2 text-center rounded border text-[10px] uppercase font-bold transition-all transform active:scale-95 ${redFlags.includes(o.v)
+                 ? 'bg-rose-500/10 border-rose-500 text-rose-400'
+                 : 'bg-slate-800 border-slate-700 text-slate-500'
+                 }`}
             >
               {o.l}
             </button>
           ))}
         </div>
+        {redFlags.length > 0 && (
+          <button 
+            onClick={() => scrollToSection(idRef)}
+            className="w-full py-2 text-xs text-cyan-500 font-bold flex items-center justify-center gap-2 animate-pulse mt-2"
+          >
+            Continue <ChevronRight className="w-3 h-3" />
+          </button>
+        )}
       </div>
 
       {/* 6. Identification Method (Required) */}
-      <div className="bg-[#0f172a] rounded-xl border border-slate-700 p-5 space-y-4">
+      <div ref={idRef} className="bg-[#0f172a] rounded-xl border border-slate-700 p-5 space-y-4 scroll-mt-20">
         <label className="text-sm font-bold text-slate-400 flex items-center gap-2 uppercase tracking-wide">
           <ScanFace className="w-4 h-4 text-cyan-500" /> Identify Subject (Required)
         </label>
@@ -514,21 +564,21 @@ function DatingScannerContent() {
           <button 
             type="button"
             onClick={() => { setActiveInputTab('instagram'); setErrorMessage(null); }} 
-            className={`flex-1 py-3 text-xs font-bold uppercase rounded-lg transition-all ${activeInputTab === 'instagram' ? 'bg-slate-700 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
+            className={`flex-1 py-4 text-xs font-bold uppercase rounded-lg transition-all active:scale-95 touch-manipulation flex items-center justify-center ${activeInputTab === 'instagram' ? 'bg-slate-700 text-white shadow-lg ring-1 ring-slate-500' : 'text-slate-500 hover:text-slate-300'}`}
           >
             Instagram
           </button>
           <button 
             type="button"
             onClick={() => { setActiveInputTab('photo'); setErrorMessage(null); }} 
-            className={`flex-1 py-3 text-xs font-bold uppercase rounded-lg transition-all ${activeInputTab === 'photo' ? 'bg-slate-700 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
+            className={`flex-1 py-4 text-xs font-bold uppercase rounded-lg transition-all active:scale-95 touch-manipulation flex items-center justify-center ${activeInputTab === 'photo' ? 'bg-slate-700 text-white shadow-lg ring-1 ring-slate-500' : 'text-slate-500 hover:text-slate-300'}`}
           >
             Photo
           </button>
           <button 
             type="button"
             onClick={() => { setActiveInputTab('whatsapp'); setErrorMessage(null); }} 
-            className={`flex-1 py-3 text-xs font-bold uppercase rounded-lg transition-all ${activeInputTab === 'whatsapp' ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
+            className={`flex-1 py-4 text-xs font-bold uppercase rounded-lg transition-all active:scale-95 touch-manipulation flex items-center justify-center ${activeInputTab === 'whatsapp' ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 shadow-lg ring-1 ring-emerald-500/50' : 'text-slate-500 hover:text-slate-300'}`}
           >
             WhatsApp
           </button>
@@ -658,7 +708,10 @@ function DatingScannerContent() {
 
         {/* PROFILE RESULT PREVIEW */}
         {imageUploaded && (
-          <div className="mt-4 p-3 bg-[#0B1120] border border-cyan-500/30 rounded-lg flex items-center gap-3 animate-fade-in">
+          <div 
+             onClick={() => scrollToSection(submitRef)}
+             className="mt-4 p-3 bg-slate-900 border border-emerald-500/50 rounded-lg flex items-center gap-3 animate-fade-in cursor-pointer relative flex flex-col items-center justify-center group overflow-hidden active:scale-[0.98] hover:bg-[#0f172a] transition-all shadow-lg"
+          >
             <div className="relative">
               <img src={imagePreview!} alt="Profile" className="w-12 h-12 rounded-full object-cover border-2 border-cyan-500" />
               <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border border-black"></div>
@@ -691,21 +744,37 @@ function DatingScannerContent() {
       </div>
 
       {/* 7. Start Scan Button */}
-      <button
-        onClick={startInvestigation}
-        disabled={!isFormComplete || isFetchingProfile}
-        className="w-full py-4 bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold rounded-xl shadow-[0_0_20px_rgba(6,182,212,0.4)] disabled:opacity-50 disabled:grayscale transition-all transform hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2"
-      >
-        {isFetchingProfile ? (
-          <>
-            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div> VERIFYING TARGET...
-          </>
-        ) : (
-          <>
-            RUN DEEP SCAN <ShieldCheck className="w-5 h-5" />
-          </>
+      <div ref={submitRef}>
+        <button
+          onClick={startInvestigation}
+          disabled={!isFormComplete || isFetchingProfile}
+          className={`relative overflow-hidden w-full py-4 text-white font-bold rounded-xl disabled:opacity-50 disabled:grayscale transition-all transform active:scale-95 flex items-center justify-center gap-2 ${
+            isFormComplete && !isFetchingProfile
+              ? 'bg-gradient-to-r from-cyan-600 to-blue-600 shadow-[0_0_25px_rgba(6,182,212,0.5)] animate-pulse-subtle hover:scale-[1.02]'
+              : 'bg-slate-700/80 text-slate-400 border border-slate-600'
+          }`}
+        >
+          {isFormComplete && !isFetchingProfile && (
+            <div className="absolute inset-0 w-full h-[200%] bg-white/[0.15] -rotate-45 -translate-y-full animate-shimmer" />
+          )}
+
+          {isFetchingProfile ? (
+            <>
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div> VERIFYING TARGET...
+            </>
+          ) : (
+            <>
+              RUN DEEP SCAN <ShieldCheck className="w-5 h-5" />
+            </>
+          )}
+        </button>
+
+        {isFormComplete && !isFetchingProfile && (
+          <p className="text-center text-rose-400 font-bold text-[10px] uppercase mt-3 tracking-widest animate-in fade-in slide-in-from-bottom-2">
+            ⚠️ Only 3 scans available in your region today.
+          </p>
         )}
-      </button>
+      </div>
 
       <div className="text-center">
         <p className="text-[10px] text-slate-500">
@@ -1256,6 +1325,24 @@ function DatingScannerContent() {
             </button>
           </div>
         </div>
+
+          {/* FLOATING NOTIFICATION PILL */}
+          <div className={`fixed top-4 left-1/2 -translate-x-1/2 z-[60] bg-slate-800/90 backdrop-blur-md border border-cyan-500/30 text-white text-[10px] px-4 py-2 rounded-full shadow-2xl flex items-center gap-2 transition-all duration-500 ${notification ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 -translate-y-4 scale-95 pointer-events-none'}`}>
+            <div className="w-3 h-3 border-2 border-cyan-500 border-t-white rounded-full animate-spin"></div>
+            {notification}
+          </div>
+
+          {/* FIXED BOTTOM CTA (Mobile Conversions) */}
+          <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-gradient-to-t from-[#0B1120] via-[#0B1120] to-transparent pointer-events-none pb-6">
+            <div className="max-w-md mx-auto pointer-events-auto">
+              <button
+                onClick={scrollToCheckout}
+                className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-bold py-4 px-8 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] transition-all animate-pulse-subtle flex items-center justify-center gap-2 uppercase tracking-wide text-sm active:scale-95"
+              >
+                <Unlock className="w-5 h-5" /> UNLOCK DOSSIER NOW
+              </button>
+            </div>
+          </div>
 
       </div>
     )
